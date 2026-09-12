@@ -24,6 +24,10 @@ src\
         filesystem.h
         filesystem_write.cpp
         filesystem_read.cpp
+        crypto\
+          cryptography.h
+          hash.cpp
+          signature.cpp <-- ????
   executor\
       executor.h
       mygit_init.cpp

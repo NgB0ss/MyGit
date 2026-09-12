@@ -5,6 +5,8 @@
  *              main file, start systems
  */
 
+#include <core/mygit.h>
+
 /* Main programm function - start all systems
  * ARGUMENTS:
  *   - Arguments count (>= 1)

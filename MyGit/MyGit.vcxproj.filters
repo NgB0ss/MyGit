@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{86d36478-703c-47d2-b7cd-771f7ec38fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Executor">
+      <UniqueIdentifier>{85ce2edf-5594-45c8-83bc-de61496cc127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Parser CMD">
+      <UniqueIdentifier>{0b2013fb-1112-4408-9d9d-0e8127349ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Resources">
+      <UniqueIdentifier>{d841a7a1-6b82-45cc-8059-ba9a1588651f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Resources\Filesystem">
+      <UniqueIdentifier>{6b9fee76-72f8-40e0-8103-e84898946f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{49979ed5-f249-462b-9712-e87d813f0d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\Tests">
+      <UniqueIdentifier>{2e3e3b50-9a82-4154-a6d1-d3031377495e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\mygit.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\parser\parser.cpp">
+      <Filter>Source Files\Core\Parser CMD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\blob.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\branch.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\commit.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\tree.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\filesystem\filesystem_read.cpp">
+      <Filter>Source Files\Core\Resources\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\filesystem\filesystem_write.cpp">
+      <Filter>Source Files\Core\Resources\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\tests\test_init.cpp">
+      <Filter>Source Files\Utils\Tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\mygit.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\executor\executor.h">
+      <Filter>Source Files\Executor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\parser\parser.h">
+      <Filter>Source Files\Core\Parser CMD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\blob.h">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\branch.h">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\commit.h">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\resources.h">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\tree.h">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\resources\filesystem\filesystem.h">
+      <Filter>Source Files\Core\Resources\Filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\tests\test.h">
+      <Filter>Source Files\Utils\Tests</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\executor\mygit_init">
+      <Filter>Source Files\Executor</Filter>
+    </None>
+  </ItemGroup>
+</Project>

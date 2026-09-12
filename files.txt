@@ -1,0 +1,39 @@
+MYGit project -> files tree
+
+FILES
+out\
+  MyGit.exe
+src\
+  core\
+    mygit.h
+    mygit.cpp
+    parser\
+      parser.cpp
+      pasrser.h
+    resources\
+      blob.cpp
+      blob.h
+      commit.cpp
+      commit.h
+      branch.cpp
+      branch.h
+      tree.cpp
+      tree.h
+      resources.h
+      filesystem\
+        filesystem.h
+        filesystem_write.cpp
+        filesystem_read.cpp
+  executor\
+      executor.h
+      mygit_init.cpp
+      mygit_add_all.cpp
+      ... all commands
+  utils\
+    tests\
+      test.h
+      test_init.cpp
+      ... unit test by all functions
+  main.cpp <-- main( int argc, char* argv[] )
+  pch.h  <-- precompiled header
+  pch.cpp <-- precompiled create header

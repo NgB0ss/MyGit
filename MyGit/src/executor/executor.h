@@ -11,9 +11,16 @@
 #include "core/resources/resources.h"
 
 // Main executor namespace
-namespace executor 
+namespace executor_core
 {
+	class executor
+	{
+	private:
 
+	public:
+
+
+	}; /* End of 'executor' class */
 }	/* end of 'executor' namespace */
 
 #endif /* __executor_h_ */

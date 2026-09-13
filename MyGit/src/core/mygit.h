@@ -9,15 +9,16 @@
 #ifndef __mygit_h_
 #define __mygit_h_
 
-#include "resources/resources.h"
+#include "executor/executor.h"
+#include "parser/parser.h"
 
 namespace core
 {
 	// Main coordinator class
-	class mygit // : public parser
+	class mygit : public parser, executor_core::executor
 	{
 	private:
-		std::string Path;
+		std::filesystem::path Path; // Path where is .mygit  
 	public:
 		/* Ctor of class
 		 * ARGUMENTS:
@@ -26,9 +27,19 @@ namespace core
 		 *   - Array of strings from cmd (arguments):
 		 *       char* argv[];
 		 */
-		mygit( int argc, char* argv[] )
+		mygit( int argc, char* argv[] ) : parser(argc, argv)
 		{
+
 		} /* End of 'mygit' function */
+
+		/* Function to make this session
+		 * ARGUMENTS: None
+		 * RETURNS: None.
+		 */
+		void RunSession( void )
+		{
+			ParseLex();
+		}	/* End 'RunSession' function */
 	}; /* End of 'mygit' class */
 } /* end of 'core' namespace */
 

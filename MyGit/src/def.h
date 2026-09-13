@@ -16,6 +16,7 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

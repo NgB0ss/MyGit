@@ -34,15 +34,15 @@
     <Filter Include="Source Files\Utils\Tests">
       <UniqueIdentifier>{2e3e3b50-9a82-4154-a6d1-d3031377495e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Resources\Filesystem\Cryptography">
+      <UniqueIdentifier>{2b0d7634-c332-4040-8ee6-b4efb3771f2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\mygit.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\parser\parser.cpp">
@@ -69,13 +69,16 @@
     <ClCompile Include="src\utils\tests\test_init.cpp">
       <Filter>Source Files\Utils\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\resources\filesystem\crypto\hash.cpp">
+      <Filter>Source Files\Core\Resources\Filesystem\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\resources\filesystem\crypto\signature.cpp">
+      <Filter>Source Files\Core\Resources\Filesystem\Cryptography</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">
       <Filter>Source Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pch.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\executor\executor.h">
       <Filter>Source Files\Executor</Filter>
@@ -104,9 +107,15 @@
     <ClInclude Include="src\utils\tests\test.h">
       <Filter>Source Files\Utils\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\resources\filesystem\crypto\cryptography.h">
+      <Filter>Source Files\Core\Resources\Filesystem\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="src\def.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\executor\mygit_init">
+    <None Include="src\executor\mygit_init.cpp">
       <Filter>Source Files\Executor</Filter>
     </None>
   </ItemGroup>

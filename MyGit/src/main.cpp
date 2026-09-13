@@ -5,7 +5,7 @@
  *              main file, start systems
  */
 
-#include <core/mygit.h>
+#include "core/mygit.h"
 
 /* Main programm function - start all systems
  * ARGUMENTS:
@@ -18,6 +18,7 @@
  */
 int main( int argc, char* argv[] )
 {
+	core::mygit MyGit(argc, argv);
 
 	return 0;
 }	/* End of 'main' function */

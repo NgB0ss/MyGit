@@ -1,6 +1,6 @@
 /* FILE:        mygit.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 15.09.2026
  * PURPOSE:     Git project
  *              Core coordinator module
  *              Class of coordinator
@@ -18,7 +18,7 @@ namespace core
 	class mygit : public parser, executor_core::executor
 	{
 	private:
-		std::filesystem::path Path; // Path where is .mygit  
+		std::filesystem::path Path; // Path where is .mygit or where is there will be
 	public:
 		/* Ctor of class
 		 * ARGUMENTS:
@@ -29,7 +29,7 @@ namespace core
 		 */
 		mygit( int argc, char* argv[] ) : parser(argc, argv)
 		{
-
+			Path = std::filesystem::current_path();
 		} /* End of 'mygit' function */
 
 		/* Function to make this session

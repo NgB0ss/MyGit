@@ -1,6 +1,6 @@
 /* FILE:        def.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 16.09.2026
  * PURPOSE:     Git project
  *              Default header file
  */
@@ -16,6 +16,8 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
+#include <functional>
+#include <variant>
 #include <filesystem>
 
 /* Debug memory allocation support */
@@ -40,7 +42,6 @@ static struct __Dummy
 #    define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #  endif /* _CRTDBG_MAP_ALLOC */
 #endif /* _DEBUG */
-
 
 #endif /* __def_h_ */
 

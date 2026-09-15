@@ -8,17 +8,10 @@
 #ifndef __parser_h_
 #define __parser_h_
 
-#include "def.h"
+#include "parser_def.h"
 
 namespace core
 {
-	// Struct - whar parser return when arsered all lexems
-	struct ParsedCommand
-	{
-    std::string FuncName;               // Name of parsered function
-		std::vector<std::string> Arguments; // Arguments what return parser (all in string type)
-	}; /* End of 'ParsedCommand' struct */
-
 	// Parser main class
 	class parser
 	{

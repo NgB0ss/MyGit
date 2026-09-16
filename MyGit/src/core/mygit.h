@@ -27,19 +27,13 @@ namespace core
 		 *   - Array of strings from cmd (arguments):
 		 *       char* argv[];
 		 */
-		mygit( int argc, char* argv[] ) : parser(argc, argv)
-		{
-			Path = std::filesystem::current_path();
-		} /* End of 'mygit' function */
+		mygit( int argc, char* argv[] );
 
 		/* Function to make this session
 		 * ARGUMENTS: None
 		 * RETURNS: None.
 		 */
-		void RunSession( void )
-		{
-			ParseLex();
-		}	/* End 'RunSession' function */
+		void RunSession( void );
 	}; /* End of 'mygit' class */
 } /* end of 'core' namespace */
 

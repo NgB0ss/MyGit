@@ -9,6 +9,7 @@
 #define __executor_h_
 
 #include "core/parser/parser_def.h"
+#include "registrator.h"
 #include "core/resources/resources.h"
 
 // Main executor namespace
@@ -42,7 +43,7 @@ namespace executor_core
 			std::string Name;
 			std::vector<argument> Arguments;
 
-			std::function<void(std::vector<ArgumentType>)> Adapter;
+			std::function<void( std::vector<ArgumentValue> )> Adapter;
 	}; /* End of 'command' struct */
 
 	class executor
@@ -69,21 +70,34 @@ namespace executor_core
 
 				if (CurrArg.type == ArgumentType::Integer)			   // Make coorect types from string - string
 				{
+					int RemakeArg = 0;
+
+					try
+					{
+						RemakeArg = std::stoi(CurrArgStr);
+					} 
+					catch ( std::exception &exept )
+					{
+						throw(exept);
+					}
+					Args.push_back(RemakeArg);
 				}
 				else if (CurrArg.type == ArgumentType::Hash)       // Make correct type from string - hash
+				{
 					core::crypto::hash RemakeArg = core::crypto::hash::FromStrToHash(CurrArgStr);
-				else                                               // We thing that that arguments is string
+					Args.push_back(RemakeArg);
+				}
+				else if (CurrArg.type == ArgumentType::String)       // We thing that that arguments is string
+				{
 					std::string RemakeArg = CurrArgStr;
-
-
-
-				// Args.push_back();
+					Args.push_back(RemakeArg);
+				}
+				else
+					throw(std::exception("Not correct type of argument :: Level -> ArgsToFuncArgs"));
 			}
 			// Call adapter
-
-
+			std::invoke(Command.Adapter, Args);
 		} /* End of 'ChooseFunc' function */
-
 
 	}; /* End of 'executor' class */
 }	/* end of 'executor' namespace */

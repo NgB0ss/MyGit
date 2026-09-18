@@ -14,7 +14,7 @@
  *   - Array of strings from cmd (arguments):
  *       char* argv[];
  */
-core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv), executor()
+core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv)
 {
   Path = std::filesystem::current_path();
 } /* End of 'mygit' function */
@@ -26,7 +26,7 @@ core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv), executor()
 void core::mygit::RunSession( void )
 {
 	// Parser arguments and choose executor function
-	ChooseFunc(ParseLex());
+	executor_core::ChooseFunc(ParseLex());
 } /* End of 'RunSession' function */
 
 /* END OF 'mygit.cpp' FILE */

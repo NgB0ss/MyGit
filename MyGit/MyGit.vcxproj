@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\mygit.cpp" />
-    <ClCompile Include="src\core\parser\parser.cpp" />
     <ClCompile Include="src\core\resources\blob.cpp" />
     <ClCompile Include="src\core\resources\branch.cpp" />
     <ClCompile Include="src\core\resources\commit.cpp" />
@@ -169,6 +168,7 @@
     <ClCompile Include="src\core\resources\filesystem\filesystem_read.cpp" />
     <ClCompile Include="src\core\resources\filesystem\filesystem_write.cpp" />
     <ClCompile Include="src\core\resources\tree.cpp" />
+    <ClCompile Include="src\executor\executor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\tests\test_init.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -180,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h" />
     <ClInclude Include="src\core\parser\parser.h" />
+    <ClInclude Include="src\core\parser\parser_def.h" />
     <ClInclude Include="src\core\resources\blob.h" />
     <ClInclude Include="src\core\resources\branch.h" />
     <ClInclude Include="src\core\resources\commit.h" />
@@ -189,6 +190,8 @@
     <ClInclude Include="src\core\resources\tree.h" />
     <ClInclude Include="src\def.h" />
     <ClInclude Include="src\executor\executor.h" />
+    <ClInclude Include="src\executor\regs\function_pool.h" />
+    <ClInclude Include="src\executor\regs\registrator.h" />
     <ClInclude Include="src\utils\tests\test.h" />
   </ItemGroup>
   <ItemGroup>

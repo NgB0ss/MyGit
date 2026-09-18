@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Core\Resources\Filesystem\Cryptography">
       <UniqueIdentifier>{2b0d7634-c332-4040-8ee6-b4efb3771f2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Executor\Registrator">
+      <UniqueIdentifier>{58f1f92b-b79e-498b-8d1f-a97738dd9ee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\mygit.cpp">
@@ -44,9 +47,6 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\parser\parser.cpp">
-      <Filter>Source Files\Core\Parser CMD</Filter>
     </ClCompile>
     <ClCompile Include="src\core\resources\blob.cpp">
       <Filter>Source Files\Core\Resources</Filter>
@@ -74,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="src\core\resources\filesystem\crypto\signature.cpp">
       <Filter>Source Files\Core\Resources\Filesystem\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="src\executor\executor.cpp">
+      <Filter>Source Files\Executor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="src\def.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\parser\parser_def.h">
+      <Filter>Source Files\Core\Parser CMD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\executor\regs\function_pool.h">
+      <Filter>Source Files\Executor\Registrator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\executor\regs\registrator.h">
+      <Filter>Source Files\Executor\Registrator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

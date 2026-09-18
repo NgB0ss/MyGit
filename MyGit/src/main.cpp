@@ -16,9 +16,27 @@
  * RETURNS: 
  *   (int) End code of programm.
  */
-int main( int argc, char* argv[] )
+int main( /* int argc, char* argv[] */ )
 {
-	core::mygit MyGit(argc, argv);
+	int argc = 3;
+  char **argv = new char*[argc];
+
+  // argv[0] Ч »м€ программы
+  argv[0] = new char[std::strlen("my_program.exe") + 1];
+  std::strcpy(argv[0], "my_program.exe");
+
+  // argv[1] Ч ѕуть к диску
+  argv[1] = new char[std::strlen("C:\\") + 1];
+  std::strcpy(argv[1], "C:\\");
+
+  // argv[2] Ч  оманда init
+  argv[2] = new char[std::strlen("init") + 1];
+  std::strcpy(argv[2], "init");
+
+  core::mygit MyGit(argc, argv);
+
+	// Run mygit
+	MyGit.RunSession();
 
 	return 0;
 }	/* End of 'main' function */

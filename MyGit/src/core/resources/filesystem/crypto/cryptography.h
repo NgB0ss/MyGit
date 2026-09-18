@@ -29,7 +29,7 @@ namespace core
 			 */
 			static hash FromStrToHash( std::string DataStr )
 			{
-       
+        return hash();
 			} /* End of 'FromStrToHash' function */
 		}; /* End of 'hash' class */
 	} /* end of 'crypto' namespace */

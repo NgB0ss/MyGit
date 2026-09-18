@@ -15,7 +15,7 @@
 namespace core
 {
 	// Main coordinator class
-	class mygit : public parser, executor_core::executor
+	class mygit : public parser
 	{
 	private:
 		std::filesystem::path Path; // Path where is .mygit or where is there will be

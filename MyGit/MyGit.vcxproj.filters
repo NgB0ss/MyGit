@@ -78,6 +78,9 @@
     <ClCompile Include="src\executor\executor.cpp">
       <Filter>Source Files\Executor</Filter>
     </ClCompile>
+    <ClCompile Include="src\executor\mygit_init.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">
@@ -125,10 +128,5 @@
     <ClInclude Include="src\executor\regs\registrator.h">
       <Filter>Source Files\Executor\Registrator</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\executor\mygit_init.cpp">
-      <Filter>Source Files\Executor</Filter>
-    </None>
   </ItemGroup>
 </Project>

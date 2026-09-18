@@ -23,26 +23,23 @@ public:
 		* 	 - Vector of argument types:
 		*       std::vector<ArgumentType> ArgTypes;
 		*/
-	template <typename type>
-	registrator( std::string NameFunc, type *Func, std::vector<ArgumentType> ArgTypes )
+	template <typename type, typename typeA>
+	registrator( std::string NameFunc, type *Func, std::vector<argument> Arguments, typeA *Adapter )
 	{
 		command CurrCmd;
 
 		CurrCmd.Name = NameFunc;
-		CurrCmd.Arguments = ArgTypes;
-		CurrCmd.Adapter = []( vector<ArgumentValue> Args )
-			{
-				Func(Args); // Call function to make git session
-			};
+		CurrCmd.Arguments = Arguments;
+		CurrCmd.Adapter = Adapter;
 
-		FunctionPool.GetPool().insert(NameFunc, CurrCmd);
+		FunctionPool.GetPool().insert(std::pair(NameFunc, CurrCmd));
 	} /* End of 'registrator' function */
 
 }; /* End of 'registrator' class */
 
 // Main macross to self-register function
-#define REGISTRATION_FUNCTION(Name, F, Arg) \
-          static registrator _(Name, F, Arg);
+#define REGISTRATION_FUNCTION(Name, F, Arg, Adapter) \
+          static registrator _(Name, F, Arg, Adapter);
 
 #endif /* __registrator_h_ */
 

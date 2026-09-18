@@ -51,9 +51,9 @@ public:
 	/* Funtion to get pool
 		* ARGUEMENTS: None
 		* RETURNS:
-		*   (auto) Pool of functions.
+		*   (auto&) Pool of functions.
 		*/
-	auto GetPool( void )
+	auto& GetPool( void )
 	{
 		return Functions;
 	}	/* End of 'GetPool' function */

@@ -26,6 +26,7 @@ core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv)
 void core::mygit::RunSession( void )
 {
 	// Parser arguments and choose executor function
+
 	executor_core::ChooseFunc(ParseLex());
 } /* End of 'RunSession' function */
 

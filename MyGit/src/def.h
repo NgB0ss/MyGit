@@ -19,6 +19,7 @@
 #include <functional>
 #include <variant>
 #include <filesystem>
+#include <utility>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

@@ -38,6 +38,11 @@ int main( /* int argc, char* argv[] */ )
 	// Run mygit
 	MyGit.RunSession();
 
+  delete argv[2];
+  delete argv[1];
+  delete argv[0];
+  delete argv;
+
 	return 0;
 }	/* End of 'main' function */
 

@@ -10,6 +10,8 @@
 
 #include "def.h"
 
+#define BYTES_HASH 32
+
 // Main core namespace
 namespace core
 {
@@ -19,7 +21,14 @@ namespace core
 		class hash
 		{
 		private:
+			bool IsStrinCalc = false;                // Flag is string calculated
+
+			std::string HashInString;	               // Hash in string
+			std::array<uint8_t, BYTES_HASH> Bytes;   // Hash bytes
 		public:
+			// NEED REALIZE MANY CTORS BY EVERYONE RESOURCE
+
+
 			/* Function to make from string - hash
 			 * ARGUMENTS:
 			 *   - String data:
@@ -27,10 +36,30 @@ namespace core
 			 * RETURNS: 
 			 *   (hash) Total hash.
 			 */
-			static hash FromStrToHash( std::string DataStr )
-			{
-        return hash();
-			} /* End of 'FromStrToHash' function */
+			static hash FromStrToHash( std::string DataStr );
+
+			/* Get string from hash class
+			 * ARGUMENTS: None.
+			 * RETURNS:
+			 *   (std::array<uint8_t, BYTES_HASH>) Hash.
+			 */
+			std::array<uint8_t, BYTES_HASH> GetHash( void );
+
+			/* Get string from hash class
+			 * ARGUMENTS: 
+			 *   - Hash data to set:
+			 *       std::array<uint8_t, 32> Data;
+			 * RETURNS:
+			 *   (uint8_t *) Hash.
+			 */
+			void SetHash( std::array<uint8_t, BYTES_HASH> Data );
+
+			/* Get string from hash class
+			 * ARGUMENTS: None.
+			 * RETURNS:
+			 *   (std::string) Hash in string.
+			 */
+			std::string GetStrHash( void );
 		}; /* End of 'hash' class */
 	} /* end of 'crypto' namespace */
 } /* end of 'core' namespace */

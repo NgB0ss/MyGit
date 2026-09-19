@@ -20,6 +20,7 @@
 #include <variant>
 #include <filesystem>
 #include <utility>
+#include <array>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

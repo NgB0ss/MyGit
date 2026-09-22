@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 19.09.2026
+ * LAST UPDATE: 22.09.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -70,6 +70,19 @@ bool core::filesystem::WriteTree( core::crypto::hash Hash, std::vector<uint8_t> 
  */
 bool core::filesystem::WriteCommit( std::string Branch, std::vector<uint8_t> Data )
 {
+	static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
+  fs::path folder_path = path / "branches";
+
+	fs::create_directories(folder_path);
+	fs::path file_path = folder_path / Branch;
+	std::ofstream file(file_path, std::ios::out | std::ios::app | std::ios::binary);
+
+	if (!file.is_open())
+	  return false;
+	
+	// Write commit data
+	file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+	return true;
 } /* End of 'core::filesystem::WriteCommit' function */
 
 /* Function to write branch 

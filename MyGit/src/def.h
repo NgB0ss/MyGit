@@ -22,6 +22,7 @@
 #include <fstream>
 #include <utility>
 #include <array>
+#include <stdexcept>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

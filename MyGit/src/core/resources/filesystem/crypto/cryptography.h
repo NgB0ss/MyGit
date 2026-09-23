@@ -1,6 +1,6 @@
 /* FILE:        cryptography.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.09.2026
+ * LAST UPDATE: 24.09.2026
  * PURPOSE:     Git project.
  *              Cryptography consalidator module.
  */
@@ -43,7 +43,7 @@ namespace core
 			 * RETURNS:
 			 *   (std::array<uint8_t, BYTES_HASH>) Hash.
 			 */
-			std::array<uint8_t, BYTES_HASH> GetHash( void );
+			std::array<uint8_t, BYTES_HASH> GetHash( void ) const;
 
 			/* Get string from hash class
 			 * ARGUMENTS: 
@@ -59,7 +59,7 @@ namespace core
 			 * RETURNS:
 			 *   (std::string) Hash in string.
 			 */
-			std::string GetStrHash( void );
+			std::string GetStrHash( void ) const;
 		}; /* End of 'hash' class */
 	} /* end of 'crypto' namespace */
 } /* end of 'core' namespace */

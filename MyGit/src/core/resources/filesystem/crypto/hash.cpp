@@ -35,7 +35,7 @@ core::crypto::hash core::crypto::hash::FromStrToHash( std::string DataStr )
  * RETURNS:
  *   (std::array<uint8_t, BYTES_HASH>) Hash.
  */
-std::array<uint8_t, BYTES_HASH> core::crypto::hash::GetHash( void )
+std::array<uint8_t, BYTES_HASH> core::crypto::hash::GetHash( void )	const
 {
 	return Bytes;
 }	/* End of 'core::crypto::hash::GetHash' function */
@@ -45,7 +45,7 @@ std::array<uint8_t, BYTES_HASH> core::crypto::hash::GetHash( void )
  * RETURNS:
  *   (std::string) Hash in string.
  */
-std::string core::crypto::hash::GetStrHash( void )
+std::string core::crypto::hash::GetStrHash( void ) const 
 {
 	if (IsStrinCalc)
 		return HashInString;

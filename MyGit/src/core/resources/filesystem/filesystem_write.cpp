@@ -10,13 +10,13 @@
 /* Function to write blob 
  * ARGUMENTS:
  *   - Hash of blob:
- *       crypto::hash Hash;
+ *       const crypto::hash &Hash;
  *   - Data of blob:
- *       std::vector<uint8_t> Data;
+ *       const std::vector<uint8_t> &Data;
  * RETURNS:
  *   (bool) Write success or no.
  */
-bool core::filesystem::WriteBlob( crypto::hash Hash, std::vector<uint8_t> Data )
+bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
 	static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
   fs::path folder_path = path / "objects" / "blobs" / Hash.GetStrHash().substr(0, 2);
@@ -36,13 +36,13 @@ bool core::filesystem::WriteBlob( crypto::hash Hash, std::vector<uint8_t> Data )
 /* Function to write tree 
  * ARGUMENTS:
  *   - Hash of tree:
- *       core::crypto::hash Hash;
+ *       const core::crypto::hash &Hash;
  *   - Data of tree:
- *       std::vector<uint8_t> Data;
+ *       const std::vector<uint8_t> &Data;
  * RETURNS:
  *   (bool) Write success or no.
  */
-bool core::filesystem::WriteTree( core::crypto::hash Hash, std::vector<uint8_t> Data )
+bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
 	static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
   fs::path folder_path = path / "objects" / "trees" / Hash.GetStrHash().substr(0, 2);
@@ -62,13 +62,13 @@ bool core::filesystem::WriteTree( core::crypto::hash Hash, std::vector<uint8_t> 
 /* Function to write commit 
  * ARGUMENTS:
  *   - Name of branch:
- *       std::string Branch;
+ *       const std::string &Branch;
  *   - Data of commit:
- *       std::vector<uint8_t> Data;
+ *       const std::vector<uint8_t> &Data;
  * RETURNS:
  *   (bool) Write success or no.
  */
-bool core::filesystem::WriteCommit( std::string Branch, std::vector<uint8_t> Data )
+bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
 	static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
   fs::path folder_path = path / "branches";
@@ -88,13 +88,13 @@ bool core::filesystem::WriteCommit( std::string Branch, std::vector<uint8_t> Dat
 /* Function to write branch 
  * ARGUMENTS:
  *   - Name of branch:
- *       std::string Branch;
+ *       const std::string &Branch;
  *   - Data of branch:
- *       std::vector<uint8_t> Data;
+ *       const  std::vector<uint8_t> &Data;
  * RETURNS:
  *   (bool) Write success or no.
  */
-bool core::filesystem::WriteBranch( std::string Branch, std::vector<uint8_t> Data )
+bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
 	static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
   fs::path folder_path = path / "branches";

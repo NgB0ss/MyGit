@@ -10,11 +10,11 @@
 /* Function to read blob
  * ARGUMENTS:
  *   - Hash of blob what need be reed:
- *       crypto:hash Hash;
+ *       const crypto:hash &Hash;
  * RETURNS:
  *  (std::vector<uint8_t>) Data of blob.
  */
-std::vector<uint8_t> core::filesystem::ReadBlob( crypto::hash Hash )
+std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
 	static fs::path Path = fs::current_path();
 	fs::path FilePath = Path / "objects" / "blobs" / Hash.GetStrHash();
@@ -37,12 +37,12 @@ std::vector<uint8_t> core::filesystem::ReadBlob( crypto::hash Hash )
 /* Function to read tree
  * ARGUMENTS:
  *   - Hash of tree what need be reed:
- *       crypto:hash Hash;
+ *       const crypto:hash &Hash;
  * RETURNS:
  *  (std::vector<uint8_t>) Data of tree.
  */
-std::vector<uint8_t> core::filesystem::ReadTree( crypto::hash Hash )
-{
+std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
+		{
 	static fs::path Path = fs::current_path();
 	fs::path FilePath = Path / "objects" / "trees" / Hash.GetStrHash();
 	std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
@@ -64,13 +64,13 @@ std::vector<uint8_t> core::filesystem::ReadTree( crypto::hash Hash )
 /* Function to read commit
  * ARGUMENTS:
  *   - Name of branch:
- *       std::string Branch;
+ *       const std::string &Branch;
  *   - Hash of commit what need be reed:
- *       crypto:hash Hash;
+ *       const crypto:hash &Hash;
  * RETURNS:
  *  (std::vector<uint8_t>) Data of commit.
  */
-std::vector<uint8_t> core::filesystem::ReadCommit( std::string Branch, crypto::hash Hash )
+std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, const crypto::hash &Hash )
 {
 	static fs::path Path = fs::current_path();
 	fs::path FilePath = Path / "branches" / Branch / ".brnch";
@@ -98,7 +98,7 @@ std::vector<uint8_t> core::filesystem::ReadCommit( std::string Branch, crypto::h
 	std::vector<uint8_t> Data(DataStr.size());
 
 	for (int i = 0; i < DataStr.size(); i++)
-		Data.push_back(DataStr[i]);
+		Data[i] = DataStr[i];
 
 	return Data;
 } /* End of 'core::filesystem::ReadCommit' function */
@@ -106,11 +106,11 @@ std::vector<uint8_t> core::filesystem::ReadCommit( std::string Branch, crypto::h
 /* Function to read branch
  * ARGUMENTS:
  *   - Name of branch:
- *       std::string Branch;
+ *       const std::string &Branch;
  * RETURNS:
  *  (std::vector<uint8_t>) Data of branch.
  */
-std::vector<uint8_t> core::filesystem::ReadBranch( std::string Branch )
+std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 {
 	static fs::path Path = fs::current_path();
 	fs::path FilePath = Path / "branches" / Branch;
@@ -128,7 +128,42 @@ std::vector<uint8_t> core::filesystem::ReadBranch( std::string Branch )
 	std::getline(File, HashBranch);
 	
 	// Get end of file and read hash of last commit 
-	/* NEED TO DO */
+	File.seekg(0, std::ios::end);
+	std::streampos fileSize = File.tellg();
+
+  if (fileSize == 0)
+	{
+		std::string message = "File is empty" + Branch;
+		throw std::runtime_error(message);
+	}
+
+	std::streamoff lastLineStart = 0;
+	for (std::streamoff offset = 2; offset <= fileSize; offset++)
+	{
+		File.seekg(-offset, std::ios::end);
+		char ch;
+
+		File.get(ch);
+		if (ch == '\n')
+		{
+			lastLineStart = File.tellg(); 
+      break;
+		}
+	}
+
+	File.seekg(lastLineStart);
+	std::string CommitHashStr;
+	std::vector<uint8_t> Data(BYTES_HASH * 2);
+
+	File.read(&CommitHashStr.data()[0], BYTES_HASH);
+
+	// Write hash branch to data
+  for (int i = 0; i < BYTES_HASH; i++)
+		Data[i] = HashBranch[i];
+
+	// Write hash last commit to data
+	for (int i = BYTES_HASH; i < BYTES_HASH; i++)
+		Data[i] = CommitHashStr[i - BYTES_HASH];
 } /* End of 'core::filesystem::ReadBranch' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

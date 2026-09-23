@@ -23,6 +23,7 @@
 #include <utility>
 #include <array>
 #include <stdexcept>
+#include <limits>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

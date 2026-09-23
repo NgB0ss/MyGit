@@ -73,12 +73,14 @@ namespace core
 
 		/* Function to read commit
 		 * ARGUMENTS:
+		 *   - Name of branch:
+		 *       std::string Branch;
 		 *   - Hash of commit what need be reed:
 		 *       crypto:hash Hash;
 		 * RETURNS:
 		 *  (std::vector<uint8_t>) Data of commit.
 		 */
-		std::vector<uint8_t> ReadCommit( crypto::hash Hash );
+		std::vector<uint8_t> ReadCommit( std::string Branch, crypto::hash Hash );
 
 		/*******   BRANCH    *******/
 		/* Function to write branch 

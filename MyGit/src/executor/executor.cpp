@@ -50,7 +50,7 @@ void executor_core::ChooseFunc( core::ParsedCommand Cmd )
 			Args.push_back(RemakeArg);
 		}
 		else
-			throw(std::exception("Not correct type of argument :: Level -> ArgsToFuncArgs"));
+			throw std::invalid_argument("Not correct type of argument :: Level -> ArgsToFuncArgs");
 	}
 	// Call adapter
 	std::invoke(Command.Adapter, Args);

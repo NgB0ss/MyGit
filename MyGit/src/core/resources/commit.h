@@ -1,6 +1,6 @@
 /* FILE:        commit.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 21.09.2026
  * PURPOSE:     Git project.
  *              Resources header file - commit
  */
@@ -9,6 +9,9 @@
 #define __commit_h_
 
 #include "tree.h"
+
+#define MAX_MSG 150  // Max symbols in 1 message to commit 
+#define MAX_AUTH 150 // Max author info
 
 namespace core
 {

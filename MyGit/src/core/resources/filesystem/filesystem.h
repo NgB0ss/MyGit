@@ -17,6 +17,30 @@ namespace core
 
 	namespace filesystem
 	{
+		/******** FILES ********/
+		/* Function to read file data
+		 * ARGUMENTS:
+		 *   - Path to file what need to be read:
+		 *       const std::string &Path;
+		 * RETURNS: 
+		 *   (std::vector<uint8_t>) Data of readed file
+		 * 
+		 */
+		std::vector<uint8_t> ReadFileData( const std::string &Path );
+
+		/* Function to write file data
+		 * ARGUMENTS:
+		 *   - Path to file what need to be write:
+		 *       const std::string &Path;
+		 *   - Is file binary:
+		 *       const bool &IsBin;
+		 *   - Data to be writed:
+		 *       const std::vector<uint8_t> &Data;
+		 * RETURNS: 
+		 * 	 (bool) Operation success or no.
+		 */
+		bool WriteFileData( const std::string &Path, const bool &IsBin, const std::vector<uint8_t> &Data );
+
 		/********   BLOB    ********/
     /* Function to write blob 
 		 * ARGUMENTS:

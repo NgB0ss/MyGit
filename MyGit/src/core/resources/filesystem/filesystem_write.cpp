@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 22.09.2026
+ * LAST UPDATE: 24.09.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -110,5 +110,42 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
 	file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
 	return true;
 } /* End of 'core::filesystem::WriteBranch' function */
+
+/* Function to write file data
+ * ARGUMENTS:
+ *   - Path to file what need to be write:
+ *       const std::string &Path;
+ *   - Is file binary:
+ *       const bool &IsBin;
+ *   - Data to be writed:
+ *       const std::vector<uint8_t> &Data;
+ * RETURNS: 
+ * 	 (bool) Operation success or no.
+ */
+bool core::filesystem::WriteFileData( const std::string &Path, const bool &IsBin, const std::vector<uint8_t> &Data )
+{
+	if (IsBin)
+	{
+		std::ofstream File(Path, std::ios::binary);
+
+		if (!File.is_open())
+		{
+			std::runtime_error Err(Path);
+			throw(Err);
+		}
+		File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
+	}
+	else
+	{
+		std::ofstream File(Path);
+
+		if (!File.is_open())
+		{
+			std::runtime_error Err(Path);
+			throw(Err);
+		}
+		File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
+	}
+} /* End of 'core::filesystem::WriteFileData' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

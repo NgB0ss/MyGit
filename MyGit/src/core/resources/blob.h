@@ -9,6 +9,7 @@
 #define __blob_h_
 
 #include "def.h"
+#include "filesystem/filesystem.h"
 
 namespace core
 {
@@ -19,6 +20,7 @@ namespace core
 		class blob
 		{
 		private:
+			bool IsFileBin = false;       // Flag by is file binary or no
 			std::vector<uint8_t> Bytes;   // File data in bytes
 		public:
 

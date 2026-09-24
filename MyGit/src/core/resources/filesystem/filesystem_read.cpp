@@ -164,6 +164,37 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 	// Write hash last commit to data
 	for (int i = BYTES_HASH; i < BYTES_HASH; i++)
 		Data[i] = CommitHashStr[i - BYTES_HASH];
+	return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
+
+/* Function to read file data
+ * ARGUMENTS:
+ *   - Path to file what need to be read:
+ *       const std::string &Path;
+ * RETURNS: 
+ *   (std::vector<uint8_t>) Data of readed file
+ */
+std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
+{
+	fs::path Path(Path);
+	std::ifstream File(Path, std::ios::binary | std::ios::ate);
+
+	// Catch error if file is not openned 
+	if (!File.is_open())
+	{
+		std::runtime_error Err("File is not openned");
+		throw(Err);
+	}
+
+	// Aproximate file size
+	std::streamsize Size;
+	Size = File.tellg();
+	File.seekg(0);
+
+	// Read data
+	std::vector<uint8_t> Data;
+	File.read(reinterpret_cast<char *>(Data.data()), Size);
+	return Data;
+} /* End of 'core::filesystem:ReadFileData' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

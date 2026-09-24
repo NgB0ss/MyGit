@@ -1,6 +1,6 @@
 /* FILE:        blob.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 19.09.2026
+ * LAST UPDATE: 24.09.2026
  * PURPOSE:     Git project.
  *              Resources - blob executor file
  */
@@ -14,7 +14,15 @@
  */
 core::resources::blob::blob( std::string Path )
 {
-  
+  try
+  {
+    Bytes = filesystem::ReadFileData(Path);
+    utils::IsFileBin(Bytes);
+  }
+  catch (const std::runtime_error &Err)
+  {
+    std::cout << Err.what() << "-> Blob is not created " << std::endl;
+  }
 } /* End of 'core::resources::blob::blob' function */
 
 /* Function to apply blob to file

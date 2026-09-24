@@ -8,8 +8,6 @@
 #ifndef __resources_h_
 #define __resources_h_
 
-#include "filesystem/filesystem.h"
-
 #include "branch.h"
 
 #endif /* __resources_h_ */

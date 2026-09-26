@@ -19,6 +19,7 @@ namespace core
 		// Tree resource class
 		class tree
 		{
+		private:
 			// One of nodes in tree
 			struct Node
 			{
@@ -29,6 +30,34 @@ namespace core
 			}; /* End of 'Node' struct */
 			
 			Node *Root = nullptr; // Main root of tree
+		public:
+
+			/* Default ctor of tree resource
+			 * ARGUMENTS: None.
+			 */
+			tree( void );
+
+			/* Function to bild data from tree 
+			 * ARGUMENTS:
+			 *   - Data:
+			 *       std::vector<uint8_t> Data;
+			 */
+			tree( std::vector<uint8_t> Data );
+
+			/* Function to apply tree to filesystem
+			 * ARGUMENTS:
+			 *   - Path to file:
+			 *       std::string Path;
+			 * RETURNS: None.
+			 */
+			void Apply( std::string Path );
+
+			/* Function to bild data from tree class 
+			 * ARGUMENTS: None.
+			 * RETURNS: 
+			 *   (std::vector<uint8_t>)	Data that build from tree.
+			 */
+			std::vector<uint8_t> DataFromTree( void );
 		}; /* End of 'tree' class */
 	}	/* end of 'resources' namespace */
 } /* end of 'core' namespace */

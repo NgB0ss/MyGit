@@ -32,6 +32,9 @@ core::resources::blob::blob( std::string Path )
  */
 core::resources::blob::blob( const std::vector<uint8_t> &Data )
 {
+  Bytes = Data;
+  IsFileBin = (bool)Bytes[Bytes.size() - 1];
+  Bytes.pop_back();
 } /* End of 'core::resources::blob::blob' function */
 
 /* Function to apply blob to file
@@ -96,7 +99,11 @@ void core::resources::blob::MakeFileByBlob( std::string Path )
  */
 std::vector<uint8_t> core::resources::blob::DataFromBlob( void )
 {
+  std::vector<uint8_t> Data;
 
+  Data = Bytes;
+  Data.push_back(IsFileBin);
+  return Data;
 } /* End of 'core::resources::blob::DataFromBlob' function */
 
 /* END OF 'blob.cpp' FILE */

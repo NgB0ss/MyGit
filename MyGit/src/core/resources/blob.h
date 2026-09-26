@@ -31,6 +31,13 @@ namespace core
 			 */
 			blob( std::string Path );
 
+			/* Ctor blob by data, that read from blobs (physic)
+			 * ARGUMENTS:
+			 *   - Data that must be blob:
+			 *       std::vector<uint8_t> Data;
+			 */
+			blob( const std::vector<uint8_t> &Data );
+
 			/* Function to apply blob to file
 			 * ARGUMENTS:
 			 *   - Path to file:
@@ -47,6 +54,12 @@ namespace core
 			 */
 			void MakeFileByBlob( std::string Path );
 
+			/* Function that convert blob to data
+			 * ARGUMENTS: None.
+			 * RETURNS:
+			 *   (std::vector<unit8_t>) Data that was blob.
+			 */
+			std::vector<uint8_t> DataFromBlob( void );
 		}; /* End of 'blob' class */
 	} /* end of 'resources' namespace */
 } /* end of 'core' namespace */

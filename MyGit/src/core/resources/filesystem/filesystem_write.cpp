@@ -146,6 +146,7 @@ bool core::filesystem::WriteFileData( const std::string &Path, const bool &IsBin
 		}
 		File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
 	}
+	return true;
 } /* End of 'core::filesystem::WriteFileData' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

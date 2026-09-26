@@ -170,6 +170,7 @@
     <ClCompile Include="src\core\resources\tree.cpp" />
     <ClCompile Include="src\executor\executor.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\utils\utils.cpp" />
     <ClCompile Include="src\utils\tests\test_init.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -193,6 +194,7 @@
     <ClInclude Include="src\executor\regs\function_pool.h" />
     <ClInclude Include="src\executor\regs\registrator.h" />
     <ClInclude Include="src\utils\tests\test.h" />
+    <ClInclude Include="src\utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\executor\mygit_init.cpp">

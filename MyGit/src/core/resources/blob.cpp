@@ -1,6 +1,6 @@
 /* FILE:        blob.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.09.2026
+ * LAST UPDATE: 26.09.2026
  * PURPOSE:     Git project.
  *              Resources - blob executor file
  */
@@ -17,12 +17,21 @@ core::resources::blob::blob( std::string Path )
   try
   {
     Bytes = filesystem::ReadFileData(Path);
-    utils::IsFileBin(Bytes);
+    IsFileBin = utils::IsFileBin(Bytes);
   }
   catch (const std::runtime_error &Err)
   {
     std::cout << Err.what() << "-> Blob is not created " << std::endl;
   }
+} /* End of 'core::resources::blob::blob' function */
+
+/* Ctor blob by data, that read from blobs (physic)
+ * ARGUMENTS:
+ *   - Data that must be blob:
+ *       std::vector<uint8_t> Data;
+ */
+core::resources::blob::blob( const std::vector<uint8_t> &Data )
+{
 } /* End of 'core::resources::blob::blob' function */
 
 /* Function to apply blob to file
@@ -33,7 +42,61 @@ core::resources::blob::blob( std::string Path )
  */
 void core::resources::blob::Apply( std::string Path )
 {
-  
+  try
+  {
+    filesystem::WriteFileData(Path, IsFileBin, Bytes);
+  }
+  catch (const std::runtime_error &Err)
+  {
+    std::cout << Err.what() << "-> Blob is not applyed " << std::endl;
+  }
 } /* End of 'core::resources::blob::Apply' function */
+
+/* Function that create file by path and blob data
+ * ARGUMENTS:
+ * 	 - Path where file need to be:
+ *       std::string Path;
+ * RETURNS: None.
+ */
+void core::resources::blob::MakeFileByBlob( std::string Path )
+{
+  std::filesystem::path PathToFile(Path);
+  std::filesystem::path Folders = PathToFile.parent_path();
+
+  // Create only dirrectories
+  fs::create_directories(PathToFile);
+  if (IsFileBin)
+  {
+    std::ofstream File(Path, std::ios::binary);
+
+    if (!File.is_open())
+    {
+      std::runtime_error Err(Path);
+      throw(Err);
+    }
+    File.write(reinterpret_cast<char *>(Bytes.data()), Bytes.size());
+  }
+  else
+  {
+    std::ofstream File(Path);
+
+    if (!File.is_open())
+    {
+      std::runtime_error Err(Path);
+      throw(Err);
+    }
+    File.write(reinterpret_cast<char *>(Bytes.data()), Bytes.size());
+  }
+} /* End of 'core::resources::blob::MakeFileByBlob' function */
+
+/* Function that convert blob to data
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (std::vector<unit8_t>) Data that was blob.
+ */
+std::vector<uint8_t> core::resources::blob::DataFromBlob( void )
+{
+
+} /* End of 'core::resources::blob::DataFromBlob' function */
 
 /* END OF 'blob.cpp' FILE */

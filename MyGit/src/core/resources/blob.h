@@ -1,8 +1,8 @@
 /* FILE:        blob.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 19.09.2026
+ * LAST UPDATE: 24.09.2026
  * PURPOSE:     Git project.
- *              Resources header file - blob
+ *              Resources header file - blob.
  */
 
 #ifndef __blob_h_
@@ -38,6 +38,15 @@ namespace core
 			 * RETURNS: None.
 			 */
 			void Apply( std::string Path );
+
+			/* FUnction that create file by path and blob data
+			 * ARGUMENTS:
+			 * 	 - Path where file need to be:
+			 *       std::string Path;
+			 * RETURNS: None.
+			 */
+			void MakeFileByBlob( std::string Path );
+
 		}; /* End of 'blob' class */
 	} /* end of 'resources' namespace */
 } /* end of 'core' namespace */

@@ -9,6 +9,7 @@
 #define __cryptography_h_
 
 #include "def.h"
+#include <openssl/evp.h>
 
 #define BYTES_HASH 32
 
@@ -26,8 +27,19 @@ namespace core
 			std::string HashInString;	               // Hash in string
 			std::array<uint8_t, BYTES_HASH> Bytes;   // Hash bytes
 		public:
-			// NEED REALIZE MANY CTORS BY EVERYONE RESOURCE
+      
+			/* Default class consructor
+			 * ARGUMENTS: None.
+			 * RETURNS: None.
+			 */
+			hash( void ) = default;
 
+			/* Function to aproximate hash to every byte subsequence
+			 * ARGUMENTS:
+			 *   - Byte vector:
+			 *       const std::vector<uint8_t> &BytesData;
+			 */
+			hash( const std::vector<uint8_t> &BytesData );
 
 			/* Function to make from string - hash
 			 * ARGUMENTS:

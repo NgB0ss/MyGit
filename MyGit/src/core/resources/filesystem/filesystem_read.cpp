@@ -176,13 +176,14 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
  */
 std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 {
-	fs::path Path(Path);
-	std::ifstream File(Path, std::ios::binary | std::ios::ate);
+	fs::path path(Path);
+	std::ifstream File(path, std::ios::binary | std::ios::ate);
 
 	// Catch error if file is not openned 
 	if (!File.is_open())
 	{
 		std::runtime_error Err("File is not openned");
+		std::cout << path;
 		throw(Err);
 	}
 

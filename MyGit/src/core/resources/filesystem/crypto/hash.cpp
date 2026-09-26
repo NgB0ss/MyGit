@@ -1,11 +1,38 @@
 /* FILE:        hash.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 19.09.2026
+ * LAST UPDATE: 26.09.2026
  * PURPOSE:     Git project.
  *              Cryptography - hash system.
  */
 
 #include "cryptography.h"
+
+/* Function to aproximate hash to every byte subsequence
+ * ARGUMENTS:
+ *   - Byte vector:
+ *       const std::vector<uint8_t> &BytesData;
+ */
+core::crypto::hash::hash( const std::vector<uint8_t> &BytesData )
+{
+	unsigned int HashLen = 0;
+	std::unique_ptr<EVP_MD_CTX, void(*)(EVP_MD_CTX*)> mdctx(EVP_MD_CTX_new(), EVP_MD_CTX_free);
+
+	// Check by is be context of hash maker or no
+	if (!mdctx)
+    throw std::runtime_error("Cant crate EVP_MD_CTX");
+
+	 // Initializing hash maker by algorithm sha-256
+	 if (EVP_DigestInit_ex(mdctx.get(), EVP_sha256(), nullptr) != 1)
+     throw std::runtime_error("Error initializing SHA-256");
+
+	 // Send bytes to hash ctor
+	 if (EVP_DigestUpdate(mdctx.get(), BytesData.data(), BytesData.size()) != 1)
+     throw std::runtime_error("Error send to hash data");
+
+	 // Write data of hash to hash class
+	 if (EVP_DigestFinal_ex(mdctx.get(), Bytes.data(), &HashLen) != 1)
+        throw std::runtime_error("Error finalize hash");
+} /* End of 'core::crypto::hash::hash' function */
 
 /* Function to make from string - hash
  * ARGUMENTS:

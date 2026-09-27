@@ -21,15 +21,12 @@ int main( /* int argc, char* argv[] */ )
 	int argc = 3;
   char **argv = new char*[argc];
 
-  // argv[0] Ч »м€ программы
-  argv[0] = new char[std::strlen("my_program.exe") + 1];
-  std::strcpy(argv[0], "my_program.exe");
+  argv[0] = new char[std::strlen("mygit.exe") + 1];
+  std::strcpy(argv[0], "mygit.exe");
 
-  // argv[1] Ч ѕуть к диску
-  argv[1] = new char[std::strlen("C:\\") + 1];
-  std::strcpy(argv[1], "C:\\");
+  argv[1] = new char[std::strlen("Z:\\") + 1];
+  std::strcpy(argv[1], "Z:\\");
 
-  // argv[2] Ч  оманда init
   argv[2] = new char[std::strlen("init") + 1];
   std::strcpy(argv[2], "init");
 

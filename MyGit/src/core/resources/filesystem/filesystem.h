@@ -17,6 +17,36 @@ namespace core
 
 	namespace filesystem
 	{
+		struct FileState
+		{
+			fs::file_time_type LastWrite;   // Time when file was remaked
+			uintmax_t Size;                 // Size of file
+			bool IsFileBin;                 // File is binary or not
+			crypto::hash Hash;              // Hash of file with flag i there binary (like blob hash)
+		}; /* End of 'FileState' struct */
+
+		// File system state struct 
+		struct FileSystemState
+		{
+			std::map<std::string, FileState> FSState;  // Filesystem state map
+		}; /* End of 'FileSystemState' struct */
+
+		/******** FILESYSTEM ********/
+		/* Function to make filesystem by resource
+		 * ARGUMENTS: 
+		 *   - Filesystem that need to be:
+		 *       const FileSystemState &FSStt;
+		 * RETURNS: None.
+		 */
+		void MakeFileSystem( const FileSystemState &FSStt );
+
+		/* Function to read filesystem state
+		 * ARGUMENTS: None.
+		 * RETURNS:
+		 *   (FileSystemState) Current filesystem state;
+		 */
+		FileSystemState ReadFileSystem( void );
+
 		/******** FILES ********/
 		/* Function to read file data
 		 * ARGUMENTS:

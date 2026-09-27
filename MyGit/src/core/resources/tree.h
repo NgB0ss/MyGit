@@ -1,6 +1,6 @@
 /* FILE:        tree.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.09.2026
+ * LAST UPDATE: 27.09.2026
  * PURPOSE:     Git project.
  *              Resources header file - tree.
  */
@@ -20,16 +20,12 @@ namespace core
 		class tree
 		{
 		private:
-			// One of nodes in tree
-			struct Node
-			{
-				std::map<std::string, Node> Childrens; // Childrens of that node
-
-				bool IsDirrectory;										 //	Is that node have blob 
-				crypto::hash BlobHash;								 // Blob hash if that not dirrectory
-			}; /* End of 'Node' struct */
-			
-			Node *Root = nullptr; // Main root of tree
+			std::map<std::string, crypto::hash> FileSystemState; // Map of filesyste, state
+			/* IN DEFAULT GIT:
+			 *   - Dirrectories in def git also have hashes, to optimiztion time, for commited big projects e.t.c
+			 *     But I have so many time and do it like def map, 
+			 *     maybe I change it after end core and write first executor functions
+			 */
 		public:
 
 			/* Default ctor of tree resource

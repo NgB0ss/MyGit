@@ -1,6 +1,6 @@
 /* FILE:        def.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.09.2026
+ * LAST UPDATE: 27.09.2026
  * PURPOSE:     Git project
  *              Default header file
  */
@@ -22,7 +22,9 @@
 #include <fstream>
 #include <utility>
 #include <array>
+#include <chrono>
 #include <stdexcept>
+#include <cstdint>
 
 // My def header file
 #include "utils/utils.h"

@@ -22,6 +22,15 @@ namespace utils
 	 *   (bool) Is file binary or no.
 	 */
 	bool IsFileBin( const std::vector<uint8_t> &DataFile );
+
+	/* Function to check is file binary or no
+	 * ARGUMENTS: 
+	 *   - Path to file to check is file binary:
+	 *       const std::string &Path;
+	 * RETURNS: 
+	 *   (bool) Is file binary or no.
+	 */
+	bool IsFileBin( const std::string &Path );
 } /* end of 'utils' namespace */
 
 #endif /* __utils_h_ */

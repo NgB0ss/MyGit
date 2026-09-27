@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 22.09.2026
+ * LAST UPDATE: 28.09.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -162,7 +162,7 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 		Data[i] = HashBranch[i];
 
 	// Write hash last commit to data
-	for (int i = BYTES_HASH; i < BYTES_HASH; i++)
+	for (int i = BYTES_HASH; i < BYTES_HASH * 2; i++)
 		Data[i] = CommitHashStr[i - BYTES_HASH];
 	return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
@@ -197,5 +197,43 @@ std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 	File.read(reinterpret_cast<char *>(Data.data()), Size);
 	return Data;
 } /* End of 'core::filesystem:ReadFileData' function */
+
+/* Function to read filesystem state
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (FileSystemState) Current filesystem state;
+ */
+core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
+{
+	FileSystemState FSStt;
+	
+	fs::path MainPath = fs::current_path();  // Get path where mygit called
+	MainPath = MainPath.parent_path();       // Get parrent of dirrectory where be .mygit
+	
+	// Recursive dirrectory itt to write all dirrectories to FileSystemState
+	for (auto entry: fs::recursive_directory_iterator(MainPath))
+		if (fs::is_regular_file(entry))
+		{
+			std::string Path = entry.path().string();
+			FileState FSt;
+
+			FSt.Size = fs::file_size(entry);
+			FSt.LastWrite = fs::last_write_time(entry);
+			std::vector<uint8_t> Data;
+			std::ifstream File(Path, std::ios::binary);
+			
+			if (!File.is_open())
+				throw(std::runtime_error("File cant be opened"));
+
+			Data.resize(FSt.Size);
+			File.read(reinterpret_cast<char *>(Data.data()), FSt.Size);
+			FSt.IsFileBin = utils::IsFileBin(Data);
+			Data.push_back(FSt.IsFileBin);
+			FSt.Hash = crypto::hash(Data);
+			FSStt.FSState.insert(std::pair<std::string, FileState> (Path, FSt));
+		}
+
+  return FSStt;
+} /* End of 'core::filesystem::ReadFileSystem' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

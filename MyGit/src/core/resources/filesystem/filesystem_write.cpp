@@ -149,4 +149,15 @@ bool core::filesystem::WriteFileData( const std::string &Path, const bool &IsBin
 	return true;
 } /* End of 'core::filesystem::WriteFileData' function */
 
+/* Function to make filesystem by resource
+ * ARGUMENTS: 
+ *   - Filesystem that need to be:
+ *       const FileSystemState &FSStt;
+ * RETURNS: None.
+ */
+void core::filesystem::MakeFileSystem( const FileSystemState &FSStt )
+{
+
+}	/* End of 'core::filesystem::MakeFileSystem' function */
+
 /* END OF 'filesystem_write.cpp' FILE */

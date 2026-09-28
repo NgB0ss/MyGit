@@ -41,12 +41,11 @@ namespace core
 			tree( std::vector<uint8_t> Data );
 
 			/* Function to apply tree to filesystem
-			 * ARGUMENTS:
-			 *   - Path to file:
-			 *       std::string Path;
+			 * ARGUMENTS: None.
 			 * RETURNS: None.
 			 */
-			void Apply( std::string Path );
+			void Apply( void );
+
 
 			/* Function that create version by path and tree data
 			 * ARGUMENTS:

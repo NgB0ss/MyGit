@@ -25,7 +25,8 @@ core::resources::tree::tree( void )
  */
 core::resources::tree::tree( std::vector<uint8_t> Data )
 {
-	
+	// INVERSE FUNCTION -> FromTreeToData
+
 
 } /* End of 'core::resources::tree::tree' function */
 
@@ -67,8 +68,22 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void )
 	 *   - PATH TO FILE, HASH OF BLOB FILE, \n
 	 *     ...
 	 */
+	std::vector<uint8_t> Data;
+	int pointer = 0;
 
+  Data.resize(FileSystemState.size() * (MAX_PATH + BYTES_HASH));
+	for (const auto& [path, hash]: FileSystemState)
+	{
+		std::string OnePair = path;
 
+		OnePair += hash.GetStrHash();
+		OnePair += "\n";
+		// Write pair to Data
+		for (int i = 0; pointer < OnePair.size(); pointer++)
+      Data[pointer] = OnePair[i++];
+	}
+	Data.shrink_to_fit();
+	return Data;
 } /* End of 'core::resources::tree::DataFromTree' function */
 
 /* END OF 'tree.cpp' FILE */

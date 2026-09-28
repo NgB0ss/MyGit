@@ -17,7 +17,6 @@ core::resources::blob::blob( std::string Path )
   try
   {
     Bytes = filesystem::ReadFileData(Path);
-    IsFileBin = utils::IsFileBin(Bytes);
   }
   catch (const std::runtime_error &Err)
   {
@@ -33,7 +32,6 @@ core::resources::blob::blob( std::string Path )
 core::resources::blob::blob( const std::vector<uint8_t> &Data )
 {
   Bytes = Data;
-  IsFileBin = (bool)Bytes[Bytes.size() - 1];
   Bytes.pop_back();
 } /* End of 'core::resources::blob::blob' function */
 
@@ -47,7 +45,7 @@ void core::resources::blob::Apply( std::string Path )
 {
   try
   {
-    filesystem::WriteFileData(Path, IsFileBin, Bytes);
+    filesystem::WriteFileData(Path, Bytes);
   }
   catch (const std::runtime_error &Err)
   {
@@ -68,28 +66,14 @@ void core::resources::blob::MakeFileByBlob( std::string Path )
 
   // Create only dirrectories
   fs::create_directories(PathToFile);
-  if (IsFileBin)
-  {
-    std::ofstream File(Path, std::ios::binary);
+  std::ofstream File(Path, std::ios::binary);
 
-    if (!File.is_open())
-    {
-      std::runtime_error Err(Path);
-      throw(Err);
-    }
-    File.write(reinterpret_cast<char *>(Bytes.data()), Bytes.size());
-  }
-  else
+  if (!File.is_open())
   {
-    std::ofstream File(Path);
-
-    if (!File.is_open())
-    {
-      std::runtime_error Err(Path);
-      throw(Err);
-    }
-    File.write(reinterpret_cast<char *>(Bytes.data()), Bytes.size());
+    std::runtime_error Err(Path);
+    throw(Err);
   }
+  File.write(reinterpret_cast<char *>(Bytes.data()), Bytes.size());
 } /* End of 'core::resources::blob::MakeFileByBlob' function */
 
 /* Function that convert blob to data
@@ -102,7 +86,6 @@ std::vector<uint8_t> core::resources::blob::DataFromBlob( void )
   std::vector<uint8_t> Data;
 
   Data = Bytes;
-  Data.push_back(IsFileBin);
   return Data;
 } /* End of 'core::resources::blob::DataFromBlob' function */
 

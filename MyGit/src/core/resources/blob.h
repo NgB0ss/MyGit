@@ -20,7 +20,6 @@ namespace core
 		class blob
 		{
 		private:
-			bool IsFileBin = false;       // Flag by is file binary or no
 			std::vector<uint8_t> Bytes;   // File data in bytes
 		public:
 

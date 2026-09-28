@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.09.2026
+ * LAST UPDATE: 28.09.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -12,6 +12,10 @@
  */
 core::resources::tree::tree( void )
 {
+	filesystem::FileSystemState FSStt = filesystem::ReadFileSystem();
+
+	for (const auto &[path, FStt]: FSStt.FSState)
+		FileSystemState[path] = FStt.Hash;
 } /* End of 'core::resources::tree::tree' function */
 
 /* Function to bild data from tree 
@@ -21,16 +25,24 @@ core::resources::tree::tree( void )
  */
 core::resources::tree::tree( std::vector<uint8_t> Data )
 {
+	
+
 } /* End of 'core::resources::tree::tree' function */
 
 /* Function to apply tree to filesystem
- * ARGUMENTS:
- *   - Path to file:
- *       std::string Path;
+ * ARGUMENTS: None.
  * RETURNS: None.
  */
-void core::resources::tree::Apply( std::string Path )
+void core::resources::tree::Apply( void )
 {
+	filesystem::FileSystemState FSStt;
+
+  // Write tree to filesystem state variable
+	for (const auto &[path, hash]: FileSystemState)
+		FSStt.FSState.insert({path, {0, FileSystemState[path]}});
+
+	// Apply filsystem with current path
+	filesystem::MakeFileSystem(FSStt);
 } /* End of 'core::resources::tree::Apply' function */
 
 /* Function that create version by path and tree data
@@ -41,6 +53,7 @@ void core::resources::tree::Apply( std::string Path )
  */
 void core::resources::tree::MakeVersByTree( std::string Path )
 {
+	
 } /* End of 'core::resources::tree::MakeVersByTree' function */
 
 /* Function to bild data from tree class 
@@ -50,6 +63,12 @@ void core::resources::tree::MakeVersByTree( std::string Path )
  */
 std::vector<uint8_t> core::resources::tree::DataFromTree( void )
 {
+	/* HOW WRITE:
+	 *   - PATH TO FILE, HASH OF BLOB FILE, \n
+	 *     ...
+	 */
+
+
 } /* End of 'core::resources::tree::DataFromTree' function */
 
 /* END OF 'tree.cpp' FILE */

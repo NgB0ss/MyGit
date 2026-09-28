@@ -19,9 +19,7 @@ namespace core
 	{
 		struct FileState
 		{
-			fs::file_time_type LastWrite;   // Time when file was remaked
 			uintmax_t Size;                 // Size of file
-			bool IsFileBin;                 // File is binary or not
 			crypto::hash Hash;              // Hash of file with flag i there binary (like blob hash)
 		}; /* End of 'FileState' struct */
 
@@ -62,14 +60,12 @@ namespace core
 		 * ARGUMENTS:
 		 *   - Path to file what need to be write:
 		 *       const std::string &Path;
-		 *   - Is file binary:
-		 *       const bool &IsBin;
 		 *   - Data to be writed:
 		 *       const std::vector<uint8_t> &Data;
 		 * RETURNS: 
 		 * 	 (bool) Operation success or no.
 		 */
-		bool WriteFileData( const std::string &Path, const bool &IsBin, const std::vector<uint8_t> &Data );
+		bool WriteFileData( const std::string &Path, const std::vector<uint8_t> &Data );
 
 		/********   BLOB    ********/
     /* Function to write blob 

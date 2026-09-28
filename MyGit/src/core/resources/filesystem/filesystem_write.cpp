@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.09.2026
+ * LAST UPDATE: 28.09.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -115,37 +115,21 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
  * ARGUMENTS:
  *   - Path to file what need to be write:
  *       const std::string &Path;
- *   - Is file binary:
- *       const bool &IsBin;
  *   - Data to be writed:
  *       const std::vector<uint8_t> &Data;
  * RETURNS: 
  * 	 (bool) Operation success or no.
  */
-bool core::filesystem::WriteFileData( const std::string &Path, const bool &IsBin, const std::vector<uint8_t> &Data )
+bool core::filesystem::WriteFileData( const std::string &Path, const std::vector<uint8_t> &Data )
 {
-	if (IsBin)
-	{
-		std::ofstream File(Path, std::ios::binary);
+	std::ofstream File(Path, std::ios::binary);
 
-		if (!File.is_open())
-		{
-			std::runtime_error Err(Path);
-			throw(Err);
-		}
-		File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
-	}
-	else
+	if (!File.is_open())
 	{
-		std::ofstream File(Path);
-
-		if (!File.is_open())
-		{
-			std::runtime_error Err(Path);
-			throw(Err);
-		}
-		File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
+		std::runtime_error Err(Path);
+		throw(Err);
 	}
+	File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
 	return true;
 } /* End of 'core::filesystem::WriteFileData' function */
 
@@ -153,11 +137,28 @@ bool core::filesystem::WriteFileData( const std::string &Path, const bool &IsBin
  * ARGUMENTS: 
  *   - Filesystem that need to be:
  *       const FileSystemState &FSStt;
+ *   - 
  * RETURNS: None.
  */
 void core::filesystem::MakeFileSystem( const FileSystemState &FSStt )
 {
+	// Run by every dirrectories
+  for (const auto &[path, FileState]: FSStt.FSState)
+	{
+		fs::path Path(path);
+		std::string FileName = Path.filename().string();
+		
+		Path.remove_filename();
+		fs::create_directories(Path);
+		Path = Path / FileName;
+		std::ofstream File(Path, std::ios::binary);
 
+		if (!File.is_open())
+			throw(std::runtime_error("File cant oppened"));
+		std::vector<uint8_t> Blob = ReadBlob(FileState.Hash);
+
+		File.write(reinterpret_cast<char *>(Blob.data()), Blob.size());
+	}
 }	/* End of 'core::filesystem::MakeFileSystem' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

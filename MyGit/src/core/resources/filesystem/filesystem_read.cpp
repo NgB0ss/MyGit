@@ -227,8 +227,6 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
 
 			Data.resize(FSt.Size);
 			File.read(reinterpret_cast<char *>(Data.data()), FSt.Size);
-			FSt.IsFileBin = utils::IsFileBin(Data);
-			Data.push_back(FSt.IsFileBin);
 			FSt.Hash = crypto::hash(Data);
 			FSStt.FSState.insert(std::pair<std::string, FileState> (Path, FSt));
 		}

@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.09.2026
+ * LAST UPDATE: 29.09.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -26,8 +26,25 @@ core::resources::tree::tree( void )
 core::resources::tree::tree( std::vector<uint8_t> Data )
 {
 	// INVERSE FUNCTION -> FromTreeToData
+	int pointer = 0;
+	std::string OnePair;
 
+	for (int i = 0; i < Data.size(); i++)
+	{
+		if (Data[i] == '\n')  // End of pair
+		{	
+			std::string Path;
+			core::crypto::hash Hash;
+			int PosStar = OnePair.find('*');
 
+			Path = OnePair.substr(0, PosStar);     // Path ro file
+		  Hash = core::crypto::hash::FromStrToHash(OnePair.substr(PosStar + 1, OnePair.size()));
+
+			FileSystemState.insert({Path, Hash});  // Add map uno
+			OnePair.clear();											 // Clear pair string
+		}
+		OnePair.push_back(Data[i]);
+	}
 } /* End of 'core::resources::tree::tree' function */
 
 /* Function to apply tree to filesystem
@@ -54,7 +71,14 @@ void core::resources::tree::Apply( void )
  */
 void core::resources::tree::MakeVersByTree( std::string Path )
 {
-	
+	filesystem::FileSystemState FSStt;
+
+  // Write tree to filesystem state variable
+	for (const auto &[defPath, hash]: FileSystemState)
+		FSStt.FSState.insert({Path + defPath, {0, FileSystemState[defPath]}});
+
+	// Apply filsystem with current path
+	filesystem::MakeFileSystem(FSStt);
 } /* End of 'core::resources::tree::MakeVersByTree' function */
 
 /* Function to bild data from tree class 
@@ -76,6 +100,7 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void )
 	{
 		std::string OnePair = path;
 
+		OnePair += "**";
 		OnePair += hash.GetStrHash();
 		OnePair += "\n";
 		// Write pair to Data

@@ -1,6 +1,6 @@
 /* FILE:        commit.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.09.2026
+ * LAST UPDATE: 29.09.2026
  * PURPOSE:     Git project.
  *              Resources header file - commit
  */
@@ -13,11 +13,20 @@
 #define MAX_MSG 150  // Max symbols in 1 message to commit 
 #define MAX_AUTH 150 // Max author info
 
+// Main core mygit namespace
 namespace core
 {
+	// Main resource namespace
 	namespace resources
 	{
-
+		// Commit resource class
+		class commit
+		{
+		private:
+			
+		public:
+			
+		}; /* End of 'commit' class */
 	}	/* end of 'resources' namespace */
 } /* end of 'core' namespace */
 

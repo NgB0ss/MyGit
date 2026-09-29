@@ -1,6 +1,6 @@
 /* FILE:        commit.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 29.09.2026
  * PURPOSE:     Git project.
  *              Resources - commit executor file
  */

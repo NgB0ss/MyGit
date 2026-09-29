@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 29.09.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -10,11 +10,20 @@
 
 #include "commit.h"
 
+// Main core mygit namespace
 namespace core
 {
+	// Main resource namespace
 	namespace resources
 	{
-
+		// Branch resource namespace
+		class branch
+		{
+		private:
+			
+		public:
+			
+		}; /* End of 'branch' class */
 	}	/* end of 'resources' namespace */
 } /* end of 'core' namespace */
 

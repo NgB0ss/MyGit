@@ -13,18 +13,18 @@
 // Main core mygit namespace
 namespace core
 {
-	// Main resource namespace
-	namespace resources
-	{
-		// Branch resource namespace
-		class branch
-		{
-		private:
-			
-		public:
-			
-		}; /* End of 'branch' class */
-	}	/* end of 'resources' namespace */
+  // Main resource namespace
+  namespace resources
+  {
+    // Branch resource namespace
+    class branch
+    {
+    private:
+      
+    public:
+      
+    }; /* End of 'branch' class */
+  }  /* end of 'resources' namespace */
 } /* end of 'core' namespace */
 
 #endif /* __branch_h_ */

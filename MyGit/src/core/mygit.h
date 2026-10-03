@@ -14,27 +14,27 @@
 
 namespace core
 {
-	// Main coordinator class
-	class mygit : public parser
-	{
-	private:
-		std::filesystem::path Path; // Path where is .mygit or where is there will be
-	public:
-		/* Ctor of class
-		 * ARGUMENTS:
-		 *   - How many arguments from cmd:
-		 *       int argc;
-		 *   - Array of strings from cmd (arguments):
-		 *       char* argv[];
-		 */
-		mygit( int argc, char* argv[] );
+  // Main coordinator class
+  class mygit : public parser
+  {
+  private:
+    std::filesystem::path Path; // Path where is .mygit or where is there will be
+  public:
+    /* Ctor of class
+     * ARGUMENTS:
+     *   - How many arguments from cmd:
+     *       int argc;
+     *   - Array of strings from cmd (arguments):
+     *       char* argv[];
+     */
+    mygit( int argc, char* argv[] );
 
-		/* Function to make this session
-		 * ARGUMENTS: None
-		 * RETURNS: None.
-		 */
-		void RunSession( void );
-	}; /* End of 'mygit' class */
+    /* Function to make this session
+     * ARGUMENTS: None
+     * RETURNS: None.
+     */
+    void RunSession( void );
+  }; /* End of 'mygit' class */
 } /* end of 'core' namespace */
 
 #endif /* __mygit_h_ */

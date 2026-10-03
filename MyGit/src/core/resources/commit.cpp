@@ -28,16 +28,16 @@ core::resources::commit::commit( std::vector<uint8_t> Data )
  *       std::string Msg;
  */
 core::resources::commit::commit( core::crypto::hash Parent,
-												 core::crypto::hash Tree,
-												 std::string Author,
-												 std::string Msg)
+                                 core::crypto::hash Tree,
+                                 std::string Author,
+                                 std::string Msg)
 {
 } /* End of 'core::resources::commit::commit' function */
 
 /* Function to apply commit version 
  * ARGUMENTS:
  *   - Hash commit that need by apply:
- *       core::crypto::hash	HashCommit;
+ *       core::crypto::hash  HashCommit;
  * RETURNS: None.
  */
 void core::resources::commit::Apply( core::crypto::hash HashCommit )
@@ -63,6 +63,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path, core::crypt
  */
 std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
 {
+  return std::vector<uint8_t> ();
 } /* End of 'core::resources::commit::DataFromCommit' function */
 
 /* END OF 'commit.cpp' FILE */

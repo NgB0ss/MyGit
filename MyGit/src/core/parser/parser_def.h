@@ -13,11 +13,11 @@
 namespace core
 {
   // Struct - whar parser return when arsered all lexems
-	struct ParsedCommand
-	{
+  struct ParsedCommand
+  {
     std::string FuncName;               // Name of parsered function
-		std::vector<std::string> Arguments; // Arguments what return parser (all in string type)
-	}; /* End of 'ParsedCommand' struct */
+    std::vector<std::string> Arguments; // Arguments what return parser (all in string type)
+  }; /* End of 'ParsedCommand' struct */
 } /* end of 'core' namespace */
 
 

@@ -16,22 +16,22 @@
  */
 std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
-	static fs::path Path = fs::current_path();
-	fs::path FilePath = Path / "objects" / "blobs" / Hash.GetStrHash();
-	std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
+  static fs::path Path = fs::current_path();
+  fs::path FilePath = Path / "objects" / "blobs" / Hash.GetStrHash();
+  std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
-	if (!File.is_open())
-	{
-		std::string message = "File of blob is not find" + Hash.GetStrHash();
-		throw std::runtime_error(message);
-	}
+  if (!File.is_open())
+  {
+    std::string message = "File of blob is not find" + Hash.GetStrHash();
+    throw std::runtime_error(message);
+  }
 
-	// If file was open
-	std::streamsize Size = File.tellg();
-	File.seekg(0, std::ios::beg);
-	std::vector<uint8_t> Data(Size);
-	File.read(reinterpret_cast<char *>(Data.data()), Size);
-	return Data;
+  // If file was open
+  std::streamsize Size = File.tellg();
+  File.seekg(0, std::ios::beg);
+  std::vector<uint8_t> Data(Size);
+  File.read(reinterpret_cast<char *>(Data.data()), Size);
+  return Data;
 } /* End of 'core::filesystem::ReadBlob' function */
 
 /* Function to read tree
@@ -42,23 +42,23 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
  *  (std::vector<uint8_t>) Data of tree.
  */
 std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
-		{
-	static fs::path Path = fs::current_path();
-	fs::path FilePath = Path / "objects" / "trees" / Hash.GetStrHash();
-	std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
+    {
+  static fs::path Path = fs::current_path();
+  fs::path FilePath = Path / "objects" / "trees" / Hash.GetStrHash();
+  std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
-	if (!File.is_open())
-	{
-		std::string message = "File of tree is not find" + Hash.GetStrHash();
-		throw std::runtime_error(message);
-	}
+  if (!File.is_open())
+  {
+    std::string message = "File of tree is not find" + Hash.GetStrHash();
+    throw std::runtime_error(message);
+  }
 
-	// If file was open
-	std::streamsize Size = File.tellg();
-	File.seekg(0, std::ios::beg);
-	std::vector<uint8_t> Data(Size);
-	File.read(reinterpret_cast<char *>(Data.data()), Size);
-	return Data;
+  // If file was open
+  std::streamsize Size = File.tellg();
+  File.seekg(0, std::ios::beg);
+  std::vector<uint8_t> Data(Size);
+  File.read(reinterpret_cast<char *>(Data.data()), Size);
+  return Data;
 } /* End of 'core::filesystem::ReadTree' function */
 
 /* Function to read commit
@@ -72,35 +72,35 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
  */
 std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, const crypto::hash &Hash )
 {
-	static fs::path Path = fs::current_path();
-	fs::path FilePath = Path / "branches" / Branch / ".brnch";
-	std::ifstream File(FilePath, std::ios::in | std::ios::binary);
+  static fs::path Path = fs::current_path();
+  fs::path FilePath = Path / "branches" / Branch / ".brnch";
+  std::ifstream File(FilePath, std::ios::in | std::ios::binary);
 
-	if (!File.is_open())
-	{
-		std::string message = "File of commit is not find" + Branch;
-		throw std::runtime_error(message);
-	}
+  if (!File.is_open())
+  {
+    std::string message = "File of commit is not find" + Branch;
+    throw std::runtime_error(message);
+  }
 
-	// Find commit
-	std::string CurrHash(BYTES_HASH, '\0');
+  // Find commit
+  std::string CurrHash(BYTES_HASH, '\0');
 
-	File.read(&CurrHash[0], BYTES_HASH);
+  File.read(&CurrHash[0], BYTES_HASH);
   while (CurrHash != Hash.GetStrHash())
-	{
-		File.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		File.read(&CurrHash[0], BYTES_HASH);
-	}
-	// Read data of commit
-	std::string DataStr;
-	std::getline(File, DataStr);
+  {
+    File.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    File.read(&CurrHash[0], BYTES_HASH);
+  }
+  // Read data of commit
+  std::string DataStr;
+  std::getline(File, DataStr);
 
-	std::vector<uint8_t> Data(DataStr.size());
+  std::vector<uint8_t> Data(DataStr.size());
 
-	for (int i = 0; i < DataStr.size(); i++)
-		Data[i] = DataStr[i];
+  for (int i = 0; i < DataStr.size(); i++)
+    Data[i] = DataStr[i];
 
-	return Data;
+  return Data;
 } /* End of 'core::filesystem::ReadCommit' function */
 
 /* Function to read branch
@@ -112,59 +112,59 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
  */
 std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 {
-	static fs::path Path = fs::current_path();
-	fs::path FilePath = Path / "branches" / Branch;
-	std::ifstream File(FilePath, std::ios::in | std::ios::binary);
+  static fs::path Path = fs::current_path();
+  fs::path FilePath = Path / "branches" / Branch;
+  std::ifstream File(FilePath, std::ios::in | std::ios::binary);
 
-	// Open file
-	if (!File.is_open())
-	{
-		std::string message = "File of branch is not find" + Branch;
-		throw std::runtime_error(message);
-	}
+  // Open file
+  if (!File.is_open())
+  {
+    std::string message = "File of branch is not find" + Branch;
+    throw std::runtime_error(message);
+  }
 
-	// Get hash of branch
-	std::string HashBranch;
-	std::getline(File, HashBranch);
-	
-	// Get end of file and read hash of last commit 
-	File.seekg(0, std::ios::end);
-	std::streampos fileSize = File.tellg();
+  // Get hash of branch
+  std::string HashBranch;
+  std::getline(File, HashBranch);
+  
+  // Get end of file and read hash of last commit 
+  File.seekg(0, std::ios::end);
+  std::streampos fileSize = File.tellg();
 
   if (fileSize == 0)
-	{
-		std::string message = "File is empty" + Branch;
-		throw std::runtime_error(message);
-	}
+  {
+    std::string message = "File is empty" + Branch;
+    throw std::runtime_error(message);
+  }
 
-	std::streamoff lastLineStart = 0;
-	for (std::streamoff offset = 2; offset <= fileSize; offset++)
-	{
-		File.seekg(-offset, std::ios::end);
-		char ch;
+  std::streamoff lastLineStart = 0;
+  for (std::streamoff offset = 2; offset <= fileSize; offset++)
+  {
+    File.seekg(-offset, std::ios::end);
+    char ch;
 
-		File.get(ch);
-		if (ch == '\n')
-		{
-			lastLineStart = File.tellg(); 
+    File.get(ch);
+    if (ch == '\n')
+    {
+      lastLineStart = File.tellg(); 
       break;
-		}
-	}
+    }
+  }
 
-	File.seekg(lastLineStart);
-	std::string CommitHashStr;
-	std::vector<uint8_t> Data(BYTES_HASH * 2);
+  File.seekg(lastLineStart);
+  std::string CommitHashStr;
+  std::vector<uint8_t> Data(BYTES_HASH * 2);
 
-	File.read(&CommitHashStr.data()[0], BYTES_HASH);
+  File.read(&CommitHashStr.data()[0], BYTES_HASH);
 
-	// Write hash branch to data
+  // Write hash branch to data
   for (int i = 0; i < BYTES_HASH; i++)
-		Data[i] = HashBranch[i];
+    Data[i] = HashBranch[i];
 
-	// Write hash last commit to data
-	for (int i = BYTES_HASH; i < BYTES_HASH * 2; i++)
-		Data[i] = CommitHashStr[i - BYTES_HASH];
-	return Data;
+  // Write hash last commit to data
+  for (int i = BYTES_HASH; i < BYTES_HASH * 2; i++)
+    Data[i] = CommitHashStr[i - BYTES_HASH];
+  return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
 
 /* Function to read file data
@@ -176,26 +176,26 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
  */
 std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 {
-	fs::path path(Path);
-	std::ifstream File(path, std::ios::binary | std::ios::ate);
+  fs::path path(Path);
+  std::ifstream File(path, std::ios::binary | std::ios::ate);
 
-	// Catch error if file is not openned 
-	if (!File.is_open())
-	{
-		std::runtime_error Err("File is not openned");
-		std::cout << path;
-		throw(Err);
-	}
+  // Catch error if file is not openned 
+  if (!File.is_open())
+  {
+    std::runtime_error Err("File is not openned");
+    std::cout << path;
+    throw(Err);
+  }
 
-	// Aproximate file size
-	std::streamsize Size;
-	Size = File.tellg();
-	File.seekg(0);
+  // Aproximate file size
+  std::streamsize Size;
+  Size = File.tellg();
+  File.seekg(0);
 
-	// Read data
-	std::vector<uint8_t> Data;
-	File.read(reinterpret_cast<char *>(Data.data()), Size);
-	return Data;
+  // Read data
+  std::vector<uint8_t> Data;
+  File.read(reinterpret_cast<char *>(Data.data()), Size);
+  return Data;
 } /* End of 'core::filesystem:ReadFileData' function */
 
 /* Function to read filesystem state
@@ -205,31 +205,30 @@ std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
  */
 core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
 {
-	FileSystemState FSStt;
-	
-	fs::path MainPath = fs::current_path();  // Get path where mygit called
-	MainPath = MainPath.parent_path();       // Get parrent of dirrectory where be .mygit
-	
-	// Recursive dirrectory itt to write all dirrectories to FileSystemState
-	for (auto entry: fs::recursive_directory_iterator(MainPath))
-		if (fs::is_regular_file(entry))
-		{
-			std::string Path = entry.path().string();
-			FileState FSt;
+  FileSystemState FSStt;
+  
+  fs::path MainPath = fs::current_path();  // Get path where mygit called
+  MainPath = MainPath.parent_path();       // Get parrent of dirrectory where be .mygit
+  
+  // Recursive dirrectory itt to write all dirrectories to FileSystemState
+  for (auto entry: fs::recursive_directory_iterator(MainPath))
+    if (fs::is_regular_file(entry))
+    {
+      std::string Path = entry.path().string();
+      FileState FSt;
 
-			FSt.Size = fs::file_size(entry);
-			FSt.LastWrite = fs::last_write_time(entry);
-			std::vector<uint8_t> Data;
-			std::ifstream File(Path, std::ios::binary);
-			
-			if (!File.is_open())
-				throw(std::runtime_error("File cant be opened"));
+      FSt.Size = fs::file_size(entry);
+      std::vector<uint8_t> Data;
+      std::ifstream File(Path, std::ios::binary);
+      
+      if (!File.is_open())
+        throw(std::runtime_error("File cant be opened"));
 
-			Data.resize(FSt.Size);
-			File.read(reinterpret_cast<char *>(Data.data()), FSt.Size);
-			FSt.Hash = crypto::hash(Data);
-			FSStt.FSState.insert(std::pair<std::string, FileState> (Path, FSt));
-		}
+      Data.resize(FSt.Size);
+      File.read(reinterpret_cast<char *>(Data.data()), FSt.Size);
+      FSt.Hash = crypto::hash(Data);
+      FSStt.FSState.insert(std::pair<std::string, FileState> (Path, FSt));
+    }
 
   return FSStt;
 } /* End of 'core::filesystem::ReadFileSystem' function */

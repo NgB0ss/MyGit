@@ -12,39 +12,39 @@
 
 namespace core
 {
-	// Parser main class
-	class parser
-	{
-	private:
-		int argc;     // Count of arguments from cmd
-		char** argv; // Arguments from cmd
-	public:
-		/* Ctor of parser class
-		 * ARGUMENTS: 
-		 *   - Count of arguments from cmd:
-		 *       int argc;
-		 *   - Arguments from cmd:
-		 *       char* argv[];
-		 */
+  // Parser main class
+  class parser
+  {
+  private:
+    int argc;     // Count of arguments from cmd
+    char** argv; // Arguments from cmd
+  public:
+    /* Ctor of parser class
+     * ARGUMENTS: 
+     *   - Count of arguments from cmd:
+     *       int argc;
+     *   - Arguments from cmd:
+     *       char* argv[];
+     */
     parser( int argc, char* argv[] ) : argc(argc), argv(argv)
-		{
-		} /* End of 'parser' fuction */
+    {
+    } /* End of 'parser' fuction */
 
-		ParsedCommand ParseLex( void )
-		{
-			ParsedCommand Cmd;
+    ParsedCommand ParseLex( void )
+    {
+      ParsedCommand Cmd;
 
-			for (int i = 0; i < argc; i++)
-			{
-				if (i == 2)
-					Cmd.FuncName = std::string(argv[i]);
-				if (i >= 2)
-					Cmd.Arguments.push_back(std::string(argv[i]));
-			}
+      for (int i = 0; i < argc; i++)
+      {
+        if (i == 2)
+          Cmd.FuncName = std::string(argv[i]);
+        if (i >= 2)
+          Cmd.Arguments.push_back(std::string(argv[i]));
+      }
 
-			return Cmd;
-		}	/* End of 'ParseLex' function */
-	}; /* End of 'parser' class */
+      return Cmd;
+    }  /* End of 'ParseLex' function */
+  }; /* End of 'parser' class */
 } /* end of 'core' namespace */
 
 #endif /* __parser_h_ */

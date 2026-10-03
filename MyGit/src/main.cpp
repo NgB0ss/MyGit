@@ -18,7 +18,7 @@
  */
 int main( /* int argc, char* argv[] */ )
 {
-	int argc = 3;
+  int argc = 3;
   char **argv = new char*[argc];
 
   argv[0] = new char[std::strlen("mygit.exe") + 1];
@@ -32,15 +32,15 @@ int main( /* int argc, char* argv[] */ )
 
   core::mygit MyGit(argc, argv);
 
-	// Run mygit
-	MyGit.RunSession();
+  // Run mygit
+  MyGit.RunSession();
 
   delete argv[2];
   delete argv[1];
   delete argv[0];
   delete argv;
 
-	return 0;
-}	/* End of 'main' function */
+  return 0;
+}  /* End of 'main' function */
 
 /* END OF 'main.cpp' FILE */

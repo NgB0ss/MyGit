@@ -13,54 +13,54 @@
 
 namespace core
 {
-	// Main resource namespace
-	namespace resources
-	{
-		// Blob container class 
-		class blob
-		{
-		private:
-			std::vector<uint8_t> Bytes;   // File data in bytes
-		public:
+  // Main resource namespace
+  namespace resources
+  {
+    // Blob container class 
+    class blob
+    {
+    private:
+      std::vector<uint8_t> Bytes;   // File data in bytes
+    public:
 
-			/* Ctor blob by file path 
-			 * ARGUMENTS:
-			 *   - File path:
-			 *       std::string Path;
-			 */
-			blob( std::string Path );
+      /* Ctor blob by file path 
+       * ARGUMENTS:
+       *   - File path:
+       *       std::string Path;
+       */
+      blob( std::string Path );
 
-			/* Ctor blob by data, that read from blobs (physic)
-			 * ARGUMENTS:
-			 *   - Data that must be blob:
-			 *       std::vector<uint8_t> Data;
-			 */
-			blob( const std::vector<uint8_t> &Data );
+      /* Ctor blob by data, that read from blobs (physic)
+       * ARGUMENTS:
+       *   - Data that must be blob:
+       *       std::vector<uint8_t> Data;
+       */
+      blob( const std::vector<uint8_t> &Data );
 
-			/* Function to apply blob to file
-			 * ARGUMENTS:
-			 *   - Path to file:
-			 *       std::string Path;
-			 * RETURNS: None.
-			 */
-			void Apply( std::string Path );
+      /* Function to apply blob to file
+       * ARGUMENTS:
+       *   - Path to file:
+       *       std::string Path;
+       * RETURNS: None.
+       */
+      void Apply( std::string Path );
 
-			/* FUnction that create file by path and blob data
-			 * ARGUMENTS:
-			 * 	 - Path where file need to be:
-			 *       std::string Path;
-			 * RETURNS: None.
-			 */
-			void MakeFileByBlob( std::string Path );
+      /* FUnction that create file by path and blob data
+       * ARGUMENTS:
+       *    - Path where file need to be:
+       *       std::string Path;
+       * RETURNS: None.
+       */
+      void MakeFileByBlob( std::string Path );
 
-			/* Function that convert blob to data
-			 * ARGUMENTS: None.
-			 * RETURNS:
-			 *   (std::vector<unit8_t>) Data that was blob.
-			 */
-			std::vector<uint8_t> DataFromBlob( void );
-		}; /* End of 'blob' class */
-	} /* end of 'resources' namespace */
+      /* Function that convert blob to data
+       * ARGUMENTS: None.
+       * RETURNS:
+       *   (std::vector<unit8_t>) Data that was blob.
+       */
+      std::vector<uint8_t> DataFromBlob( void );
+    }; /* End of 'blob' class */
+  } /* end of 'resources' namespace */
 } /* end of 'core' namespace */
 
 #endif /* __blob_h_ */

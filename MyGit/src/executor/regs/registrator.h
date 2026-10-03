@@ -14,26 +14,26 @@
 class registrator
 {
 public:
-	/* Ctor of class
-		* ARGUMENTS: 
-		*   - Name of commnd:
-		*       std::string NameFunc;
-		*   - Function that will be registration:
-		*       type *Func;
-		* 	 - Vector of argument types:
-		*       std::vector<ArgumentType> ArgTypes;
-		*/
-	template <typename type, typename typeA>
-	registrator( std::string NameFunc, type *Func, std::vector<argument> Arguments, typeA *Adapter )
-	{
-		command CurrCmd;
+  /* Ctor of class
+    * ARGUMENTS: 
+    *   - Name of commnd:
+    *       std::string NameFunc;
+    *   - Function that will be registration:
+    *       type *Func;
+    *    - Vector of argument types:
+    *       std::vector<ArgumentType> ArgTypes;
+    */
+  template <typename type, typename typeA>
+  registrator( std::string NameFunc, type *Func, std::vector<argument> Arguments, typeA *Adapter )
+  {
+    command CurrCmd;
 
-		CurrCmd.Name = NameFunc;
-		CurrCmd.Arguments = Arguments;
-		CurrCmd.Adapter = Adapter;
+    CurrCmd.Name = NameFunc;
+    CurrCmd.Arguments = Arguments;
+    CurrCmd.Adapter = Adapter;
 
-		FunctionPool.GetPool().insert(std::pair(NameFunc, CurrCmd));
-	} /* End of 'registrator' function */
+    FunctionPool.GetPool().insert(std::pair(NameFunc, CurrCmd));
+  } /* End of 'registrator' function */
 
 }; /* End of 'registrator' class */
 

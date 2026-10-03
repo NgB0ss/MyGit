@@ -55,7 +55,7 @@ void core::resources::blob::Apply( std::string Path )
 
 /* Function that create file by path and blob data
  * ARGUMENTS:
- * 	 - Path where file need to be:
+ *    - Path where file need to be:
  *       std::string Path;
  * RETURNS: None.
  */

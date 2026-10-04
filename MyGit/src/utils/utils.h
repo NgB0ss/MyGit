@@ -1,6 +1,6 @@
 /* FILE:        utils.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.09.2026
+ * LAST UPDATE: 04.10.2026
  * PURPOSE:     Git project.
  *              Utilit consalidation header file.
  */
@@ -31,6 +31,15 @@ namespace utils
    *   (bool) Is file binary or no.
    */
   bool IsFileBin( const std::string &Path );
+
+  /* Function to parse string to time point
+   * ARGUMENTS:
+   *   - Time in string:
+   *       const std::string &StrTime;
+   * RETURNS: 
+   *   (std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes>) Time point.
+   */
+  std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> TimeFromStr( const std::string &StrTime );
 } /* end of 'utils' namespace */
 
 #endif /* __utils_h_ */

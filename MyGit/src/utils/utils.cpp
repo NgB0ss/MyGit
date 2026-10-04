@@ -1,6 +1,6 @@
 /* FILE:        utils.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.09.2026
+ * LAST UPDATE: 04.10.2026
  * PURPOSE:     Git project.
  *              Utils executor file.
  */
@@ -43,6 +43,24 @@ bool utils::IsFileBin( const std::string &Path )
   File.read(Data.data(), 8000);
   return Data.find('\0') != std::string::npos;
 } /* End of 'IsFileBin' function */
+
+/* Function to parse string to time point
+ * ARGUMENTS:
+ *   - Time in string:
+ *       const std::string &StrTime;
+ * RETURNS: 
+ *   (std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes>) Time point.
+ */
+std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> utils::TimeFromStr( const std::string &StrTime )
+{
+  std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> TimePoint;
+  std::istringstream ss{StrTime};
+
+  ss >> std::chrono::parse("%F %R", TimePoint);
+  if (ss.fail())
+    throw(std::runtime_error("Error in parsed time of commit"));
+  return TimePoint;
+} /* End of 'utils::TimeFromStr' function */
 
 
 /* END OF 'utils.cpp' FILE */

@@ -31,43 +31,39 @@ namespace core
       /* Ctor commit by byte data 
        * ARGUMENTS:
        *   - Data that readed from commit:
-       *       std::vector<uint8_t> Data;
+       *       const std::vector<uint8_t> &Data;
        */
-      commit( std::vector<uint8_t> Data );
+      commit( const std::vector<uint8_t> &Data );
 
       /* Ctor by all data of resource
        * ARGUMENTS:
        *   - Hash of parrent commit:
-       *       core::crypto::hash Parent;
+       *       const core::crypto::hash &Parent;
        *   - Hash of tree filesystem state of commit:
-       *       core::crypto::hash Tree;
+       *       const core::crypto::hash &Tree;
        *   - Author of commit:
-       *       std::string Author;
+       *       const std::string &Author;
        *   - Message of commit:
-       *       std::string Msg;
+       *       const std::string &Msg;
        */
-      commit( core::crypto::hash Parent,
-              core::crypto::hash Tree,
-              std::string Author,
-              std::string Msg );
+      commit( const core::crypto::hash &Parent,
+              const core::crypto::hash &Tree,
+              const std::string &Author,
+              const std::string &Msg);
 
       /* Function to apply commit version 
-       * ARGUMENTS:
-       *   - Hash commit that need by apply:
-       *       core::crypto::hash  HashCommit;
+       * ARGUMENTS: None.
        * RETURNS: None.
        */
-      void Apply( core::crypto::hash HashCommit );
+      void Apply( void );
 
       /* Function to make version by commit and path where it need be
        * ARGUMENTS:
-       *   - Path where we need version:
+       *   - Path where version need be:
        *       std::string Path;
-       *   - Hash of commit that need be applied:
-       *       core::crypto::hash HashCommit;
        * RETURNS: None.
       */
-      void MakeVersionByCommit( std::string Path, core::crypto::hash HashCommit );
+      void MakeVersionByCommit( std::string Path );
 
       /* Function to get data from commit 
        * ARGUMENTS: None.

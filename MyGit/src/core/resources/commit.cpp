@@ -14,7 +14,6 @@
  */
 core::resources::commit::commit( const std::vector<uint8_t> &Data )
 {
-  std::vector<uint8_t> Data;
   int CurrPos = 0;
   
   for (CurrPos; CurrPos < BYTES_HASH; CurrPos++)
@@ -149,9 +148,9 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
     Data[CurrPos] = Parent.GetHash()[CurrPos];
   Data[CurrPos++] = ' ';
   // Write time
-  std::string Time = std::format("{:%Y-%m-%d %H &M}", Time);
+  std::string TimeStr = std::format("{:%Y-%m-%d %H %M}", Time);
   for (int i = 0; CurrPos < CurrPos + 16; CurrPos++)
-    Data[CurrPos] = Time[i++];
+    Data[CurrPos] = TimeStr[i++];
   Data[CurrPos++] = ' ';
   // Write current position
   for (int i = 0; CurrPos < CurrPos + Author.size(); CurrPos++)

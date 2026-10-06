@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.09.2026
+ * LAST UPDATE: 06.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -166,6 +166,32 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
     Data[i] = CommitHashStr[i - BYTES_HASH];
   return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
+
+/* Function to read name of current branch 
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (std::string) Current branch.
+ */
+std::string core::filesystem::ReadCurrBranchName( void )
+{
+  // WARNING: Branch saved not binary 
+  // Where current branch be saved?
+  // .mygit\
+  //    CurrentBranch
+  //    ...
+  static fs::path Path = fs::current_path() / ".mygit" / "CurrentBranch";
+  std::ifstream File(Path, std::ios::ate);
+
+  if (!File.is_open())
+    throw(std::runtime_error("Current branch cant be opened"));
+  std::string NameBrnch;
+  std::size_t Size = File.tellg();
+
+  File.seekg(0);
+  NameBrnch.resize(Size);
+  File.read(NameBrnch.data(), Size);
+  return NameBrnch;
+} /* End of 'core::filesystem::ReadCurrBranchName' function */
 
 /* Function to read file data
  * ARGUMENTS:

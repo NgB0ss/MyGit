@@ -10,6 +10,8 @@
 
 #include "commit.h"
 
+// Brnch that created by 0 bytes
+#define ZERO_BYTE_BRNCH core::crypto::hash(e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855)
 // Main core mygit namespace
 namespace core
 {
@@ -21,10 +23,10 @@ namespace core
     {
     private:
       inline static bool IsCurrentBrInit = false;    // Flag that help with init current branch
-      static branch CurrentBranch;            // Current branch that choosed (maybe can read from .mygit)
-      crypto::hash CurrentCommitHash;         // Last commit hash
-      tree QueueAdd;                          // Queue added files (saved like tree of filesystem)
+      static branch CurrentBranch;                   // Current branch that choosed (maybe can read from .mygit)
+      crypto::hash CurrentCommitHash;                // Last commit hash
       bool IsQueueInit = false;               // Flag that help with queueadd initialization
+      tree QueueAdd;                          // Queue added files (saved like tree of filesystem)
 
     public:
       /* Create branch by name

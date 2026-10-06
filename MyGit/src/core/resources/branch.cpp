@@ -14,10 +14,31 @@
  */
 core::resources::branch::branch( const std::string &Branch )
 {
-  CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  // Try to delegate ctor by bytes
+  std::vector<uint8_t> Bytes;
+  bool IsDelegate = true;
+
+  try
+  {
+    Bytes = filesystem::ReadBranch(Branch);
+  }
+  catch ( std::runtime_error &Err )
+  {
+    IsDelegate = false;
+  }
+  // Delegate if we can
+  if (IsDelegate)
+    (*this) = branch(Bytes);
+
   if (!IsCurrentBrInit)
-    ;// Read current branch
-  
+    // Read name of current branch from .mygit
+    // Create current branch
+    CurrentBranch = branch(filesystem::ReadBranch(filesystem::ReadCurrBranchName()));
+
+  if (IsDelegate)
+    return;
+
+  CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // ZERO_BYTES_BRNCH
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -57,6 +78,12 @@ void core::resources::branch::SwapCurrentBranch( const branch &NewCurrBr )
  */
 std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
 {
+  /* How branch wiil be saved in bytes?:
+   *   - In default sequence field:
+   *       (CurrentCommitHash) (IsQeueAddInit) (QueueData <- Watch in tree decoder)
+   */
+
+
 } /* End of 'core::resources::branch::FromBranchToData' fucntion */
 
 

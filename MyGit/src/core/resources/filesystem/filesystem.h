@@ -1,6 +1,6 @@
 /* FILE:        filesystem.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.09.2026
+ * LAST UPDATE: 06.10.2026
  * PURPOSE:     Git project.
  *              Filesystem main file - physic save resources
  */
@@ -147,6 +147,14 @@ namespace core
      */
     bool WriteBranch( const std::string &Branch, const std::vector<uint8_t> &Data );
 
+    /* Function to write current branch name
+     * ARGUMENTS:
+     *   - Name of new current branch name:
+     *       const std::string &NewName;
+     * RETURNS: None.
+     */
+    void WriteCurrBranchName( std::string NewName );
+
     /* Function to read branch
      * ARGUMENTS:
      *   - Name of branch:
@@ -155,6 +163,13 @@ namespace core
      *  (std::vector<uint8_t>) Data of branch.
      */
     std::vector<uint8_t> ReadBranch( const std::string &Branch );
+
+    /* Function to read name of current branch 
+     * ARGUMENTS: None.
+     * RETURNS:
+     *   (std::string) Current branch.
+     */
+    std::string ReadCurrBranchName( void );
   }  /* end of 'filesystem' namespace */
 } /* end of 'core' namespace */
 

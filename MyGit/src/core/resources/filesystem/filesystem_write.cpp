@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.09.2026
+ * LAST UPDATE: 06.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -110,6 +110,23 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
   return true;
 } /* End of 'core::filesystem::WriteBranch' function */
+
+/* Function to write current branch name
+ * ARGUMENTS:
+ *   - Name of new current branch name:
+ *       const std::string &NewName;
+ * RETURNS: None.
+ */
+void core::filesystem::WriteCurrBranchName( std::string NewName )
+{
+  // WARNING: Curr branch saved non binary
+  static fs::path Path = fs::current_path() / ".mygit" / "CurrentBranch";
+  std::ofstream File(Path);
+
+  if (!File.is_open())
+    throw(std::runtime_error("File of current branch cant be created"));
+  File.write(NewName.data(), NewName.size());
+} /* End of 'core::filesystem::WriteCurrBarnchName' function */
 
 /* Function to write file data
  * ARGUMENTS:

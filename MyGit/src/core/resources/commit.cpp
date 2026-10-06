@@ -75,7 +75,7 @@ void core::resources::commit::Apply( void )
   {
     Bytes = filesystem::ReadTree(Tree);
   }
-  catch ( std::runtime_error Err )
+  catch ( std::runtime_error& Err )
   {
     throw(Err);
   }
@@ -85,7 +85,7 @@ void core::resources::commit::Apply( void )
   {
     TreeCommit.Apply();
   }
-  catch ( std::runtime_error Err )
+  catch ( std::runtime_error& Err )
   {
     throw(Err);
   }
@@ -107,7 +107,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path )
   {
     Bytes = filesystem::ReadTree(Tree);
   }
-  catch ( std::runtime_error Err )
+  catch ( std::runtime_error& Err )
   {
     throw(Err);
   }
@@ -117,7 +117,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path )
   {
     TreeCommit.MakeVersByTree(Path);
   }
-  catch ( std::runtime_error Err )
+  catch ( std::runtime_error& Err )
   {
     throw(Err);
   }

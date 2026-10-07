@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 06.10.2026
+ * LAST UPDATE: 07.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -48,6 +48,21 @@ core::resources::branch::branch( const std::string &Branch )
  */
 core::resources::branch::branch( const std::vector<uint8_t> &Data )
 {
+  std::vector<uint8_t> CurrBytes;
+  int AllCount = 0;
+
+  for (auto cnt: Data)
+    if (Data[cnt] != ' ')
+      CurrBytes.push_back(Data[cnt]), AllCount = cnt;
+    else
+      break;
+  CurrentCommitHash = crypto::hash(CurrBytes);
+  CurrBytes.clear();
+  AllCount++;
+  IsQueueInit = Data[AllCount];
+  
+  CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
+  QueueAdd = tree(CurrBytes);
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Function to get current branch 
@@ -82,8 +97,15 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
    *   - In default sequence field:
    *       (CurrentCommitHash) (IsQeueAddInit) (QueueData <- Watch in tree decoder)
    */
+  std::vector<uint8_t> Data, QueueDt;
 
-
+  QueueDt = QueueAdd.DataFromTree();
+  Data.insert(Data.begin(), CurrentCommitHash.GetHash().begin(), CurrentCommitHash.GetHash().end());
+  Data.push_back(' ');
+  Data.push_back(IsQueueInit);
+  Data.push_back(' ');
+  Data.insert(Data.end(), QueueDt.begin(), QueueDt.end());
+  return Data;
 } /* End of 'core::resources::branch::FromBranchToData' fucntion */
 
 

@@ -16,6 +16,11 @@ namespace core
   // Main resources namespace
   namespace resources
   {
+    enum class TreeCtor
+    {
+      Default, 
+      BySystem
+    };
     // Tree resource class
     class tree
     {
@@ -27,11 +32,15 @@ namespace core
        *     maybe I change it after end core and write first executor functions
        */
     public:
+      /* Default ctro of tree */
+      tree( void ) = default;
 
       /* Default ctor of tree resource
-       * ARGUMENTS: None.
+       * ARGUMENTS: 
+       *   - Type ctor that you need:
+       *       TreeCtor Type;
        */
-      tree( void );
+      tree( TreeCtor Type );
 
       /* Function to bild data from tree 
        * ARGUMENTS:

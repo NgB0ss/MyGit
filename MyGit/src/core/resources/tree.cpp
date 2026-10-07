@@ -8,14 +8,19 @@
 #include "tree.h"
 
 /* Default ctor of tree resource
- * ARGUMENTS: None.
+ * ARGUMENTS: 
+ *   - Type ctor that you need:
+ *       TreeCtor Type;
  */
-core::resources::tree::tree( void )
+core::resources::tree::tree( TreeCtor Type )
 {
-  filesystem::FileSystemState FSStt = filesystem::ReadFileSystem();
+  if (Type == TreeCtor::BySystem)
+  {
+    filesystem::FileSystemState FSStt = filesystem::ReadFileSystem();
 
-  for (const auto &[path, FStt]: FSStt.FSState)
-    FileSystemState[path] = FStt.Hash;
+    for (const auto &[path, FStt]: FSStt.FSState)
+      FileSystemState[path] = FStt.Hash;
+  }
 } /* End of 'core::resources::tree::tree' function */
 
 /* Function to bild data from tree 

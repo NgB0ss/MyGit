@@ -7,6 +7,8 @@
 
 #include "branch.h"
 
+core::resources::branch core::resources::branch::CurrentBranch;
+
 /* Create branch by name
  * ARGUMENTS: 
  *   - Name of branch:
@@ -22,7 +24,7 @@ core::resources::branch::branch( const std::string &Branch )
   {
     Bytes = filesystem::ReadBranch(Branch);
   }
-  catch ( std::runtime_error &Err )
+  catch ( const std::runtime_error &Err )
   {
     IsDelegate = false;
   }

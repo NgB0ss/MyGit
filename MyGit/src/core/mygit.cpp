@@ -1,6 +1,6 @@
 /* FILE:        mygit.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.09.2026
+ * LAST UPDATE: 07.10.2026
  * PURPOSE:     Git project.
  *              Coordinator module executor.
  */
@@ -14,7 +14,7 @@
  *   - Array of strings from cmd (arguments):
  *       char* argv[];
  */
-core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv)
+core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv, std::filesystem::current_path())
 {
   Path = std::filesystem::current_path();
 } /* End of 'mygit' function */

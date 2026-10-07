@@ -25,10 +25,14 @@ namespace core
       inline static bool IsCurrentBrInit = false;    // Flag that help with init current branch
       static branch CurrentBranch;                   // Current branch that choosed (maybe can read from .mygit)
       crypto::hash CurrentCommitHash;                // Last commit hash
-      bool IsQueueInit = false;               // Flag that help with queueadd initialization
-      tree QueueAdd;                          // Queue added files (saved like tree of filesystem)
+      bool IsQueueInit = false;                      // Flag that help with queueadd initialization
+      tree QueueAdd = tree(TreeCtor::Default);       // Queue added files (saved like tree of filesystem)
 
     public:
+
+      /* Default branch ctor */
+      branch( void ) = default;
+
       /* Create branch by name
        * ARGUMENTS: 
        *   - Name of branch:

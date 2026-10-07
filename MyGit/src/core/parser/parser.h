@@ -1,6 +1,6 @@
 /* FILE:        parser.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 15.09.2026
+ * LAST UPDATE: 07.10.2026
  * PURPOSE:     Git project
  *              Parser consalidator file
  */
@@ -18,6 +18,8 @@ namespace core
   private:
     int argc;     // Count of arguments from cmd
     char** argv; // Arguments from cmd
+    std::filesystem::path Current_Path; // Path here mygit was called
+
   public:
     /* Ctor of parser class
      * ARGUMENTS: 
@@ -25,22 +27,31 @@ namespace core
      *       int argc;
      *   - Arguments from cmd:
      *       char* argv[];
+     *   - Current path:
+     *       std::filesystem::path Path;
      */
-    parser( int argc, char* argv[] ) : argc(argc), argv(argv)
+    parser( int argc, char* argv[], std::filesystem::path Path ) : argc(argc), argv(argv), Current_Path(Path)
     {
     } /* End of 'parser' fuction */
 
     ParsedCommand ParseLex( void )
     {
+      std::string Path;
       ParsedCommand Cmd;
 
       for (int i = 0; i < argc; i++)
       {
-        if (i == 2)
+        if (i == 0)
+          Path = argv[i];
+        if (i == 1)
           Cmd.FuncName = std::string(argv[i]);
         if (i >= 2)
           Cmd.Arguments.push_back(std::string(argv[i]));
       }
+
+      // Functions that need path in arguments
+      if (Cmd.FuncName == "init")
+        Cmd.Arguments.push_back(Current_Path.string());
 
       return Cmd;
     }  /* End of 'ParseLex' function */

@@ -16,7 +16,23 @@
  */
 void Init( std::string Path )
 {
+  std::filesystem::path CurrPath(Path);
+  
+  // Create all need dirrectories
+  CurrPath = CurrPath / ".mygit";
+  std::filesystem::create_directories(CurrPath);
+  CurrPath = CurrPath / "objects" / "trees";
+  std::filesystem::create_directories(CurrPath);
+  CurrPath = CurrPath.parent_path() / "blobs";
+  std::filesystem::create_directories(CurrPath);
+  CurrPath = CurrPath.parent_path().parent_path() / "branches";
+  std::filesystem::create_directories(CurrPath);
+  CurrPath = CurrPath.parent_path() / "CurrentBranch";
+  std::ofstream File(CurrPath);
 
+  if (!File.is_open())
+    throw(std::runtime_error("File of current branch cant be openned"));
+  File.write("main", 4);
 } /* End of 'Init' function */
 
 /*** ADAPTER TO FUNCTION ***/

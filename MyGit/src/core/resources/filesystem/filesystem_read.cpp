@@ -122,48 +122,11 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
     std::string message = "File of branch is not find" + Branch;
     throw std::runtime_error(message);
   }
+  std::string DataStr;
+  std::vector<uint8_t> Data;
 
-  // Get hash of branch
-  std::string HashBranch;
-  std::getline(File, HashBranch);
-  
-  // Get end of file and read hash of last commit 
-  File.seekg(0, std::ios::end);
-  std::streampos fileSize = File.tellg();
-
-  if (fileSize == 0)
-  {
-    std::string message = "File is empty" + Branch;
-    throw std::runtime_error(message);
-  }
-
-  std::streamoff lastLineStart = 0;
-  for (std::streamoff offset = 2; offset <= fileSize; offset++)
-  {
-    File.seekg(-offset, std::ios::end);
-    char ch;
-
-    File.get(ch);
-    if (ch == '\n')
-    {
-      lastLineStart = File.tellg(); 
-      break;
-    }
-  }
-
-  File.seekg(lastLineStart);
-  std::string CommitHashStr;
-  std::vector<uint8_t> Data(BYTES_HASH * 2);
-
-  File.read(&CommitHashStr.data()[0], BYTES_HASH);
-
-  // Write hash branch to data
-  for (int i = 0; i < BYTES_HASH; i++)
-    Data[i] = HashBranch[i];
-
-  // Write hash last commit to data
-  for (int i = BYTES_HASH; i < BYTES_HASH * 2; i++)
-    Data[i] = CommitHashStr[i - BYTES_HASH];
+  std::getline(File, DataStr);
+  Data.insert(Data.begin(), DataStr.begin(), DataStr.end());
   return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
 
@@ -180,16 +143,13 @@ std::string core::filesystem::ReadCurrBranchName( void )
   //    CurrentBranch
   //    ...
   static fs::path Path = fs::current_path() / ".mygit" / "CurrentBranch";
-  std::ifstream File(Path, std::ios::ate);
+  std::ifstream File(Path);
 
   if (!File.is_open())
     throw(std::runtime_error("Current branch cant be opened"));
   std::string NameBrnch;
-  std::size_t Size = File.tellg();
-
-  File.seekg(0);
-  NameBrnch.resize(Size);
-  File.read(NameBrnch.data(), Size);
+  
+  std::getline(File, NameBrnch);
   return NameBrnch;
 } /* End of 'core::filesystem::ReadCurrBranchName' function */
 

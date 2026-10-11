@@ -34,7 +34,8 @@ void Init( std::string Path )
 
   if (!File.is_open())
     throw(std::runtime_error("File of current branch cant be openned"));
-  File.write("main", 4);
+  File << "main\n";
+  File.close();
 
   // Create main branch in branches object
   core::resources::branch Main("main");

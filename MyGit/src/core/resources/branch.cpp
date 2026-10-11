@@ -44,7 +44,7 @@ core::resources::branch::branch( const std::string &Branch )
     }
     catch ( std::runtime_error Err )
     {
-      std::cout << Err.what();
+      std::cout << Err.what() << std::endl;
     }
 
   if (IsDelegate)
@@ -70,19 +70,25 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
   int AllCount = 0;
 
   for (auto cnt: Data)
-    if (Data[cnt] != ' ')
-      CurrBytes.push_back(Data[cnt]), AllCount = cnt;
+    if (cnt != ' ')
+      CurrBytes.push_back(cnt), AllCount++;
     else
       break;
-  NameBranch = reinterpret_cast<char *>(CurrBytes.data());
-  CurrBytes.insert(CurrBytes.begin(), Data.begin() + NameBranch.size(), Data.end());
+  NameBranch = std::string(CurrBytes.begin(), CurrBytes.end());
+  AllCount++;
+  CurrBytes.insert(CurrBytes.begin(),
+                   Data.begin() + NameBranch.size(),
+                   Data.begin() + NameBranch.size() + BYTES_HASH);
   CurrentCommitHash = crypto::hash(CurrBytes);
   CurrBytes.clear();
   AllCount += 32 + 1;
   IsQueueInit = Data[AllCount];
   
-  CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
-  QueueAdd = tree(CurrBytes);
+  if (IsQueueInit)
+  {
+    CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
+    QueueAdd = tree(CurrBytes);
+  }
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Function to get current branch 
@@ -123,7 +129,9 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
   std::array<uint8_t, BYTES_HASH> BytesCurrCommit = CurrentCommitHash.GetHash();
 
   QueueDt = QueueAdd.DataFromTree();
-  Data.insert(Data.begin(), BytesCurrCommit.begin(), BytesCurrCommit.end());
+  Data.insert(Data.begin(), NameBranch.begin(), NameBranch.end());
+  Data.push_back(' ');
+  Data.insert(Data.end(), BytesCurrCommit.begin(), BytesCurrCommit.end());
   Data.push_back(' ');
   Data.push_back(IsQueueInit);
   Data.push_back(' ');

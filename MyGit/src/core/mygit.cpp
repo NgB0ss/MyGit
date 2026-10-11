@@ -1,6 +1,6 @@
 /* FILE:        mygit.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 07.10.2026
+ * LAST UPDATE: 10.10.2026
  * PURPOSE:     Git project.
  *              Coordinator module executor.
  */
@@ -26,7 +26,14 @@ core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv, std::filesyste
 void core::mygit::RunSession( void )
 {
   // Parser arguments and choose executor function
-  executor_core::ChooseFunc(ParseLex());
+  try
+  {
+    executor_core::ChooseFunc(ParseLex());
+  }
+  catch ( std::runtime_error Err )
+  {
+    std::cout << Err.what();
+  }
 } /* End of 'RunSession' function */
 
 /* END OF 'mygit.cpp' FILE */

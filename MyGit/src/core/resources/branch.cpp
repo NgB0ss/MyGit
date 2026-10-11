@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 07.10.2026
+ * LAST UPDATE: 10.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -20,6 +20,8 @@ core::resources::branch::branch( const std::string &Branch )
   std::vector<uint8_t> Bytes;
   bool IsDelegate = true;
 
+  NameBranch = Branch;
+
   try
   {
     Bytes = filesystem::ReadBranch(Branch);
@@ -28,6 +30,7 @@ core::resources::branch::branch( const std::string &Branch )
   {
     IsDelegate = false;
   }
+  
   // Delegate if we can
   if (IsDelegate)
     (*this) = branch(Bytes);
@@ -40,7 +43,11 @@ core::resources::branch::branch( const std::string &Branch )
   if (IsDelegate)
     return;
 
+  // Set current commit to zero bytes hash
   CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // ZERO_BYTES_BRNCH
+  
+  // Write new branch if ctor not delegated
+  filesystem::WriteBranch(NameBranch, FromBranchToData());
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -58,9 +65,11 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
       CurrBytes.push_back(Data[cnt]), AllCount = cnt;
     else
       break;
+  NameBranch = reinterpret_cast<char *>(CurrBytes.data());
+  CurrBytes.insert(CurrBytes.begin(), Data.begin() + NameBranch.size(), Data.end());
   CurrentCommitHash = crypto::hash(CurrBytes);
   CurrBytes.clear();
-  AllCount++;
+  AllCount += 32 + 1;
   IsQueueInit = Data[AllCount];
   
   CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
@@ -86,6 +95,7 @@ core::resources::branch& core::resources::branch::GetCurrentBranch( void )
 void core::resources::branch::SwapCurrentBranch( const branch &NewCurrBr )
 {
   CurrentBranch = NewCurrBr;
+  filesystem::WriteCurrBranchName(NewCurrBr.NameBranch);
 } /* End of 'core::resources::branch::SwapCurrentBranch' fucntion */
 
 /* Function to get data by branch

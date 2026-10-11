@@ -24,6 +24,7 @@ namespace core
     private:
       inline static bool IsCurrentBrInit = false;    // Flag that help with init current branch
       static branch CurrentBranch;                   // Current branch that choosed (maybe can read from .mygit)
+      std::string NameBranch;                        // Name of branch
       crypto::hash CurrentCommitHash;                // Last commit hash
       bool IsQueueInit = false;                      // Flag that help with queueadd initialization
       tree QueueAdd = tree(TreeCtor::Default);       // Queue added files (saved like tree of filesystem)
@@ -60,7 +61,7 @@ namespace core
        *       const branch &NewCurrBr;
        * RETURNS: None.
        */
-      void SwapCurrentBranch( const branch &NewCurrBr );
+      static void SwapCurrentBranch( const branch &NewCurrBr );
 
       /* Function to get data by branch
        * ARGUMENTS: None.

@@ -1,6 +1,6 @@
 /* FILE:        executor.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.09.2026
+ * LAST UPDATE: 10.10.2026
  * PURPOSE:     Git project
  *              Executor executor file.
  */
@@ -16,7 +16,14 @@
  */
 void executor_core::ChooseFunc( core::ParsedCommand Cmd )
 {
-  command Command = FunctionPool.GetPool().find(Cmd.FuncName)->second; // Get command 
+  // Get command 
+  auto Pair = FunctionPool.GetPool().find(Cmd.FuncName);
+
+  if (Pair == FunctionPool.GetPool().end())
+    throw(std::runtime_error("Not find that function -> see help"));
+  command Command = FunctionPool.GetPool().find(Cmd.FuncName)->second; 
+
+
   std::vector<ArgumentValue> Args;                            // Get value of arguments
 
   // Parsing string arguments to correct-type arguments

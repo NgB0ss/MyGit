@@ -84,6 +84,15 @@
     <ClCompile Include="src\utils\utils.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\executor\mygit_add.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\executor\mygit_brnch_choose.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\executor\mygit_commit.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">

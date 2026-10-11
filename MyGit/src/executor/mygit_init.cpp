@@ -28,11 +28,17 @@ void Init( std::string Path )
   CurrPath = CurrPath.parent_path().parent_path() / "branches";
   std::filesystem::create_directories(CurrPath);
   CurrPath = CurrPath.parent_path() / "CurrentBranch";
+  
+  // Create current branch file
   std::ofstream File(CurrPath);
 
   if (!File.is_open())
     throw(std::runtime_error("File of current branch cant be openned"));
   File.write("main", 4);
+
+  // Create main branch in branches object
+  core::resources::branch Main("main");
+
 } /* End of 'Init' function */
 
 /*** ADAPTER TO FUNCTION ***/

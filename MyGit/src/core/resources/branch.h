@@ -11,7 +11,7 @@
 #include "commit.h"
 
 // Brnch that created by 0 bytes
-#define ZERO_BYTE_BRNCH core::crypto::hash(e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855)
+#define ZERO_BYTES_HASH core::crypto::hash::FromStrToHash("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
 // Main core mygit namespace
 namespace core
 {

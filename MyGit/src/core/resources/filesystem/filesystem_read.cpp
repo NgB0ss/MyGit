@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 06.10.2026
+ * LAST UPDATE: 10.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -17,7 +17,7 @@
 std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
   static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / "objects" / "blobs" / Hash.GetStrHash();
+  fs::path FilePath = Path / ".mygit" / "objects" / "blobs" / Hash.GetStrHash();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
@@ -44,7 +44,7 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
     {
   static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / "objects" / "trees" / Hash.GetStrHash();
+  fs::path FilePath = Path / ".mygit" / "objects" / "trees" / Hash.GetStrHash();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
@@ -73,7 +73,7 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
 std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, const crypto::hash &Hash )
 {
   static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / "branches" / Branch / ".brnch";
+  fs::path FilePath = Path / ".mygit" / "branches" / Branch / ".brnch";
   std::ifstream File(FilePath, std::ios::in | std::ios::binary);
 
   if (!File.is_open())
@@ -113,8 +113,8 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
 std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 {
   static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / "branches" / Branch;
-  std::ifstream File(FilePath, std::ios::in | std::ios::binary);
+  fs::path FilePath = Path / ".mygit" / "branches" / Branch;
+  std::ifstream File(FilePath);
 
   // Open file
   if (!File.is_open())

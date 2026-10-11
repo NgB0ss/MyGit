@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 06.10.2026
+ * LAST UPDATE: 10.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -19,7 +19,7 @@
 bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
   static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
-  fs::path folder_path = path / "objects" / "blobs" / Hash.GetStrHash().substr(0, 2);
+  fs::path folder_path = path / ".mygit" / "objects" / "blobs" / Hash.GetStrHash().substr(0, 2);
 
   fs::create_directories(folder_path);
   fs::path file_path = folder_path / Hash.GetStrHash();
@@ -45,7 +45,7 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
 bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
   static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
-  fs::path folder_path = path / "objects" / "trees" / Hash.GetStrHash().substr(0, 2);
+  fs::path folder_path = path / ".mygit" / "objects" / "trees" / Hash.GetStrHash().substr(0, 2);
 
   fs::create_directories(folder_path);
   fs::path file_path = folder_path / Hash.GetStrHash();
@@ -71,7 +71,7 @@ bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<ui
 bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
   static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
-  fs::path folder_path = path / "branches";
+  fs::path folder_path = path / ".mygit" / "branches";
 
   fs::create_directories(folder_path);
   fs::path file_path = folder_path / Branch;
@@ -97,11 +97,11 @@ bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector
 bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
   static fs::path path = std::filesystem::current_path();  // Get dirrectory where we need .mygit
-  fs::path folder_path = path / "branches";
+  fs::path folder_path = path / ".mygit" / "branches";
 
   fs::create_directories(folder_path);
   fs::path file_path = folder_path / Branch;
-  std::ofstream file(file_path, std::ios::binary);
+  std::ofstream file(file_path);
 
   if (!file.is_open())
     return false;

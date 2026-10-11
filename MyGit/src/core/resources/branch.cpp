@@ -38,7 +38,14 @@ core::resources::branch::branch( const std::string &Branch )
   if (!IsCurrentBrInit)
     // Read name of current branch from .mygit
     // Create current branch
-    CurrentBranch = branch(filesystem::ReadBranch(filesystem::ReadCurrBranchName()));
+    try
+    {
+      CurrentBranch = branch(filesystem::ReadBranch(filesystem::ReadCurrBranchName()));
+    }
+    catch ( std::runtime_error Err )
+    {
+      std::cout << Err.what();
+    }
 
   if (IsDelegate)
     return;
@@ -47,7 +54,9 @@ core::resources::branch::branch( const std::string &Branch )
   CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // ZERO_BYTES_BRNCH
   
   // Write new branch if ctor not delegated
-  filesystem::WriteBranch(NameBranch, FromBranchToData());
+  if (filesystem::WriteBranch(NameBranch, FromBranchToData()))
+    std::cout << "Branch successfull create -> " << NameBranch << std::endl;
+    
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -108,11 +117,13 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
   /* How branch wiil be saved in bytes?:
    *   - In default sequence field:
    *       (CurrentCommitHash) (IsQeueAddInit) (QueueData <- Watch in tree decoder)
+   * COMMITS WILL BE WRITE AFTER BRANCH INFO
    */
   std::vector<uint8_t> Data, QueueDt;
+  std::array<uint8_t, BYTES_HASH> BytesCurrCommit = CurrentCommitHash.GetHash();
 
   QueueDt = QueueAdd.DataFromTree();
-  Data.insert(Data.begin(), CurrentCommitHash.GetHash().begin(), CurrentCommitHash.GetHash().end());
+  Data.insert(Data.begin(), BytesCurrCommit.begin(), BytesCurrCommit.end());
   Data.push_back(' ');
   Data.push_back(IsQueueInit);
   Data.push_back(' ');

@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 11.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -152,6 +152,21 @@ std::string core::filesystem::ReadCurrBranchName( void )
   std::getline(File, NameBrnch);
   return NameBrnch;
 } /* End of 'core::filesystem::ReadCurrBranchName' function */
+
+/* Function to check saved branch before or no 
+ * ARGUMENTS: 
+ *   - Name of branch to need check:
+ *       std::string NameBranch;
+ * RETURNS:
+ *   (bool) Is saved before or no.
+ */
+bool core::filesystem::IsBranchSavedBf( std::string NameBranch )
+{
+  static fs::path Path = fs::current_path();
+
+  Path = Path / ".mygit" / "branches" / NameBranch;
+  return fs::exists(Path);
+} /* End of 'core::filesystem::IsBranchSavedBf' function */
 
 /* Function to read file data
  * ARGUMENTS:

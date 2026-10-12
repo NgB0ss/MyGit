@@ -170,6 +170,15 @@ namespace core
      *   (std::string) Current branch.
      */
     std::string ReadCurrBranchName( void );
+
+    /* Function to check saved branch before or no 
+     * ARGUMENTS: 
+     *   - Name of branch to need check:
+     *       std::string NameBranch;
+     * RETURNS:
+     *   (bool) Is saved before or no.
+     */
+    bool IsBranchSavedBf( std::string NameBranch );
   }  /* end of 'filesystem' namespace */
 } /* end of 'core' namespace */
 

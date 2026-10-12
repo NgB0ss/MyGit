@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 06.10.2026
+ * LAST UPDATE: 12.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -29,6 +29,13 @@ namespace core
       bool IsQueueInit = false;                      // Flag that help with queueadd initialization
       tree QueueAdd = tree(TreeCtor::Default);       // Queue added files (saved like tree of filesystem)
 
+      /* Function to get data by branch
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (std::vector<uint8_t>) Data in bytes.
+       */
+      std::vector<uint8_t> FromBranchToData( void );
+
     public:
 
       /* Default branch ctor */
@@ -55,6 +62,12 @@ namespace core
        */
       branch& GetCurrentBranch( void );
 
+      /* Function to save branch in filesystem
+       * ARGUMENTS: None.
+       * RETURNS: None.
+       */
+      void SaveBranch( void );
+
       /* Swap current branch function 
        * ARGUMENTS:
        *   - Branch to swap:
@@ -62,13 +75,6 @@ namespace core
        * RETURNS: None.
        */
       static void SwapCurrentBranch( const branch &NewCurrBr );
-
-      /* Function to get data by branch
-       * ARGUMENTS: None.
-       * RETURNS: 
-       *   (std::vector<uint8_t>) Data in bytes.
-       */
-      std::vector<uint8_t> FromBranchToData( void );
     }; /* End of 'branch' class */
   }  /* end of 'resources' namespace */
 } /* end of 'core' namespace */

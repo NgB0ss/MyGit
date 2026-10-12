@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 11.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -54,9 +54,8 @@ core::resources::branch::branch( const std::string &Branch )
   CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // ZERO_BYTES_BRNCH
   
   // Write new branch if ctor not delegated
-  if (filesystem::WriteBranch(NameBranch, FromBranchToData()))
-    std::cout << "Branch successfull create -> " << NameBranch << std::endl;
-    
+  try { SaveBranch(); }
+  catch ( std::runtime_error Err ) { std::cout << Err.what(); }
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -87,7 +86,7 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
   if (IsQueueInit)
   {
     CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
-    QueueAdd = tree(CurrBytes);
+    QueueAdd = tree(filesystem::ReadTree(crypto::hash(CurrBytes)));
   }
 } /* End of 'core::resources::branch::branch' fucntion */
 
@@ -122,22 +121,45 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
 {
   /* How branch wiil be saved in bytes?:
    *   - In default sequence field:
-   *       (CurrentCommitHash) (IsQeueAddInit) (QueueData <- Watch in tree decoder)
+   *       (CurrentCommitHash) (IsQeueAddInit) (QueueHash)
    * COMMITS WILL BE WRITE AFTER BRANCH INFO
    */
   std::vector<uint8_t> Data, QueueDt;
   std::array<uint8_t, BYTES_HASH> BytesCurrCommit = CurrentCommitHash.GetHash();
 
   QueueDt = QueueAdd.DataFromTree();
+  crypto::hash HashIndex(QueueDt);
+  std::string HashStr = HashIndex.GetStrHash();
+
   Data.insert(Data.begin(), NameBranch.begin(), NameBranch.end());
   Data.push_back(' ');
   Data.insert(Data.end(), BytesCurrCommit.begin(), BytesCurrCommit.end());
   Data.push_back(' ');
   Data.push_back(IsQueueInit);
   Data.push_back(' ');
-  Data.insert(Data.end(), QueueDt.begin(), QueueDt.end());
+  Data.insert(Data.end(), HashStr.begin(), HashStr.end());
   return Data;
 } /* End of 'core::resources::branch::FromBranchToData' fucntion */
+
+/* Function to save branch in filesystem
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+void core::resources::branch::SaveBranch( void )
+{
+  std::vector<uint8_t> BytesBrnch = FromBranchToData();
+
+  if (IsQueueInit)
+  {
+    std::vector<uint8_t> QueueData = QueueAdd.DataFromTree();
+
+    if (!filesystem::WriteTree(crypto::hash(QueueData), QueueData))
+      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit"));
+  }
+
+  if (!filesystem::WriteBranch(NameBranch, BytesBrnch))
+    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm"));
+} /* End of 'core::resources::branch::SaveBranch' function */
 
 
 /* END OF 'branch.cpp' FILE */

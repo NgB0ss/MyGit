@@ -124,7 +124,7 @@ void core::filesystem::WriteCurrBranchName( std::string NewName )
   std::ofstream File(Path);
 
   if (!File.is_open())
-    throw(std::runtime_error("File of current branch cant be created"));
+    throw(std::runtime_error("File of current branch cant be opened"));
   File.write(NewName.data(), NewName.size());
 } /* End of 'core::filesystem::WriteCurrBarnchName' function */
 
@@ -142,10 +142,7 @@ bool core::filesystem::WriteFileData( const std::string &Path, const std::vector
   std::ofstream File(Path, std::ios::binary);
 
   if (!File.is_open())
-  {
-    std::runtime_error Err(Path);
-    throw(Err);
-  }
+    return false;
   File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
   return true;
 } /* End of 'core::filesystem::WriteFileData' function */

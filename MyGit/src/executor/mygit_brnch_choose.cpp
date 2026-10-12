@@ -1,6 +1,6 @@
 /* FILE:        mygit_brnch_choose.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 11.10.2026
  * PURPOSE:     Git project
  *              Mygit brnch choose functions 
  */
@@ -11,6 +11,12 @@
 
 void ChooseBranch( std::string NewBranchStr )
 {
+  if (!core::filesystem::IsBranchSavedBf(NewBranchStr))
+  {
+    std::cout << "Branch not created before -> cant be choose " << NewBranchStr << std::endl;
+    return;
+  }
+
   try
   {
     core::resources::branch NewBranch(NewBranchStr);

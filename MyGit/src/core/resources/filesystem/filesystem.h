@@ -1,6 +1,6 @@
 /* FILE:        filesystem.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 06.10.2026
+ * LAST UPDATE: 13.10.2026
  * PURPOSE:     Git project.
  *              Filesystem main file - physic save resources
  */
@@ -20,6 +20,11 @@ namespace core
 
   namespace filesystem
   {
+    // HARDCODE PATH SAVE
+    inline const fs::path BRANCH_PATH = fs::current_path() / ".mygit" / "branches";
+    inline const fs::path BLOBS_OBJ_PATH = fs::current_path() / ".mygit" / "objects" / "blobs";
+    inline const fs::path TREES_OBJ_PATH = fs::current_path() / ".mygit" / "objects" / "trees";
+
     struct FileState
     {
       uintmax_t Size;         // Size of file

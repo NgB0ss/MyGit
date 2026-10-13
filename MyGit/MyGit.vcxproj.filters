@@ -96,6 +96,9 @@
     <ClCompile Include="src\executor\mygit_brnch_create.cpp">
       <Filter>Source Files\Executor</Filter>
     </ClCompile>
+    <ClCompile Include="src\executor\mygit_brnch_branches.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">

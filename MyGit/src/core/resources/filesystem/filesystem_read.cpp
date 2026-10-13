@@ -16,8 +16,7 @@
  */
 std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
-  static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / ".mygit" / "objects" / "blobs" / Hash.GetStrHash();
+  fs::path FilePath = BLOBS_OBJ_PATH / Hash.GetStrHash();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
@@ -42,9 +41,8 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
  *  (std::vector<uint8_t>) Data of tree.
  */
 std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
-    {
-  static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / ".mygit" / "objects" / "trees" / Hash.GetStrHash();
+{
+  fs::path FilePath = TREES_OBJ_PATH / Hash.GetStrHash();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
@@ -72,8 +70,7 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
  */
 std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, const crypto::hash &Hash )
 {
-  static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / ".mygit" / "branches" / Branch / ".brnch";
+  fs::path FilePath = BRANCH_PATH / Branch / ".brnch";
   std::ifstream File(FilePath, std::ios::in | std::ios::binary);
 
   if (!File.is_open())
@@ -112,8 +109,7 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
  */
 std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
 {
-  static fs::path Path = fs::current_path();
-  fs::path FilePath = Path / ".mygit" / "branches" / Branch;
+  fs::path FilePath = BRANCH_PATH / Branch;
   std::ifstream File(FilePath);
 
   // Open file
@@ -148,7 +144,7 @@ std::string core::filesystem::ReadCurrBranchName( void )
   if (!File.is_open())
     throw(std::runtime_error("Current branch cant be opened"));
   std::string NameBrnch;
-  
+
   std::getline(File, NameBrnch);
   return NameBrnch;
 } /* End of 'core::filesystem::ReadCurrBranchName' function */
@@ -162,9 +158,7 @@ std::string core::filesystem::ReadCurrBranchName( void )
  */
 bool core::filesystem::IsBranchSavedBf( std::string NameBranch )
 {
-  static fs::path Path = fs::current_path();
-
-  Path = Path / ".mygit" / "branches" / NameBranch;
+  fs::path Path = BRANCH_PATH / NameBranch;
   return fs::exists(Path);
 } /* End of 'core::filesystem::IsBranchSavedBf' function */
 
@@ -207,10 +201,10 @@ std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
 {
   FileSystemState FSStt;
-  
+
   fs::path MainPath = fs::current_path();  // Get path where mygit called
   MainPath = MainPath.parent_path();       // Get parrent of dirrectory where be .mygit
-  
+
   // Recursive dirrectory itt to write all dirrectories to FileSystemState
   for (auto entry: fs::recursive_directory_iterator(MainPath))
     if (fs::is_regular_file(entry))
@@ -221,7 +215,7 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
       FSt.Size = fs::file_size(entry);
       std::vector<uint8_t> Data;
       std::ifstream File(Path, std::ios::binary);
-      
+
       if (!File.is_open())
         throw(std::runtime_error("File cant be opened"));
 

@@ -50,7 +50,7 @@ namespace core
       }
 
       // Functions that need path in arguments
-      if (Cmd.FuncName == "init")
+      if (Cmd.FuncName == "init" || Cmd.FuncName == "branches")
         Cmd.Arguments.push_back(Current_Path.string());
 
       return Cmd;

@@ -1,6 +1,6 @@
 /* FILE:        cryptography.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.09.2026
+ * LAST UPDATE: 16.10.2026
  * PURPOSE:     Git project.
  *              Cryptography consalidator module.
  */
@@ -11,7 +11,7 @@
 #include "def.h"
 #include <openssl/evp.h>
 
-#define BYTES_HASH 32
+#define BYTES_HASH 64
 
 // Main core namespace
 namespace core
@@ -22,9 +22,6 @@ namespace core
     class hash
     {
     private:
-      bool IsStrinCalc = false;                // Flag is string calculated
-
-      std::string HashInString;                 // Hash in string
       std::array<uint8_t, BYTES_HASH> Bytes;   // Hash bytes
     public:
       
@@ -55,7 +52,7 @@ namespace core
        * RETURNS:
        *   (std::array<uint8_t, BYTES_HASH>) Hash.
        */
-      std::array<uint8_t, BYTES_HASH> GetHash( void ) const;
+      std::array<uint8_t, BYTES_HASH> bytes( void ) const;
 
       /* Get string from hash class
        * ARGUMENTS: 
@@ -71,7 +68,7 @@ namespace core
        * RETURNS:
        *   (std::string) Hash in string.
        */
-      std::string GetStrHash( void ) const;
+      std::string string( void ) const;
     }; /* End of 'hash' class */
   } /* end of 'crypto' namespace */
 } /* end of 'core' namespace */

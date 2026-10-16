@@ -21,6 +21,7 @@ namespace core
   namespace filesystem
   {
     // HARDCODE PATH SAVE
+    inline const fs::path MYGIT_PATH = fs::current_path() / ".mygit";
     inline const fs::path BRANCH_PATH = fs::current_path() / ".mygit" / "branches";
     inline const fs::path BLOBS_OBJ_PATH = fs::current_path() / ".mygit" / "objects" / "blobs";
     inline const fs::path TREES_OBJ_PATH = fs::current_path() / ".mygit" / "objects" / "trees";

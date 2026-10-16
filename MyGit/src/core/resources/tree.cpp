@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 29.09.2026
+ * LAST UPDATE: 16.10.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -14,13 +14,19 @@
  */
 core::resources::tree::tree( TreeCtor Type )
 {
-  if (Type == TreeCtor::BySystem)
+  if (Type == TreeCtor::BySystem)  // Ctor by system
   {
     filesystem::FileSystemState FSStt = filesystem::ReadFileSystem();
 
     for (const auto &[path, FStt]: FSStt.FSState)
       FileSystemState[path] = FStt.Hash;
+    // Create blobs by tree that not created
+    for (const auto &[path, hash]: FileSystemState)
+      if (!filesystem::WriteBlob(hash, blob(path).DataFromBlob()))
+        std::cout << "Blob cant be writed " << hash.string() << std::endl;
   }
+  else  // Ctor default
+    *this = tree();
 } /* End of 'core::resources::tree::tree' function */
 
 /* Function to bild data from tree 
@@ -106,7 +112,7 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void )
     std::string OnePair = path;
 
     OnePair += "**";
-    OnePair += hash.GetStrHash();
+    OnePair += hash.string();
     OnePair += "\n";
     // Write pair to Data
     for (int i = 0; pointer < OnePair.size(); pointer++)

@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 12.10.2026
+ * LAST UPDATE: 16.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -23,7 +23,7 @@ namespace core
     {
     private:
       inline static bool IsCurrentBrInit = false;    // Flag that help with init current branch
-      static branch CurrentBranch;                   // Current branch that choosed (maybe can read from .mygit)
+      static branch CurrentBranch;            // Current branch that choosed (maybe can read from .mygit)
       std::string NameBranch;                        // Name of branch
       crypto::hash CurrentCommitHash;                // Last commit hash
       bool IsQueueInit = false;                      // Flag that help with queueadd initialization
@@ -55,18 +55,26 @@ namespace core
        */
       branch( const std::vector<uint8_t> &Data );
 
-      /* Function to get current branch 
-       * ARGUMENTS: None.
-       * RETURNS: 
-       *   (branch) Current branch
+      /* Function to apply tree to branch
+       * ARGUMENTS: 
+       *   - Tree to apply to branch:
+       *       const tree &NewTree;
+       * RETURNS: None.
        */
-      branch& GetCurrentBranch( void );
+      void ApplyTree( const tree &NewTRee );
 
       /* Function to save branch in filesystem
        * ARGUMENTS: None.
        * RETURNS: None.
        */
       void SaveBranch( void );
+
+      /* Function to get current branch 
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (branch) Current branch
+       */
+      static branch& GetCurrentBranch( void );
 
       /* Swap current branch function 
        * ARGUMENTS:

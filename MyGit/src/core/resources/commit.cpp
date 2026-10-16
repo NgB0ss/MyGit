@@ -17,7 +17,7 @@ core::resources::commit::commit( const std::vector<uint8_t> &Data )
   int CurrPos = 0;
   
   for (CurrPos; CurrPos < BYTES_HASH; CurrPos++)
-    Parent.GetHash()[CurrPos] = Data[CurrPos];
+    Parent.bytes()[CurrPos] = Data[CurrPos];
   CurrPos++;
   // Write time
   std::string TimeStr;
@@ -37,7 +37,7 @@ core::resources::commit::commit( const std::vector<uint8_t> &Data )
   CurrPos++;
   // Write tree hash
   for (int i = 0; CurrPos < CurrPos + BYTES_HASH; CurrPos++)
-    Tree.GetHash()[i] = Data[CurrPos];
+    Tree.bytes()[i] = Data[CurrPos];
 } /* End of 'core::resources::commit::commit' fucntion */
 
 /* Ctor by all data of resource
@@ -145,7 +145,7 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   // Write hash 
   Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + 16 + 4); // 16 Symbols - time without time zone and 4 for spaces
   for (CurrPos; CurrPos < BYTES_HASH; CurrPos++)
-    Data[CurrPos] = Parent.GetHash()[CurrPos];
+    Data[CurrPos] = Parent.bytes()[CurrPos];
   Data[CurrPos++] = ' ';
   // Write time
   std::string TimeStr = std::format("{:%Y-%m-%d %H %M}", Time);
@@ -162,7 +162,7 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   Data[CurrPos++] = ' ';
   // Write tree hash
   for (int i = 0; CurrPos < CurrPos + BYTES_HASH; CurrPos++)
-    Data[CurrPos] = Tree.GetHash()[i];
+    Data[CurrPos] = Tree.bytes()[i];
   
   return Data;
 } /* End of 'core::resources::commit::DataFromCommit' function */

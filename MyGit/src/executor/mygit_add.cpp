@@ -11,7 +11,14 @@
 
 void Add( std::string ArgAdd )
 {
-
+  if (ArgAdd == ".")  // Add all in this repo
+  {
+    core::resources::tree CurrTree(core::resources::TreeCtor::BySystem);
+    core::resources::branch CurrBranch = core::resources::branch::GetCurrentBranch();
+    
+    CurrBranch.ApplyTree(CurrTree);
+    CurrBranch.SaveBranch();
+  }
 }
 
 /*** ADAPTER TO FUNCTION ***/

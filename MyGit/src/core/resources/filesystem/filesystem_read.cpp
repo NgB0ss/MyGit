@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 11.10.2026
+ * LAST UPDATE: 16.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -16,12 +16,12 @@
  */
 std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
-  fs::path FilePath = BLOBS_OBJ_PATH / Hash.GetStrHash();
+  fs::path FilePath = BLOBS_OBJ_PATH / Hash.string();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
   {
-    std::string message = "File of blob is not find" + Hash.GetStrHash();
+    std::string message = "File of blob is not find" + Hash.string();
     throw std::runtime_error(message);
   }
 
@@ -42,12 +42,12 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
  */
 std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
 {
-  fs::path FilePath = TREES_OBJ_PATH / Hash.GetStrHash();
+  fs::path FilePath = TREES_OBJ_PATH / Hash.string();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())
   {
-    std::string message = "File of tree is not find" + Hash.GetStrHash();
+    std::string message = "File of tree is not find" + Hash.string();
     throw std::runtime_error(message);
   }
 
@@ -83,7 +83,7 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
   std::string CurrHash(BYTES_HASH, '\0');
 
   File.read(&CurrHash[0], BYTES_HASH);
-  while (CurrHash != Hash.GetStrHash())
+  while (CurrHash != Hash.string())
   {
     File.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     File.read(&CurrHash[0], BYTES_HASH);
@@ -189,6 +189,8 @@ std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 
   // Read data
   std::vector<uint8_t> Data;
+
+  Data.resize(Size);
   File.read(reinterpret_cast<char *>(Data.data()), Size);
   return Data;
 } /* End of 'core::filesystem:ReadFileData' function */
@@ -203,11 +205,10 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
   FileSystemState FSStt;
 
   fs::path MainPath = fs::current_path();  // Get path where mygit called
-  MainPath = MainPath.parent_path();       // Get parrent of dirrectory where be .mygit
 
   // Recursive dirrectory itt to write all dirrectories to FileSystemState
   for (auto entry: fs::recursive_directory_iterator(MainPath))
-    if (fs::is_regular_file(entry))
+    if (fs::is_regular_file(entry) && entry.path().string().find(".mygit") == -1)
     {
       std::string Path = entry.path().string();
       FileState FSt;
@@ -221,7 +222,9 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
 
       Data.resize(FSt.Size);
       File.read(reinterpret_cast<char *>(Data.data()), FSt.Size);
-      FSt.Hash = crypto::hash(Data);
+      core::crypto::hash Hash(Data);
+
+      FSt.Hash = Hash;
       FSStt.FSState.insert(std::pair<std::string, FileState> (Path, FSt));
     }
 

@@ -15,6 +15,7 @@
 core::crypto::hash::hash( const std::vector<uint8_t> &BytesData )
 {
   unsigned int HashLen = 0;
+  std::array<uint8_t, BYTES_HASH / 2> HashData;
   std::unique_ptr<EVP_MD_CTX, void(*)(EVP_MD_CTX*)> mdctx(EVP_MD_CTX_new(), EVP_MD_CTX_free);
 
   // Check by is be context of hash maker or no
@@ -30,8 +31,19 @@ core::crypto::hash::hash( const std::vector<uint8_t> &BytesData )
      throw std::runtime_error("Error send to hash data");
 
    // Write data of hash to hash class
-   if (EVP_DigestFinal_ex(mdctx.get(), Bytes.data(), &HashLen) != 1)
+   if (EVP_DigestFinal_ex(mdctx.get(), HashData.data(), &HashLen) != 1)
         throw std::runtime_error("Error finalize hash");
+
+   // Transalte from 32 to 64 chars array
+   static const char hex_digits[] = "0123456789abcdef";
+
+   for (unsigned int i = 0; i < HashLen; ++i) 
+   {
+    uint8_t byte = HashData[i];
+    
+    Bytes[i * 2] = hex_digits[(byte >> 4) & 0x0F];
+    Bytes[i * 2 + 1] = hex_digits[byte & 0x0F];
+   }
 } /* End of 'core::crypto::hash::hash' function */
 
 /* Function to make from string - hash
@@ -48,12 +60,9 @@ core::crypto::hash core::crypto::hash::FromStrToHash( std::string DataStr )
   if (DataStr.size() != BYTES_HASH)
     return hash();
   else
-  {
     for (int i = 0; i < BYTES_HASH; i++)
-      Data.Bytes[0] = DataStr[i];
-    Data.HashInString = DataStr;
-    Data.IsStrinCalc = true;
-  }
+      Data.Bytes[i] = DataStr[i];
+
   return Data;
 } /* End of 'core::crypto::hash::FromStrToHash` fucntion */
 
@@ -62,23 +71,25 @@ core::crypto::hash core::crypto::hash::FromStrToHash( std::string DataStr )
  * RETURNS:
  *   (std::array<uint8_t, BYTES_HASH>) Hash.
  */
-std::array<uint8_t, BYTES_HASH> core::crypto::hash::GetHash( void )  const
+std::array<uint8_t, BYTES_HASH> core::crypto::hash::bytes( void ) const 
 {
   return Bytes;
-}  /* End of 'core::crypto::hash::GetHash' function */
+}  /* End of 'core::crypto::hash::bytes' function */
 
 /* Get string from hash class
  * ARGUMENTS: None.
  * RETURNS:
  *   (std::string) Hash in string.
  */
-std::string core::crypto::hash::GetStrHash( void ) const 
+std::string core::crypto::hash::string( void ) const
 {
-  if (IsStrinCalc)
-    return HashInString;
-  else
-    return std::string();
-} /* End of 'core::crypto::hash::GetStrHash' function */
+  std::string HashStr;
+
+  HashStr.resize(BYTES_HASH);
+  for (int i = 0; i < BYTES_HASH; i++)
+    HashStr[i] = Bytes[i];
+  return HashStr;
+} /* End of 'core::crypto::hash::string' function */
 
 /* Get string from hash class
  * ARGUMENTS: 

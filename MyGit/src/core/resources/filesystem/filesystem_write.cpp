@@ -18,10 +18,10 @@
  */
 bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
-  fs::path folder_path = BLOBS_OBJ_PATH / Hash.GetStrHash().substr(0, 2);
+  fs::path folder_path = BLOBS_OBJ_PATH / Hash.string().substr(0, 2);
 
   fs::create_directories(folder_path);
-  fs::path file_path = folder_path / Hash.GetStrHash();
+  fs::path file_path = folder_path / Hash.string();
   std::ofstream file(file_path, std::ios::binary);
 
   if (!file.is_open())
@@ -43,10 +43,10 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
  */
 bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<uint8_t> &Data )
 {
-  fs::path folder_path = TREES_OBJ_PATH / Hash.GetStrHash().substr(0, 2);
+  fs::path folder_path = TREES_OBJ_PATH / Hash.string().substr(0, 2);
 
   fs::create_directories(folder_path);
-  fs::path file_path = folder_path / Hash.GetStrHash();
+  fs::path file_path = folder_path / Hash.string();
   std::ofstream file(file_path, std::ios::binary);
 
   if (!file.is_open())

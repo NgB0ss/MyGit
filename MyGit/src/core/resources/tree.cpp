@@ -115,7 +115,7 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void )
     OnePair += hash.string();
     OnePair += "\n";
     // Write pair to Data
-    for (int i = 0; pointer < OnePair.size(); pointer++)
+    for (int i = 0; i < OnePair.size(); pointer++)
       Data[pointer] = OnePair[i++];
   }
   Data.shrink_to_fit();

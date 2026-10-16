@@ -85,7 +85,9 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
  */
 void core::resources::branch::ApplyTree( const core::resources::tree &NewTree )
 {
+  // Init queue
   QueueAdd = NewTree;
+  IsQueueInit = true;
 }
 
 /* Function to get current branch 

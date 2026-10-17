@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.10.2026
+ * LAST UPDATE: 18.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -88,7 +88,39 @@ void core::resources::branch::ApplyTree( const core::resources::tree &NewTree )
   // Init queue
   QueueAdd = NewTree;
   IsQueueInit = true;
-}
+} /* End of 'core::resources::branch::ApplyTree' function */
+
+/* Function to get tree from branch
+ * ARGUMENTS: None
+ * RETURNS: 
+ *   (tree *) Pointer to queue of branch
+ */
+core::resources::tree * core::resources::branch::GetTree( void )
+{
+  if (IsQueueInit)
+    return &QueueAdd;
+  return nullptr;
+} /* End of 'core::resources::branch::GetTree' function */
+
+/* Function to get last hash of commit 
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (crytpo::hash) Hash of parrent commit
+ */
+core::crypto::hash core::resources::branch::GetLastCmmtHash( void )
+{
+  return CurrentCommitHash;
+} /* End of 'core::resources::branch::GetLastCmmtHash' function */
+
+/* Function to get name of branch
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (std::string) Name of branch.
+ */
+std::string core::resources::branch::GetName( void )
+{
+  return NameBranch;
+} /* End of 'core::resources::branch::GetName' function */
 
 /* Function to get current branch 
  * ARGUMENTS: None.
@@ -106,6 +138,8 @@ core::resources::branch& core::resources::branch::GetCurrentBranch( void )
     catch ( std::runtime_error Err )
     {
       std::cout << Err.what() << std::endl;
+      // This error dont need catch, programm need be stopped
+      throw Err;
     }
   return CurrentBranch;
 } /* End of 'core::resources::branch::GetCurrentBranch' fucntion */

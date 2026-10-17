@@ -9,6 +9,12 @@
 #include "regs/registrator.h"
 #include "regs/function_pool.h"
 
+/* Function to add files to index (queue) 
+ * ARGUMENTS:
+ *   - Argument of add:
+ *       std::string ArgAdd;
+ * RETURNS: None.
+ */
 void Add( std::string ArgAdd )
 {
   if (ArgAdd == ".")  // Add all in this repo
@@ -19,7 +25,9 @@ void Add( std::string ArgAdd )
     CurrBranch.ApplyTree(CurrTree);
     CurrBranch.SaveBranch();
   }
-}
+  else
+    std::cout << "Not correct chooise operator of add -> see help" << std::endl;
+} /* End of 'Add' function */
 
 /*** ADAPTER TO FUNCTION ***/
 

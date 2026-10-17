@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.10.2026
+ * LAST UPDATE: 17.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -62,6 +62,13 @@ namespace core
        * RETURNS: None.
        */
       void ApplyTree( const tree &NewTRee );
+
+      /* Function to get tree from branch
+       * ARGUMENTS: None
+       * RETURNS: 
+       *   (tree *) Pointer to queue of branch
+       */
+      tree * GetTree( void );
 
       /* Function to save branch in filesystem
        * ARGUMENTS: None.

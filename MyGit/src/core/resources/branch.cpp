@@ -67,13 +67,16 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
                    Data.begin() + NameBranch.size() + BYTES_HASH);
   CurrentCommitHash = crypto::hash(CurrBytes);
   CurrBytes.clear();
-  AllCount += 32 + 1;
+  AllCount += BYTES_HASH + 1;
   IsQueueInit = Data[AllCount];
+  AllCount += 2;
   
   if (IsQueueInit)
   {
-    CurrBytes.insert(CurrBytes.begin(), (Data.begin() + AllCount), Data.end());
-    QueueAdd = tree(filesystem::ReadTree(crypto::hash(CurrBytes)));
+    std::string HashStr;
+
+    HashStr.insert(HashStr.begin() , (Data.begin() + AllCount), Data.end());
+    QueueAdd = tree(filesystem::ReadTree(crypto::hash::FromStrToHash(HashStr)));
   }
 } /* End of 'core::resources::branch::branch' fucntion */
 

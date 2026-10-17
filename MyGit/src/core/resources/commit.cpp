@@ -140,29 +140,29 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
    *     Without ()
    */
   std::vector<uint8_t> Data;
+  std::array<uint8_t, BYTES_HASH> CurrHash;
   int CurrPos = 0;
   
+  CurrHash = Parent.bytes();
   // Write hash 
   Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + 16 + 4); // 16 Symbols - time without time zone and 4 for spaces
-  for (CurrPos; CurrPos < BYTES_HASH; CurrPos++)
-    Data[CurrPos] = Parent.bytes()[CurrPos];
+  Data.insert(Data.begin(), CurrHash.begin(), CurrHash.end());
+  CurrPos += BYTES_HASH;
   Data[CurrPos++] = ' ';
   // Write time
   std::string TimeStr = std::format("{:%Y-%m-%d %H %M}", Time);
-  for (int i = 0; CurrPos < CurrPos + 16; CurrPos++)
-    Data[CurrPos] = TimeStr[i++];
+
+  Data.insert(Data.begin() + CurrPos, TimeStr.begin(), TimeStr.end());
+  CurrPos += TimeStr.size();
   Data[CurrPos++] = ' ';
-  // Write current position
-  for (int i = 0; CurrPos < CurrPos + Author.size(); CurrPos++)
-    Data[CurrPos] = Author[i++];
+  Data.insert(Data.begin() + CurrPos, Author.begin(), Author.end());
+  CurrPos += Author.size();
   Data[CurrPos++] = ' ';
-  // Write message
-  for (int i = 0; CurrPos < CurrPos + Message.size(); CurrPos++)
-    Data[CurrPos] = Message[i++];
+  Data.insert(Data.begin() + CurrPos, Message.begin(), Message.end());
+  CurrPos += Message.size();
   Data[CurrPos++] = ' ';
-  // Write tree hash
-  for (int i = 0; CurrPos < CurrPos + BYTES_HASH; CurrPos++)
-    Data[CurrPos] = Tree.bytes()[i];
+  CurrHash = Tree.bytes();
+  Data.insert(Data.begin() + CurrPos, CurrHash.begin(), CurrHash.end());
   
   return Data;
 } /* End of 'core::resources::commit::DataFromCommit' function */

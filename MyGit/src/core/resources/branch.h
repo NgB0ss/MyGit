@@ -70,6 +70,20 @@ namespace core
        */
       tree * GetTree( void );
 
+      /* Function to get last hash of commit 
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (crytpo::hash) Hash of parrent commit
+       */
+      crypto::hash GetLastCmmtHash( void );
+
+      /* Function to get name of branch
+       * ARGUMENTS: None.
+       * RETURNS:
+       *   (std::string) Name of branch.
+       */
+      std::string GetName( void );
+
       /* Function to save branch in filesystem
        * ARGUMENTS: None.
        * RETURNS: None.

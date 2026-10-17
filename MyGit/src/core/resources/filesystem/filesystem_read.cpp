@@ -42,7 +42,7 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
  */
 std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
 {
-  fs::path FilePath = TREES_OBJ_PATH / Hash.string();
+  fs::path FilePath = TREES_OBJ_PATH / Hash.string().substr(0, 2) / Hash.string();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())

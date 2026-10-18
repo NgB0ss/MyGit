@@ -78,6 +78,7 @@ bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector
     return false;
 
   // Write commit data
+  file << "\n";
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
   return true;
 } /* End of 'core::filesystem::WriteCommit' function */

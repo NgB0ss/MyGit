@@ -1,6 +1,6 @@
 /* FILE:        blob.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.09.2026
+ * LAST UPDATE: 18.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - blob.
  */
@@ -28,7 +28,7 @@ namespace core
        *   - File path:
        *       std::string Path;
        */
-      blob( std::string Path );
+      blob( const std::string &Path );
 
       /* Ctor blob by data, that read from blobs (physic)
        * ARGUMENTS:
@@ -37,28 +37,20 @@ namespace core
        */
       blob( const std::vector<uint8_t> &Data );
 
-      /* Function to apply blob to file
-       * ARGUMENTS:
-       *   - Path to file:
-       *       std::string Path;
-       * RETURNS: None.
-       */
-      void Apply( std::string Path );
-
       /* FUnction that create file by path and blob data
        * ARGUMENTS:
        *    - Path where file need to be:
        *       std::string Path;
        * RETURNS: None.
        */
-      void MakeFileByBlob( std::string Path );
+      void MakeFileByBlob( const std::string &Path ) const;
 
       /* Function that convert blob to data
        * ARGUMENTS: None.
        * RETURNS:
        *   (std::vector<unit8_t>) Data that was blob.
        */
-      std::vector<uint8_t> DataFromBlob( void );
+      std::vector<uint8_t> ToData( void ) const;
     }; /* End of 'blob' class */
   } /* end of 'resources' namespace */
 } /* end of 'core' namespace */

@@ -22,7 +22,7 @@ core::resources::tree::tree( TreeCtor Type )
       FileSystemState[path] = FStt.Hash;
     // Create blobs by tree that not created
     for (const auto &[path, hash]: FileSystemState)
-      if (!filesystem::WriteBlob(hash, blob(path).DataFromBlob()))
+      if (!filesystem::WriteBlob(hash, blob(path).ToData()))
         std::cout << "Blob cant be writed " << hash.string() << std::endl;
   }
   else  // Ctor default

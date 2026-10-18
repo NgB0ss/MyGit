@@ -137,10 +137,16 @@ void core::filesystem::WriteCurrBranchName( std::string NewName )
 bool core::filesystem::WriteFileData( const std::string &Path, const std::vector<uint8_t> &Data )
 {
   std::ofstream File(Path, std::ios::binary);
+  fs::path PathFile(Path);
+  fs::path Folder = PathFile.parent_path();
 
-  if (!File.is_open())
+  fs::create_directories(Folder);
+  if (!File.is_open()) // Try to oppen file
     return false;
   File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
+  if (File.fail())     // Check, wite file bytes or no
+    return false;
+
   return true;
 } /* End of 'core::filesystem::WriteFileData' function */
 

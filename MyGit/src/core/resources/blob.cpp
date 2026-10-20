@@ -22,7 +22,7 @@ core::resources::blob::blob( const std::string &Path )
  *   - Data that must be blob:
  *       std::vector<uint8_t> Data;
  */
-core::resources::blob::blob( const std::vector<uint8_t> &Data )
+core::resources::blob::blob( std::vector<uint8_t> Data )
 {
   // Move ctors
   Bytes = std::move(Data);

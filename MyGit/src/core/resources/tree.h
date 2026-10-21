@@ -51,11 +51,11 @@ namespace core
 
       /* Function that create version by path and tree data
        * ARGUMENTS:
-       *    - Path where version need to be:
+       *    - Path where version need to be (path null -> that mean path - current path):
        *       std::string Path;
        * RETURNS: None.
        */
-      void ApplyVersion( std::string Path );
+      void ApplyVersion( std::string Path = {} );
 
       /* Function to bild data from tree class 
        * ARGUMENTS: None.

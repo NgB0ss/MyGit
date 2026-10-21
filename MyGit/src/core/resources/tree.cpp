@@ -68,11 +68,20 @@ void core::resources::tree::ApplyVersion( std::string Path )
 {
   filesystem::FileSystemState FSStt;
 
+  std::filesystem::path DefPath, CurrentPath = std::filesystem::current_path();
+
   // Write tree to filesystem state variable
   for (const auto &[defPath, hash]: FileSystemState)
-    FSStt.FSState.insert({Path + defPath, {0, FileSystemState[defPath]}});
+  {
+    DefPath = std::filesystem::path(defPath);
+    DefPath = std::filesystem::relative(DefPath, CurrentPath);
+    if (DefPath.string().size() == 0)
+      FSStt.FSState.insert({CurrentPath.string(), {0, FileSystemState[defPath]}});
+    else
+      FSStt.FSState.insert({Path + DefPath.string(), {0, FileSystemState[defPath]}});
+  }
 
-  // Apply filsystem with current path
+  // ApplyVersion filsystem with current path
   filesystem::MakeFileSystem(FSStt);
 } /* End of 'core::resources::tree::ApplyVersion' function */
 

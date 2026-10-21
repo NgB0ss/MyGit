@@ -32,7 +32,7 @@ void Get( core::crypto::hash HashCommit, std::string Path = {} )
     std::cout << Err.what() << std::endl;
     return;
   }
-  
+  CommitVers.ApplyVersion(Path);
 } /* End of 'Get' function */
 
 /*** ADAPTER TO FUNCTION ***/

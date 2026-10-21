@@ -58,10 +58,12 @@ namespace core
               const std::string &Msg);
 
       /* Function to apply commit version 
-       * ARGUMENTS: None.
+       * ARGUMENTS: 
+       *   - Path where vesrion will be builded:
+       *       std::string Path;
        * RETURNS: None.
        */
-      void Apply( void );
+      void ApplyVersion( std::string Path );
 
       /* Function to make version by commit and path where it need be
        * ARGUMENTS:

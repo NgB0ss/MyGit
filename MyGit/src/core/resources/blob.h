@@ -35,7 +35,7 @@ namespace core
        *   - Data that must be blob:
        *       std::vector<uint8_t> Data;
        */
-      blob( const std::vector<uint8_t> &Data );
+      blob( std::vector<uint8_t> Data );
 
       /* FUnction that create file by path and blob data
        * ARGUMENTS:

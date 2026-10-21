@@ -113,7 +113,7 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
   std::ifstream File(FilePath);
 
   // Open file
-  if (!File.is_open())
+  if (!File.is_open())                            
   {
     std::string message = "File of branch is not find" + Branch;
     throw std::runtime_error(message);

@@ -1,6 +1,6 @@
 /* FILE:        mygit_brnch_choose.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 11.10.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project
  *              Mygit brnch choose functions 
  */
@@ -9,6 +9,12 @@
 #include "regs/registrator.h"
 #include "regs/function_pool.h"
 
+/* Branch choose function 
+ * ARGUMENTS:
+ *   - Name of branch in string type:
+ *       std::string NewBranchStr;
+ * RETURNS: None.
+ */
 void ChooseBranch( std::string NewBranchStr )
 {
   if (!core::filesystem::IsBranchSavedBf(NewBranchStr))
@@ -26,7 +32,7 @@ void ChooseBranch( std::string NewBranchStr )
   {
     std::cout << Err.what() << std::endl;
   }
-}
+} /* End of 'ChooseBranch' function */
 
 /*** ADAPTER TO FUNCTION ***/
 

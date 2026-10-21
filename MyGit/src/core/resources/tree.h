@@ -1,6 +1,6 @@
 /* FILE:        tree.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 27.09.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - tree.
  */
@@ -49,20 +49,13 @@ namespace core
        */
       tree( std::vector<uint8_t> Data );
 
-      /* Function to apply tree to filesystem
-       * ARGUMENTS: None.
-       * RETURNS: None.
-       */
-      void Apply( void );
-
-
       /* Function that create version by path and tree data
        * ARGUMENTS:
        *    - Path where version need to be:
        *       std::string Path;
        * RETURNS: None.
        */
-      void MakeVersByTree( std::string Path );
+      void ApplyVersion( std::string Path );
 
       /* Function to bild data from tree class 
        * ARGUMENTS: None.

@@ -64,10 +64,12 @@ core::resources::commit::commit( const core::crypto::hash &Parent,
 } /* End of 'core::resources::commit::commit' function */
 
 /* Function to apply commit version 
- * ARGUMENTS: None.
+ * ARGUMENTS: 
+ *   - Path where version will be applied:
+ *       std::strin Path;
  * RETURNS: None.
  */
-void core::resources::commit::Apply( void )
+void core::resources::commit::Apply( std::string Path )
 {
   std::vector<uint8_t> Bytes;
 
@@ -83,7 +85,7 @@ void core::resources::commit::Apply( void )
 
   try
   {
-    TreeCommit.Apply();
+    TreeCommit.Apply(Path);
   }
   catch ( std::runtime_error& Err )
   {
@@ -115,7 +117,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path )
                           
   try
   {
-    TreeCommit.MakeVersByTree(Path);
+    TreeCommit.ApplyVersion(Path);
   }
   catch ( std::runtime_error& Err )
   {

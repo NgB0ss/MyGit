@@ -1,6 +1,6 @@
 /* FILE:        mygit_brnch_create.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project
  *              Mygit brnch create functions 
  */
@@ -9,6 +9,12 @@
 #include "regs/registrator.h"
 #include "regs/function_pool.h"
 
+/* Branch create function 
+ * ARGUMENTS:
+ *   - New branch name in string type:
+ *       std::string NewBranchStr;
+ * RETURNS: None.
+ */
 void CreateBranch( std::string NewBranchStr )
 {
   try
@@ -19,7 +25,7 @@ void CreateBranch( std::string NewBranchStr )
   {
     std::cout << Err.what() << std::endl;
   }
-}
+} /* End of 'CreateBranch' function */
 
 /*** ADAPTER TO FUNCTION ***/
 

@@ -58,29 +58,13 @@ core::resources::tree::tree( std::vector<uint8_t> Data )
   }
 } /* End of 'core::resources::tree::tree' function */
 
-/* Function to apply tree to filesystem
- * ARGUMENTS: None.
- * RETURNS: None.
- */
-void core::resources::tree::Apply( void )
-{
-  filesystem::FileSystemState FSStt;
-
-  // Write tree to filesystem state variable
-  for (const auto &[path, hash]: FileSystemState)
-    FSStt.FSState.insert({path, {0, FileSystemState[path]}});
-
-  // Apply filsystem with current path
-  filesystem::MakeFileSystem(FSStt);
-} /* End of 'core::resources::tree::Apply' function */
-
 /* Function that create version by path and tree data
  * ARGUMENTS:
  *    - Path where version need to be:
  *       std::string Path;
  * RETURNS: None.
  */
-void core::resources::tree::MakeVersByTree( std::string Path )
+void core::resources::tree::ApplyVersion( std::string Path )
 {
   filesystem::FileSystemState FSStt;
 
@@ -90,7 +74,7 @@ void core::resources::tree::MakeVersByTree( std::string Path )
 
   // Apply filsystem with current path
   filesystem::MakeFileSystem(FSStt);
-} /* End of 'core::resources::tree::MakeVersByTree' function */
+} /* End of 'core::resources::tree::ApplyVersion' function */
 
 /* Function to bild data from tree class 
  * ARGUMENTS: None.

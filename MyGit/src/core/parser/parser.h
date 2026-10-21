@@ -1,6 +1,6 @@
 /* FILE:        parser.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 07.10.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project
  *              Parser consalidator file
  */
@@ -50,7 +50,7 @@ namespace core
       }
 
       // Functions that need path in arguments
-      if (Cmd.FuncName == "init" || Cmd.FuncName == "branches")
+      if (Cmd.FuncName == "init" || Cmd.FuncName == "branches" || Cmd.FuncName == "log")
         Cmd.Arguments.push_back(Current_Path.string());
 
       return Cmd;

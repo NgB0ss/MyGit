@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 18.10.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -28,6 +28,7 @@ core::resources::branch::branch( const std::string &Branch )
   catch ( const std::runtime_error &Err )
   {
     IsDelegate = false;
+    std::cout << Err.what();
   }
   
   // Delegate if we can
@@ -42,7 +43,7 @@ core::resources::branch::branch( const std::string &Branch )
   
   // Write new branch if ctor not delegated
   try { SaveBranch(); }
-  catch ( std::runtime_error Err ) { std::cout << Err.what(); }
+  catch ( std::runtime_error Err ) { throw Err; }
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -140,8 +141,6 @@ core::resources::branch& core::resources::branch::GetCurrentBranch( void )
     }
     catch ( std::runtime_error Err )
     {
-      std::cout << Err.what() << std::endl;
-      // This error dont need catch, programm need be stopped
       throw Err;
     }
   return CurrentBranch;

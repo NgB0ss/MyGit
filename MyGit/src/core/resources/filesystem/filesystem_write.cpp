@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -29,6 +29,8 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
 
   // If blob file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  if (file.fail())     // Check, wite file bytes or no
+    return false;
   return true;
 } /* End of 'core::filesystem::WriteBlob' function */
 
@@ -54,6 +56,8 @@ bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<ui
 
   // If tree file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  if (file.fail())     // Check, wite file bytes or no
+    return false;
   return true;
 } /* End of 'core::filesystem::WriteTree' function */
 
@@ -80,6 +84,8 @@ bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector
   // Write commit data
   file << "\n";
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  if (file.fail())     // Check, wite file bytes or no
+    return false;
   return true;
 } /* End of 'core::filesystem::WriteCommit' function */
 
@@ -105,6 +111,8 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
 
   // If blob file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  if (file.fail())     // Check, wite file bytes or no
+    return false;
   return true;
 } /* End of 'core::filesystem::WriteBranch' function */
 
@@ -123,6 +131,8 @@ void core::filesystem::WriteCurrBranchName( std::string NewName )
   if (!File.is_open())
     throw(std::runtime_error("File of current branch cant be opened"));
   File.write(NewName.data(), NewName.size());
+  if (File.fail())     // Check, wite file bytes or no
+    throw(std::runtime_error("Branch name cant be writen"));
 } /* End of 'core::filesystem::WriteCurrBarnchName' function */
 
 /* Function to write file data
@@ -175,6 +185,8 @@ void core::filesystem::MakeFileSystem( const FileSystemState &FSStt )
     std::vector<uint8_t> Blob = ReadBlob(FileState.Hash);
 
     File.write(reinterpret_cast<char *>(Blob.data()), Blob.size());
+    if (File.fail())     // Check, wite file bytes or no
+      throw std::runtime_error("Data cant be written");
   }
 }  /* End of 'core::filesystem::MakeFileSystem' function */
 

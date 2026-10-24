@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.10.2026
+ * LAST UPDATE: 24.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -20,8 +20,10 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
 {
   fs::path folder_path = BLOBS_OBJ_PATH / Hash.string().substr(0, 2);
 
-  fs::create_directories(folder_path);
   fs::path file_path = folder_path / Hash.string();
+
+  if (fs::exists(file_path)) // If that blob exist dont need overwrtie it
+    return true;
   std::ofstream file(file_path, std::ios::binary);
 
   if (!file.is_open())
@@ -30,7 +32,12 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
   // If blob file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
   if (file.fail())     // Check, wite file bytes or no
+  {
+    file.close();
     return false;
+  }
+
+  file.close();
   return true;
 } /* End of 'core::filesystem::WriteBlob' function */
 
@@ -57,7 +64,11 @@ bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<ui
   // If tree file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
   if (file.fail())     // Check, wite file bytes or no
+  {
+    file.close();
     return false;
+  }
+  file.close();
   return true;
 } /* End of 'core::filesystem::WriteTree' function */
 
@@ -72,11 +83,8 @@ bool core::filesystem::WriteTree( const crypto::hash &Hash, const std::vector<ui
  */
 bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
-  fs::path folder_path = BRANCH_PATH;
-
-  fs::create_directories(folder_path);
-  fs::path file_path = folder_path / Branch;
-  std::ofstream file(file_path, std::ios::out | std::ios::app | std::ios::binary);
+  fs::path file_path = BRANCH_PATH / Branch;
+  std::ofstream file(file_path, std::ios::app);
 
   if (!file.is_open())
     return false;
@@ -85,7 +93,11 @@ bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector
   file << "\n";
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
   if (file.fail())     // Check, wite file bytes or no
+  {
+    file.close();
     return false;
+  }
+  file.close();
   return true;
 } /* End of 'core::filesystem::WriteCommit' function */
 
@@ -111,8 +123,13 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
 
   // If blob file created
   file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  file << "\n";
   if (file.fail())     // Check, wite file bytes or no
+  {
+    file.close();
     return false;
+  }
+  file.close();
   return true;
 } /* End of 'core::filesystem::WriteBranch' function */
 
@@ -132,7 +149,11 @@ void core::filesystem::WriteCurrBranchName( std::string NewName )
     throw(std::runtime_error("File of current branch cant be opened"));
   File.write(NewName.data(), NewName.size());
   if (File.fail())     // Check, wite file bytes or no
+  {
+    File.close();
     throw(std::runtime_error("Branch name cant be writen"));
+  }
+  File.close();
 } /* End of 'core::filesystem::WriteCurrBarnchName' function */
 
 /* Function to write file data
@@ -155,8 +176,11 @@ bool core::filesystem::WriteFileData( const std::string &Path, const std::vector
     return false;
   File.write(reinterpret_cast<const char *>(Data.data()), Data.size());
   if (File.fail())     // Check, wite file bytes or no
+  {
+    File.close();
     return false;
-
+  }
+  File.close();
   return true;
 } /* End of 'core::filesystem::WriteFileData' function */
 
@@ -186,7 +210,10 @@ void core::filesystem::MakeFileSystem( const FileSystemState &FSStt )
 
     File.write(reinterpret_cast<char *>(Blob.data()), Blob.size());
     if (File.fail())     // Check, wite file bytes or no
+    {
+      File.close();
       throw std::runtime_error("Data cant be written");
+    }
   }
 }  /* End of 'core::filesystem::MakeFileSystem' function */
 

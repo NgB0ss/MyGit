@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.10.2026
+ * LAST UPDATE: 24.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -171,7 +171,7 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
    * COMMITS WILL BE WRITE AFTER BRANCH INFO
    */
   std::vector<uint8_t> Data, QueueDt;
-  std::array<uint8_t, BYTES_HASH> BytesCurrCommit = CurrentCommitHash.bytes();
+  std::string BytesCurrCommit = CurrentCommitHash.string();
 
   QueueDt = QueueAdd.DataFromTree();
   crypto::hash HashIndex(QueueDt);

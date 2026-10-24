@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.10.2026
+ * LAST UPDATE: 24.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -30,6 +30,8 @@ std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
   File.seekg(0, std::ios::beg);
   std::vector<uint8_t> Data(Size);
   File.read(reinterpret_cast<char *>(Data.data()), Size);
+  if (File.fail())
+    throw std::runtime_error("Data of blob cant be read");
   return Data;
 } /* End of 'core::filesystem::ReadBlob' function */
 
@@ -47,7 +49,7 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
 
   if (!File.is_open())
   {
-    std::string message = "File of tree is not find" + Hash.string();
+    std::string message = "File of tree is not find " + Hash.string();
     throw std::runtime_error(message);
   }
 
@@ -56,6 +58,9 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
   File.seekg(0, std::ios::beg);
   std::vector<uint8_t> Data(Size);
   File.read(reinterpret_cast<char *>(Data.data()), Size);
+  if (File.fail())
+    throw std::runtime_error("Data of tree cant be read");
+  File.close();
   return Data;
 } /* End of 'core::filesystem::ReadTree' function */
 
@@ -83,20 +88,27 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
   std::string CurrHash(BYTES_HASH, '\0');
 
   File.read(&CurrHash[0], BYTES_HASH);
+  if (File.fail())
+    throw std::runtime_error("Data of commit cant be read");
   while (CurrHash != Hash.string())
   {
     File.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     File.read(&CurrHash[0], BYTES_HASH);
+    if (File.fail())
+      throw std::runtime_error("Data of commit cant be read");
   }
   // Read data of commit
   std::string DataStr;
   std::getline(File, DataStr);
+  if (File.fail())
+    throw std::runtime_error("Data of commit cant be read");
 
   std::vector<uint8_t> Data(DataStr.size());
 
   for (int i = 0; i < DataStr.size(); i++)
     Data[i] = DataStr[i];
 
+  File.close();
   return Data;
 } /* End of 'core::filesystem::ReadCommit' function */
 
@@ -122,7 +134,10 @@ std::vector<uint8_t> core::filesystem::ReadBranch( const std::string &Branch )
   std::vector<uint8_t> Data;
 
   std::getline(File, DataStr);
+  if (File.fail())
+    throw std::runtime_error("Data of branch cant be read");
   Data.insert(Data.begin(), DataStr.begin(), DataStr.end());
+  File.close();
   return Data;
 } /* End of 'core::filesystem::ReadBranch' function */
 
@@ -146,6 +161,9 @@ std::string core::filesystem::ReadCurrBranchName( void )
   std::string NameBrnch;
 
   std::getline(File, NameBrnch);
+  if (File.fail())
+    throw std::runtime_error("Data of current branch name cant be read");
+  File.close();
   return NameBrnch;
 } /* End of 'core::filesystem::ReadCurrBranchName' function */
 
@@ -192,6 +210,9 @@ std::vector<uint8_t> core::filesystem::ReadFileData( const std::string &Path )
 
   Data.resize(Size);
   File.read(reinterpret_cast<char *>(Data.data()), Size);
+  if (File.fail())
+    throw std::runtime_error("Data of file cant be read");
+  File.close();
   return Data;
 } /* End of 'core::filesystem:ReadFileData' function */
 

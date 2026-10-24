@@ -116,20 +116,36 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
 
   fs::create_directories(folder_path);
   fs::path file_path = folder_path / Branch;
-  std::ofstream file(file_path);
+  std::ifstream file(file_path);
+  fs::path OutPath = file_path.parent_path() / "OutFile.txt";
+  std::ofstream OutFile(OutPath);
 
-  if (!file.is_open())
+  if (!file.is_open() || !OutFile.is_open())
     return false;
 
-  // If blob file created
-  file.write(reinterpret_cast<const char*>(Data.data()), Data.size());
-  file << "\n";
-  if (file.fail())     // Check, wite file bytes or no
+  // Write new string to out file 
+  OutFile.write(reinterpret_cast<const char*>(Data.data()), Data.size());
+  if (OutFile.fail())
+  {
+    OutFile.close();
+    file.close();
+    return false;
+  }
+
+  // Skip 1 string and copy other data
+  std::string dummy;
+  if (std::getline(file, dummy))
+    OutFile << file.rdbuf();
+  if (OutFile.fail())     // Check, wite file bytes or no
   {
     file.close();
     return false;
   }
+  OutFile.close();
   file.close();
+
+  fs::remove(file_path);
+  fs::rename(OutPath, file_path);
   return true;
 } /* End of 'core::filesystem::WriteBranch' function */
 

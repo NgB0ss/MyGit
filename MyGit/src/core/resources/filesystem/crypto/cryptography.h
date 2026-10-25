@@ -1,6 +1,6 @@
 /* FILE:        cryptography.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.10.2026
+ * LAST UPDATE: 25.10.2026
  * PURPOSE:     Git project.
  *              Cryptography consalidator module.
  */

@@ -1,6 +1,6 @@
 /* FILE:        commit.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 29.09.2026
+ * LAST UPDATE: 21.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - commit
  */
@@ -23,11 +23,17 @@ namespace core
     class commit
     {
     private:
-      core::crypto::hash Parent, Tree;                                                     // Parent commit and tree filesystem state
-      std::string Author, Message;                                                         // Author of commit message
-      std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> Time;       // Time that commit was created
+      core::crypto::hash Parent{}, Tree{};                                        // Parent commit and tree filesystem state
+      std::string Author{}, Message{};                                            // Author of commit message
+      std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> Time{};       // Time that commit was created
 
     public:
+      /* Default commit ctor
+       * ARGUMENTS: None.
+       * RETURNS: None.
+       */
+      commit( void ) = default;
+
       /* Ctor commit by byte data 
        * ARGUMENTS:
        *   - Data that readed from commit:
@@ -52,10 +58,12 @@ namespace core
               const std::string &Msg);
 
       /* Function to apply commit version 
-       * ARGUMENTS: None.
+       * ARGUMENTS: 
+       *   - Path where vesrion will be builded:
+       *       std::string Path;
        * RETURNS: None.
        */
-      void Apply( void );
+      void ApplyVersion( std::string Path );
 
       /* Function to make version by commit and path where it need be
        * ARGUMENTS:

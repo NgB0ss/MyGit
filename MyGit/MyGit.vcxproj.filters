@@ -114,6 +114,9 @@
     <ClCompile Include="src\executor\mygit_reset_uncommited.cpp">
       <Filter>Source Files\Executor</Filter>
     </ClCompile>
+    <ClCompile Include="src\executor\mygit_commit_log.cpp">
+      <Filter>Source Files\Executor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">

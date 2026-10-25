@@ -64,10 +64,12 @@ core::resources::commit::commit( const core::crypto::hash &Parent,
 } /* End of 'core::resources::commit::commit' function */
 
 /* Function to apply commit version 
- * ARGUMENTS: None.
+ * ARGUMENTS: 
+ *   - Path where version will be applied:
+ *       std::strin Path;
  * RETURNS: None.
  */
-void core::resources::commit::Apply( void )
+void core::resources::commit::ApplyVersion( std::string Path )
 {
   std::vector<uint8_t> Bytes;
 
@@ -83,13 +85,13 @@ void core::resources::commit::Apply( void )
 
   try
   {
-    TreeCommit.Apply();
+    TreeCommit.ApplyVersion(Path);
   }
   catch ( std::runtime_error& Err )
   {
     throw(Err);
   }
-} /* End of 'core::resources::commit::Apply' function */
+} /* End of 'core::resources::commit::ApplyVersion' function */
 
 /* Function to make version by commit and path where it need be
  * ARGUMENTS:
@@ -115,7 +117,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path )
                           
   try
   {
-    TreeCommit.MakeVersByTree(Path);
+    TreeCommit.ApplyVersion(Path);
   }
   catch ( std::runtime_error& Err )
   {
@@ -136,7 +138,7 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
    */
 
   /* Data commit is:
-   *   - (Parent hash) (Time) (Author) (Message) (Tree hash)
+   *   - (Parent hash) (Hash of commit) (Time) (Author) (Message) (Tree hash)
    *     Without ()
    */
   std::vector<uint8_t> Data;
@@ -145,25 +147,30 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   
   CurrHash = Parent.bytes();
   // Write hash 
-  Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + 16 + 4); // 16 Symbols - time without time zone and 4 for spaces
+  Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + 16 + 5); // 16 Symbols - time without time zone and 4 for spaces
   Data.insert(Data.begin(), CurrHash.begin(), CurrHash.end());
   CurrPos += BYTES_HASH;
   Data[CurrPos++] = ' ';
+  Data[CurrPos++] = ' ';
   // Write time
-  std::string TimeStr = std::format("{:%Y-%m-%d %H %M}", Time);
+  std::string TimeStr = std::format("{:%Y-%m-%d %H:%M}", Time);
 
   Data.insert(Data.begin() + CurrPos, TimeStr.begin(), TimeStr.end());
-  CurrPos += TimeStr.size();
+  CurrPos += (int)TimeStr.size();
   Data[CurrPos++] = ' ';
   Data.insert(Data.begin() + CurrPos, Author.begin(), Author.end());
-  CurrPos += Author.size();
+  CurrPos += (int)Author.size();
   Data[CurrPos++] = ' ';
   Data.insert(Data.begin() + CurrPos, Message.begin(), Message.end());
-  CurrPos += Message.size();
+  CurrPos += (int)Message.size();
   Data[CurrPos++] = ' ';
   CurrHash = Tree.bytes();
   Data.insert(Data.begin() + CurrPos, CurrHash.begin(), CurrHash.end());
-  
+
+  crypto::hash HashCommit(Data);
+  std::array<uint8_t, BYTES_HASH> HashArr = HashCommit.bytes();
+
+  Data.insert(Data.begin() + BYTES_HASH + 1, HashArr.begin(), HashArr.end());  
   return Data;
 } /* End of 'core::resources::commit::DataFromCommit' function */
 

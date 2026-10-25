@@ -22,7 +22,7 @@ core::resources::tree::tree( TreeCtor Type )
       FileSystemState[path] = FStt.Hash;
     // Create blobs by tree that not created
     for (const auto &[path, hash]: FileSystemState)
-      if (!filesystem::WriteBlob(hash, blob(path).DataFromBlob()))
+      if (!filesystem::WriteBlob(hash, blob(path).ToData()))
         std::cout << "Blob cant be writed " << hash.string() << std::endl;
   }
   else  // Ctor default
@@ -58,39 +58,32 @@ core::resources::tree::tree( std::vector<uint8_t> Data )
   }
 } /* End of 'core::resources::tree::tree' function */
 
-/* Function to apply tree to filesystem
- * ARGUMENTS: None.
- * RETURNS: None.
- */
-void core::resources::tree::Apply( void )
-{
-  filesystem::FileSystemState FSStt;
-
-  // Write tree to filesystem state variable
-  for (const auto &[path, hash]: FileSystemState)
-    FSStt.FSState.insert({path, {0, FileSystemState[path]}});
-
-  // Apply filsystem with current path
-  filesystem::MakeFileSystem(FSStt);
-} /* End of 'core::resources::tree::Apply' function */
-
 /* Function that create version by path and tree data
  * ARGUMENTS:
  *    - Path where version need to be:
  *       std::string Path;
  * RETURNS: None.
  */
-void core::resources::tree::MakeVersByTree( std::string Path )
+void core::resources::tree::ApplyVersion( std::string Path )
 {
   filesystem::FileSystemState FSStt;
 
+  std::filesystem::path DefPath, CurrentPath = std::filesystem::current_path();
+
   // Write tree to filesystem state variable
   for (const auto &[defPath, hash]: FileSystemState)
-    FSStt.FSState.insert({Path + defPath, {0, FileSystemState[defPath]}});
+  {
+    DefPath = std::filesystem::path(defPath);
+    DefPath = std::filesystem::relative(DefPath, CurrentPath);
+    if (DefPath.string().size() == 0)
+      FSStt.FSState.insert({CurrentPath.string(), {0, FileSystemState[defPath]}});
+    else
+      FSStt.FSState.insert({Path + DefPath.string(), {0, FileSystemState[defPath]}});
+  }
 
-  // Apply filsystem with current path
+  // ApplyVersion filsystem with current path
   filesystem::MakeFileSystem(FSStt);
-} /* End of 'core::resources::tree::MakeVersByTree' function */
+} /* End of 'core::resources::tree::ApplyVersion' function */
 
 /* Function to bild data from tree class 
  * ARGUMENTS: None.

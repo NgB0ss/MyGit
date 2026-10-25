@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 18.10.2026
+ * LAST UPDATE: 24.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -42,7 +42,7 @@ core::resources::branch::branch( const std::string &Branch )
   
   // Write new branch if ctor not delegated
   try { SaveBranch(); }
-  catch ( std::runtime_error Err ) { std::cout << Err.what(); }
+  catch ( std::runtime_error Err ) { throw Err; }
 } /* End of 'core::resources::branch::branch' fucntion */
 
 /* Branch ctor by bytes data
@@ -140,8 +140,6 @@ core::resources::branch& core::resources::branch::GetCurrentBranch( void )
     }
     catch ( std::runtime_error Err )
     {
-      std::cout << Err.what() << std::endl;
-      // This error dont need catch, programm need be stopped
       throw Err;
     }
   return CurrentBranch;
@@ -172,7 +170,7 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
    * COMMITS WILL BE WRITE AFTER BRANCH INFO
    */
   std::vector<uint8_t> Data, QueueDt;
-  std::array<uint8_t, BYTES_HASH> BytesCurrCommit = CurrentCommitHash.bytes();
+  std::string BytesCurrCommit = CurrentCommitHash.string();
 
   QueueDt = QueueAdd.DataFromTree();
   crypto::hash HashIndex(QueueDt);
@@ -201,11 +199,11 @@ void core::resources::branch::SaveBranch( void )
     std::vector<uint8_t> QueueData = QueueAdd.DataFromTree();
 
     if (!filesystem::WriteTree(crypto::hash(QueueData), QueueData))
-      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit"));
+      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit\n"));
   }
 
   if (!filesystem::WriteBranch(NameBranch, BytesBrnch))
-    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm"));
+    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm\n"));
 } /* End of 'core::resources::branch::SaveBranch' function */
 
 

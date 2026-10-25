@@ -174,6 +174,7 @@
     <ClCompile Include="src\executor\mygit_brnch_choose.cpp" />
     <ClCompile Include="src\executor\mygit_brnch_create.cpp" />
     <ClCompile Include="src\executor\mygit_commit.cpp" />
+    <ClCompile Include="src\executor\mygit_commit_log.cpp" />
     <ClCompile Include="src\executor\mygit_get.cpp" />
     <ClCompile Include="src\executor\mygit_help.cpp" />
     <ClCompile Include="src\executor\mygit_log.cpp" />

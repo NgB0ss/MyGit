@@ -9,7 +9,6 @@
 #include "regs/registrator.h"
 #include "regs/function_pool.h"
 
-
 /* Init mygit function 
  * ARGUMENTS:
  * RETURNS: None.

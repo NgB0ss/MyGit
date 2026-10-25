@@ -141,6 +141,15 @@ namespace core
      */
     std::vector<uint8_t> ReadCommit( const std::string &Branch, const crypto::hash &Hash );
 
+    /* Read all commits funcion
+     * ARGUMENTS:
+     *   - Branch name from what we need read commits:
+     *       const std::string &Branch;
+     * RETURNS: 
+     *   (std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>>) Pait hash-commit bytes;
+     */
+    std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> ReadAllCommits( const std::string &Branch );  
+
     /*******   BRANCH    *******/
     /* Function to write branch 
      * ARGUMENTS:

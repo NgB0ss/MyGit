@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.10.2026
+ * LAST UPDATE: 25.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -111,6 +111,41 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
   File.close();
   return Data;
 } /* End of 'core::filesystem::ReadCommit' function */
+
+/* Read all commits funcion
+ * ARGUMENTS:
+ *   - Branch name from what we need read commits:
+ *       const std::string &Branch;
+ * RETURNS: 
+ *   (std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>>) Pait hash-commit bytes;
+ */
+std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> 
+  core::filesystem::ReadAllCommits( const std::string &Branch )
+{
+  fs::path FilePath = BRANCH_PATH / Branch;
+  std::ifstream File(FilePath);
+
+  if (!File.is_open())
+    throw std::runtime_error("File of branch cant be oppened (Read all commits step)");
+  std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> HashCommitPairs;
+
+  // Paing commit pairs and returns it
+  std::string curr;
+  int cnt = 0;
+  std::vector<uint8_t> Bytes;
+
+  while (std::getline(File, curr))
+  {
+    if (cnt++ <= 1) // Skip branch data and \n
+      continue;
+    Bytes.insert(Bytes.begin(), curr.begin(), curr.end());
+    crypto::hash HashCommit(Bytes);
+    std::pair<core::crypto::hash, std::vector<uint8_t>> CurrPair(HashCommit, Bytes);
+
+    HashCommitPairs.push_back(CurrPair);
+  }
+  return HashCommitPairs;
+} /* End of 'core::filesystem::ReadAllCommits' fucntion */
 
 /* Function to read branch
  * ARGUMENTS:

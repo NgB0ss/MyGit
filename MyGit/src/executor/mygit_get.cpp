@@ -1,6 +1,6 @@
 /* FILE:        mygit_get.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.10.2026
+ * LAST UPDATE: 25.10.2026
  * PURPOSE:     Git project.
  *              Mygit get version function. 
  */
@@ -25,7 +25,7 @@ void Get( core::crypto::hash HashCommit, std::string Path = {} )
   try
   {
     CurrBranch = core::resources::branch::GetCurrentBranch();
-    CommitVers = core::filesystem::ReadCommit(CurrBranch.GetName(), HashCommit);
+    CommitVers = core::resources::commit(core::filesystem::ReadCommit(CurrBranch.GetName(), HashCommit));
   }
   catch ( const std::runtime_error &Err )
   {
@@ -55,7 +55,7 @@ REGISTRATION_FUNCTION("get",                                        \
                       Get,                                          \
                       (std::vector<argument> {                      \
                         {"HashCommit", ArgumentType::Hash, true},   \
-                        {"Path", ArgumentType::Hash, false}         \
+                        {"Path", ArgumentType::String, false}       \
                       }), Adapter)
 
 /* END OF 'mygit_get.cpp' FILE */

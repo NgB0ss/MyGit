@@ -146,9 +146,9 @@ namespace core
      *   - Branch name from what we need read commits:
      *       const std::string &Branch;
      * RETURNS: 
-     *   (std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>>) Pait hash-commit bytes;
+     *   (std::vector<std::vector<uint8_t>>) Pait hash-commit bytes;
      */
-    std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> ReadAllCommits( const std::string &Branch );  
+    std::vector<std::vector<uint8_t>> ReadAllCommits( const std::string &Branch );
 
     /*******   BRANCH    *******/
     /* Function to write branch 

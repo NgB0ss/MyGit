@@ -75,39 +75,32 @@ std::vector<uint8_t> core::filesystem::ReadTree( const crypto::hash &Hash )
  */
 std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, const crypto::hash &Hash )
 {
-  fs::path FilePath = BRANCH_PATH / Branch / ".brnch";
+  fs::path FilePath = BRANCH_PATH / Branch;
   std::ifstream File(FilePath, std::ios::in | std::ios::binary);
 
   if (!File.is_open())
   {
-    std::string message = "File of commit is not find" + Branch;
+    std::string message = "File of commit is not find " + Branch;
     throw std::runtime_error(message);
   }
 
   // Find commit
-  std::string CurrHash(BYTES_HASH, '\0');
-
-  File.read(&CurrHash[0], BYTES_HASH);
-  if (File.fail())
-    throw std::runtime_error("Data of commit cant be read");
-  while (CurrHash != Hash.string())
+  std::string CurrHash, CurrStr;
+  int cnt = 0;
+  
+  while (std::getline(File, CurrStr))
   {
-    File.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    File.read(&CurrHash[0], BYTES_HASH);
-    if (File.fail())
-      throw std::runtime_error("Data of commit cant be read");
+    if (cnt <= 1)
+      continue;
+    CurrHash.insert(CurrHash.begin(),
+                    CurrStr.begin() + BYTES_HASH + 1,
+                    CurrStr.begin() + BYTES_HASH * 2 + 1);
+    if (CurrHash == Hash.string())
+      break;
   }
-  // Read data of commit
-  std::string DataStr;
-  std::getline(File, DataStr);
-  if (File.fail())
-    throw std::runtime_error("Data of commit cant be read");
+  std::vector<uint8_t> Data;
 
-  std::vector<uint8_t> Data(DataStr.size());
-
-  for (int i = 0; i < DataStr.size(); i++)
-    Data[i] = DataStr[i];
-
+  Data.insert(Data.begin(), CurrStr.begin(), CurrStr.end());
   File.close();
   return Data;
 } /* End of 'core::filesystem::ReadCommit' function */
@@ -117,17 +110,16 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
  *   - Branch name from what we need read commits:
  *       const std::string &Branch;
  * RETURNS: 
- *   (std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>>) Pait hash-commit bytes;
+ *   (std::vector<std::vector<uint8_t>>) Pait hash-commit bytes;
  */
-std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> 
-  core::filesystem::ReadAllCommits( const std::string &Branch )
+std::vector<std::vector<uint8_t>> core::filesystem::ReadAllCommits( const std::string &Branch )
 {
   fs::path FilePath = BRANCH_PATH / Branch;
   std::ifstream File(FilePath);
 
   if (!File.is_open())
     throw std::runtime_error("File of branch cant be oppened (Read all commits step)");
-  std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>> HashCommitPairs;
+  std::vector<std::vector<uint8_t>> HashCommitPairs;
 
   // Paing commit pairs and returns it
   std::string curr;
@@ -139,10 +131,8 @@ std::vector<std::pair<core::crypto::hash, std::vector<uint8_t>>>
     if (cnt++ <= 1) // Skip branch data and \n
       continue;
     Bytes.insert(Bytes.begin(), curr.begin(), curr.end());
-    crypto::hash HashCommit(Bytes);
-    std::pair<core::crypto::hash, std::vector<uint8_t>> CurrPair(HashCommit, Bytes);
 
-    HashCommitPairs.push_back(CurrPair);
+    HashCommitPairs.push_back(Bytes);
   }
   return HashCommitPairs;
 } /* End of 'core::filesystem::ReadAllCommits' fucntion */

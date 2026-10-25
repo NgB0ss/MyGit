@@ -19,13 +19,10 @@ void CommitLog( void )
   
   Path = Path / core::filesystem::BRANCH_PATH;
   core::resources::branch CurrBrnch = core::resources::branch::GetCurrentBranch();
-  std::vector
-    <std::pair<core::crypto::hash,
-     std::vector<uint8_t>>
-    > AllCommits = core::filesystem::ReadAllCommits(CurrBrnch.GetName());
+  std::vector <std::vector<uint8_t>> AllCommits = core::filesystem::ReadAllCommits(CurrBrnch.GetName());
   std::string CommitOutput;
 
-  for (auto &[hash, bytes]: AllCommits)
+  for (auto &bytes: AllCommits)
   {
     CommitOutput.clear();
     // Earase bytes from 0 symbols
@@ -40,9 +37,9 @@ void CommitLog( void )
       return;
     }
     CommitOutput.resize(bytes.size() - 2 * BYTES_HASH);
-    for (int count = 0, i = BYTES_HASH; i < bytes.size() - BYTES_HASH; i++)
+    for (int count = 0, i = BYTES_HASH + 1; i < bytes.size() - BYTES_HASH; i++)
       CommitOutput[count++] = bytes[i];
-    std::cout << hash.string() << " " << CommitOutput << std::endl;
+    std::cout << CommitOutput << std::endl;
   }
 } /* End of 'CommitLog' function */
 

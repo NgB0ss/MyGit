@@ -28,7 +28,6 @@ core::resources::branch::branch( const std::string &Branch )
   catch ( const std::runtime_error &Err )
   {
     IsDelegate = false;
-    std::cout << Err.what();
   }
   
   // Delegate if we can
@@ -200,11 +199,11 @@ void core::resources::branch::SaveBranch( void )
     std::vector<uint8_t> QueueData = QueueAdd.DataFromTree();
 
     if (!filesystem::WriteTree(crypto::hash(QueueData), QueueData))
-      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit"));
+      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit\n"));
   }
 
   if (!filesystem::WriteBranch(NameBranch, BytesBrnch))
-    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm"));
+    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm\n"));
 } /* End of 'core::resources::branch::SaveBranch' function */
 
 

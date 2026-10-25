@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.10.2026
+ * LAST UPDATE: 25.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -20,6 +20,7 @@ bool core::filesystem::WriteBlob( const crypto::hash &Hash, const std::vector<ui
 {
   fs::path folder_path = BLOBS_OBJ_PATH / Hash.string().substr(0, 2);
 
+  fs::create_directories(folder_path);
   fs::path file_path = folder_path / Hash.string();
 
   if (fs::exists(file_path)) // If that blob exist dont need overwrtie it
@@ -112,16 +113,24 @@ bool core::filesystem::WriteCommit( const std::string &Branch, const std::vector
  */
 bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector<uint8_t> &Data )
 {
+  // Folder path to branch
   fs::path folder_path = BRANCH_PATH;
 
-  fs::create_directories(folder_path);
+  // Path aproximate
   fs::path file_path = folder_path / Branch;
-  std::ifstream file(file_path);
-  fs::path OutPath = file_path.parent_path() / "OutFile.txt";
-  std::ofstream OutFile(OutPath);
+  std::string BranchTmp = Branch + ".tmp";
+  fs::path OutPath = file_path.parent_path() / BranchTmp;
 
-  if (!file.is_open() || !OutFile.is_open())
+  // File crating handle
+  std::ofstream OutFile(OutPath);
+  std::ifstream file(file_path);
+  bool FirstEntry = false;
+
+  if (!file.is_open())
+    FirstEntry = true;
+  if (!OutFile.is_open())
     return false;
+
 
   // Write new string to out file 
   OutFile.write(reinterpret_cast<const char*>(Data.data()), Data.size());
@@ -132,17 +141,19 @@ bool core::filesystem::WriteBranch( const std::string &Branch, const std::vector
     return false;
   }
 
-  // Skip 1 string and copy other data
-  std::string dummy;
-  if (std::getline(file, dummy))
-    OutFile << file.rdbuf();
-  if (OutFile.fail())     // Check, wite file bytes or no
+  // Skip 1 string and copy other data if main create before
+  if (!FirstEntry)
   {
-    file.close();
-    return false;
+    std::string dummy;
+    if (std::getline(file, dummy))
+    {
+      OutFile << "\n";
+      OutFile << file.rdbuf();
+    }
   }
   OutFile.close();
-  file.close();
+  if (!FirstEntry)
+    file.close();
 
   fs::remove(file_path);
   fs::rename(OutPath, file_path);

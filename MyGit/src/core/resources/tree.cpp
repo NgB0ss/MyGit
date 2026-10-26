@@ -129,7 +129,7 @@ core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &D
   // Need sort tree, and get hash
   // We need sort tree bcse map is not know how elements insert in there
   // And if some elements swap, hash1 != hash2
-  
+
   // Check, maybe we get data before
   std::vector<uint8_t> DataToSort;
   bool IsDataGet = true;
@@ -138,6 +138,7 @@ core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &D
     DataToSort = DataFromTree();
   else
     DataToSort = Data;
+
   // Create pairs vector to sort it after
   // Create struct to pairs hash->path
   struct files
@@ -147,29 +148,58 @@ core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &D
   };
 
   std::vector<files> FilesView;
-  int cnt = 0, it = 0, StarPos = 0;
   std::string_view StrDataToSort(reinterpret_cast<char *>(DataToSort.data()), DataToSort.size());
-  std::string_view Curr;
 
-  while (cnt++ < StrDataToSort.size())
+  size_t cnt = 0;
+  while (cnt < StrDataToSort.size())
   {
-    it = StrDataToSort.find('\n', cnt);
-    if (it == std::string::npos)
+    size_t it = StrDataToSort.find('\n', cnt);
+    if (it == std::string_view::npos)
       it = StrDataToSort.size();
-    Curr = StrDataToSort.substr(cnt, it - cnt);
-    
-    StarPos = StrDataToSort.find('*', cnt);
-    if (StarPos != std::string::npos)
-      FilesView.push_back({Curr.substr(0, StarPos), Curr.substr(StarPos + 2, Curr.size())});
+  
+ 
+    std::string_view Curr = StrDataToSort.substr(cnt, it - cnt);
+  
+    if (!Curr.empty() && Curr.back() == '\r') {
+      Curr.remove_suffix(1);
+    }
+
+    size_t StarPos = Curr.find("**");
+    if (StarPos != std::string_view::npos)
+    {
+      std::string_view path = Curr.substr(0, StarPos);
+      std::string_view hash = Curr.substr(StarPos + 2); 
+      FilesView.push_back({path, hash});
+    }
 
     cnt = it + 1;
-    it = 0;
   }
+
   // Sort tree
-  std::sort(FilesView.begin(), FilesView.end(), []( const files &File1, const files &File2)
+  std::sort(FilesView.begin(), FilesView.end(), [](const files &File1, const files &File2)
             {
               return File1.Path < File2.Path;
             });
+
+  // Now decoding
+  size_t total_size = 0;
+  for (const auto& file : FilesView) {
+      total_size += file.Path.size() + 2 + file.Hash.size() + 1; // path + "**" + hash + "\n"
+  }
+
+  std::vector<uint8_t> SortedData;
+  SortedData.reserve(total_size);
+ 
+  for (const auto& file : FilesView)
+  {
+    SortedData.insert(SortedData.end(), file.Path.begin(), file.Path.end());
+    SortedData.push_back('*');
+    SortedData.push_back('*');
+    SortedData.insert(SortedData.end(), file.Hash.begin(), file.Hash.end());
+    SortedData.push_back('\n');
+  }
+
+  return crypto::hash(SortedData);
 } /* End of 'core::resources::tree::GetHash' function */
 
 /* END OF 'tree.cpp' FILE */

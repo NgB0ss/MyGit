@@ -173,11 +173,10 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
    *       (CurrentCommitHash) (IsQeueAddInit) (QueueHash)
    * COMMITS WILL BE WRITE AFTER BRANCH INFO
    */
-  std::vector<uint8_t> Data, QueueDt;
+  std::vector<uint8_t> Data;
   std::string BytesCurrCommit = CurrentCommitHash.string();
 
-  QueueDt = QueueAdd.DataFromTree();
-  crypto::hash HashIndex(QueueDt);
+  crypto::hash HashIndex = QueueAdd.GetHash();
   std::string HashStr = HashIndex.string();
 
   Data.insert(Data.begin(), NameBranch.begin(), NameBranch.end());
@@ -202,7 +201,7 @@ void core::resources::branch::SaveBranch( void )
   {
     std::vector<uint8_t> QueueData = QueueAdd.DataFromTree();
 
-    if (!filesystem::WriteTree(crypto::hash(QueueData), QueueData))
+    if (!filesystem::WriteTree(QueueAdd.GetHash(QueueData), QueueData))
       throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit\n"));
   }
 

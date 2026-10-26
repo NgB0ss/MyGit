@@ -29,7 +29,7 @@ void Commit( std::string ArgCommit, std::string Message )
       std::cout << "No files in index" << std::endl;
       return;
     }
-    core::crypto::hash HashTree(CurrTreeBrnch->DataFromTree());
+    core::crypto::hash HashTree = CurrTreeBrnch->GetHash();
     core::resources::commit CurrCommit =
       core::resources::commit(CurrBranch.GetLastCmmtHash(),
                               HashTree,

@@ -35,11 +35,14 @@ core::resources::commit::commit( const std::vector<uint8_t> &Data )
   // Write message
   while (Data[CurrPos] != '"')
     Message.push_back(Data[CurrPos++]);
-  CurrPos++;
+  CurrPos += 2;
   // Write tree hash
   SavePos = CurrPos;
+  std::array<uint8_t, BYTES_HASH> TreeHash;
+
   for (int i = 0; CurrPos < SavePos + BYTES_HASH; CurrPos++)
-    Tree.bytes()[i] = Data[CurrPos];
+    TreeHash[i++] = Data[CurrPos];
+  Tree.SetHash(TreeHash);
 } /* End of 'core::resources::commit::commit' fucntion */
 
 /* Ctor by all data of resource

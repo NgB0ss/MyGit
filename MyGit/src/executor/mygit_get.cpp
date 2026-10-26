@@ -1,6 +1,6 @@
 /* FILE:        mygit_get.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 25.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Mygit get version function. 
  */

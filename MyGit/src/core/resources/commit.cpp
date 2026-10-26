@@ -18,25 +18,27 @@ core::resources::commit::commit( const std::vector<uint8_t> &Data )
   
   for (CurrPos; CurrPos < BYTES_HASH; CurrPos++)
     Parent.bytes()[CurrPos] = Data[CurrPos];
-  CurrPos++;
+  CurrPos += BYTES_HASH + 2;
   // Write time
   std::string TimeStr;
+  int SavePos = CurrPos;
 
   TimeStr.resize(16);
-  for (int i = 0; CurrPos < CurrPos + 16; CurrPos++)
+  for (int i = 0; CurrPos < SavePos + 16; CurrPos++)
     TimeStr[i++] = Data[CurrPos];
   Time = utils::TimeFromStr(TimeStr);
   CurrPos++;
-  // Write current position
-  for (int i = 0; CurrPos < CurrPos + Author.size(); CurrPos++)
-    Author.push_back(Data[CurrPos]);
+  while (Data[CurrPos] != ' ')
+    Author.push_back(Data[CurrPos++]);
+  CurrPos++;
   CurrPos++;
   // Write message
-  for (int i = 0; CurrPos < CurrPos + Message.size(); CurrPos++)
-    Message.push_back(Data[CurrPos]);
+  while (Data[CurrPos] != '"')
+    Message.push_back(Data[CurrPos++]);
   CurrPos++;
   // Write tree hash
-  for (int i = 0; CurrPos < CurrPos + BYTES_HASH; CurrPos++)
+  SavePos = CurrPos;
+  for (int i = 0; CurrPos < SavePos + BYTES_HASH; CurrPos++)
     Tree.bytes()[i] = Data[CurrPos];
 } /* End of 'core::resources::commit::commit' fucntion */
 
@@ -147,7 +149,7 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   
   CurrHash = Parent.bytes();
   // Write hash 
-  Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + 16 + 5); // 16 Symbols - time without time zone and 4 for spaces
+  Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + TIME_SYMBOLS + 7); // 5 symblos for spaces and 2 to ""
   Data.insert(Data.begin(), CurrHash.begin(), CurrHash.end());
   CurrPos += BYTES_HASH;
   Data[CurrPos++] = ' ';
@@ -161,8 +163,10 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   Data.insert(Data.begin() + CurrPos, Author.begin(), Author.end());
   CurrPos += (int)Author.size();
   Data[CurrPos++] = ' ';
+  Data[CurrPos++] = '"';
   Data.insert(Data.begin() + CurrPos, Message.begin(), Message.end());
   CurrPos += (int)Message.size();
+  Data[CurrPos++] = '"';
   Data[CurrPos++] = ' ';
   CurrHash = Tree.bytes();
   Data.insert(Data.begin() + CurrPos, CurrHash.begin(), CurrHash.end());

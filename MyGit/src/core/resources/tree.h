@@ -62,7 +62,15 @@ namespace core
        * RETURNS: 
        *   (std::vector<uint8_t>)  Data that build from tree.
        */
-      std::vector<uint8_t> DataFromTree( void );
+      std::vector<uint8_t> DataFromTree( void ) const;
+
+      /* Function to get hash by tree class
+       * ARGUMENTS: 
+       *   - const std::vector<uint8_t> &Data = {};
+       * RETURNS: 
+       *   (core::crypto::hash) Hash of tree.
+       */
+      crypto::hash GetHash( const std::vector<uint8_t> &Data = {} ) const;
     }; /* End of 'tree' class */
   }  /* end of 'resources' namespace */
 } /* end of 'core' namespace */

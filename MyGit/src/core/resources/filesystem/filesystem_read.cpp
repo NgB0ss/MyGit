@@ -90,13 +90,16 @@ std::vector<uint8_t> core::filesystem::ReadCommit( const std::string &Branch, co
   
   while (std::getline(File, CurrStr))
   {
-    if (cnt <= 1)
+    if (cnt++ <= 1)
       continue;
     CurrHash.insert(CurrHash.begin(),
                     CurrStr.begin() + BYTES_HASH + 1,
                     CurrStr.begin() + BYTES_HASH * 2 + 1);
     if (CurrHash == Hash.string())
       break;
+    // Clear all current strings
+    CurrHash.clear();
+    CurrStr.clear();
   }
   std::vector<uint8_t> Data;
 

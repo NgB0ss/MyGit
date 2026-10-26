@@ -1,6 +1,6 @@
 /* FILE:        def.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 27.09.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project
  *              Default header file
  */
@@ -13,7 +13,8 @@
 #include <tuple>
 #include <algorithm>
 #include <cmath>
-#include <string.h>
+#include <string_view>
+#include <string>
 #include <iostream>
 #include <vector>
 #include <functional>
@@ -25,10 +26,10 @@
 #include <chrono>
 #include <stdexcept>
 #include <cstdint>
+#include <limits>
 
 // My def header file
 #include "utils/utils.h"
-#include <limits>
 
 /* Debug memory allocation support */
 #ifdef _DEBUG

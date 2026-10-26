@@ -1,6 +1,6 @@
 /* FILE:        commit.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - commit
  */
@@ -12,6 +12,7 @@
 
 #define MAX_MSG 150  // Max symbols in 1 message to commit 
 #define MAX_AUTH 150 // Max author info
+#define TIME_SYMBOLS 16 // Time in commit symbols in string
 
 // Main core mygit namespace
 namespace core

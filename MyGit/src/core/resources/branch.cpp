@@ -63,9 +63,13 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
   NameBranch = std::string(CurrBytes.begin(), CurrBytes.end());
   AllCount++;
   CurrBytes.insert(CurrBytes.begin(),
-                   Data.begin() + NameBranch.size(),
-                   Data.begin() + NameBranch.size() + BYTES_HASH);
-  CurrentCommitHash = crypto::hash(CurrBytes);
+                   Data.begin() + AllCount,
+                   Data.begin() + AllCount + BYTES_HASH);
+  std::array<uint8_t, BYTES_HASH> Arr;
+
+  for (int i = 0; i < BYTES_HASH; i++)
+    Arr[i] = CurrBytes[i];
+  CurrentCommitHash.SetHash(Arr);
   CurrBytes.clear();
   AllCount += BYTES_HASH + 1;
   IsQueueInit = Data[AllCount];

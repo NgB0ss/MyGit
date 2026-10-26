@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 16.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -49,7 +49,7 @@ core::resources::tree::tree( std::vector<uint8_t> Data )
       size_t PosStar = OnePair.find('*');
 
       Path = OnePair.substr(0, PosStar);     // Path ro file
-      Hash = core::crypto::hash::FromStrToHash(OnePair.substr(PosStar + 1, OnePair.size()));
+      Hash = core::crypto::hash::FromStrToHash(OnePair.substr(PosStar + 2, OnePair.size()));
 
       FileSystemState.insert({Path, Hash});  // Add map uno
       OnePair.clear();                       // Clear pair string
@@ -64,7 +64,7 @@ core::resources::tree::tree( std::vector<uint8_t> Data )
  *       std::string Path;
  * RETURNS: None.
  */
-void core::resources::tree::ApplyVersion( std::string Path )
+void core::resources::tree::ApplyVersion( std::string Path ) 
 {
   filesystem::FileSystemState FSStt;
 
@@ -90,7 +90,7 @@ void core::resources::tree::ApplyVersion( std::string Path )
  * RETURNS: 
  *   (std::vector<uint8_t>)  Data that build from tree.
  */
-std::vector<uint8_t> core::resources::tree::DataFromTree( void )
+std::vector<uint8_t> core::resources::tree::DataFromTree( void ) const
 {
   /* HOW WRITE:
    *   - PATH TO FILE, HASH OF BLOB FILE, \n
@@ -111,8 +111,65 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void )
     for (int i = 0; i < OnePair.size(); pointer++)
       Data[pointer] = OnePair[i++];
   }
+  auto it = std::find(Data.begin(), Data.end(), '\0'); 
+
+  Data.erase(it, Data.end());
   Data.shrink_to_fit();
   return Data;
 } /* End of 'core::resources::tree::DataFromTree' function */
+
+/* Function to get hash by tree class
+ * ARGUMENTS: 
+ *   - const std::vector<uint8_t> &Data;
+ * RETURNS: 
+ *   (core::crypto::hash) Hash of tree.
+ */
+core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &Data ) const
+{
+  // Need sort tree, and get hash
+  // We need sort tree bcse map is not know how elements insert in there
+  // And if some elements swap, hash1 != hash2
+  
+  // Check, maybe we get data before
+  std::vector<uint8_t> DataToSort;
+  bool IsDataGet = true;
+
+  if (Data.size() == 0)
+    DataToSort = DataFromTree();
+  else
+    DataToSort = Data;
+  // Create pairs vector to sort it after
+  // Create struct to pairs hash->path
+  struct files
+  {
+    std::string_view Path;
+    std::string_view Hash;
+  };
+
+  std::vector<files> FilesView;
+  int cnt = 0, it = 0, StarPos = 0;
+  std::string_view StrDataToSort(reinterpret_cast<char *>(DataToSort.data()), DataToSort.size());
+  std::string_view Curr;
+
+  while (cnt++ < StrDataToSort.size())
+  {
+    it = StrDataToSort.find('\n', cnt);
+    if (it == std::string::npos)
+      it = StrDataToSort.size();
+    Curr = StrDataToSort.substr(cnt, it - cnt);
+    
+    StarPos = StrDataToSort.find('*', cnt);
+    if (StarPos != std::string::npos)
+      FilesView.push_back({Curr.substr(0, StarPos), Curr.substr(StarPos + 2, Curr.size())});
+
+    cnt = it + 1;
+    it = 0;
+  }
+  // Sort tree
+  std::sort(FilesView.begin(), FilesView.end(), []( const files &File1, const files &File2)
+            {
+              return File1.Path < File2.Path;
+            });
+} /* End of 'core::resources::tree::GetHash' function */
 
 /* END OF 'tree.cpp' FILE */

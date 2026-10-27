@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.10.2026
+ * LAST UPDATE: 27.10.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -67,18 +67,28 @@ core::resources::tree::tree( std::vector<uint8_t> Data )
 void core::resources::tree::ApplyVersion( std::string Path ) 
 {
   filesystem::FileSystemState FSStt;
+  std::filesystem::path Relative, CurrentPath = std::filesystem::current_path();
+  bool IsApp = false;
 
-  std::filesystem::path DefPath, CurrentPath = std::filesystem::current_path();
+  // Is apply tree or make by tree in other path
+  if (Path.size() == 0)
+    IsApp = true;
 
   // Write tree to filesystem state variable
   for (const auto &[defPath, hash]: FileSystemState)
   {
-    DefPath = std::filesystem::path(defPath);
-    DefPath = std::filesystem::relative(DefPath, CurrentPath);
-    if (DefPath.string().size() == 0)
-      FSStt.FSState.insert({CurrentPath.string(), {0, FileSystemState[defPath]}});
+    // Correct defpath without \n
+    std::filesystem::path Def;
+    if (defPath[0] == '\n')
+      Def = defPath.substr(1, defPath.size());
     else
-      FSStt.FSState.insert({Path + DefPath.string(), {0, FileSystemState[defPath]}});
+      Def = defPath;
+    // Aproximate realtive path
+    Relative = std::filesystem::relative(Def, CurrentPath);
+    if (IsApp)
+      FSStt.FSState.insert({defPath, {0, hash}});
+    else
+      FSStt.FSState.insert({Path + "\\" + Relative.string(), {0, hash}});
   }
 
   // ApplyVersion filsystem with current path

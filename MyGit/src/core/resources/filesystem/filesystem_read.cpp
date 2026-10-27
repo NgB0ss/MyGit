@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 25.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -16,7 +16,7 @@
  */
 std::vector<uint8_t> core::filesystem::ReadBlob( const crypto::hash &Hash )
 {
-  fs::path FilePath = BLOBS_OBJ_PATH / Hash.string();
+  fs::path FilePath = BLOBS_OBJ_PATH / Hash.string().substr(0, 2) / Hash.string();
   std::ifstream File(FilePath, std::ios::in | std::ios::binary | std::ios::ate );
 
   if (!File.is_open())

@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 17.10.2026
+ * LAST UPDATE: 27.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -34,7 +34,7 @@ namespace core
        * RETURNS: 
        *   (std::vector<uint8_t>) Data in bytes.
        */
-      std::vector<uint8_t> FromBranchToData( void );
+      std::vector<uint8_t> ToData( void ) const;
 
     public:
 
@@ -82,13 +82,13 @@ namespace core
        * RETURNS:
        *   (std::string) Name of branch.
        */
-      std::string GetName( void );
+      std::string GetName( void ) const;
 
       /* Function to save branch in filesystem
        * ARGUMENTS: None.
        * RETURNS: None.
        */
-      void SaveBranch( void );
+      void SaveBranch( void ) const;
 
       /* Function to get current branch 
        * ARGUMENTS: None.

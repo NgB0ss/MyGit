@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 25.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -242,6 +242,39 @@ void core::filesystem::MakeFileSystem( const FileSystemState &FSStt )
       throw std::runtime_error("Data cant be written");
     }
   }
-}  /* End of 'core::filesystem::MakeFileSystem' function */
+} /* End of 'core::filesystem::MakeFileSystem' function */
+
+/* Function to celar current filesystem 
+ * ARGUMENTS:
+ *   - Path to clear filesystem:
+ *       std::string Path;
+ * RETURNS: 
+ *   (bool) IsOkOrNo.
+ */
+bool core::filesystem::ClearFilesystem( std::string Path )
+{
+  if (!fs::exists(Path))
+    return false;
+  std::vector<fs::path> Dirrects;
+
+  // Delete files
+  for (const auto &entry: fs::recursive_directory_iterator(Path))
+  {
+    if (entry.path().string().find(".mygit") != std::string::npos)
+      continue;
+
+    try {fs::remove(entry.path());}
+    catch ( std::exception ) 
+    { 
+      Dirrects.push_back(entry.path()); 
+      continue;
+    }
+  }
+
+  // Delete dirrectories
+  for (const auto &entry: Dirrects)
+    fs::remove(entry);
+  return true;
+} /* End of 'core::filesystem::ClearFilesystem' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

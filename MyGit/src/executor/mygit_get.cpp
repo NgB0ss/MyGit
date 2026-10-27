@@ -46,7 +46,9 @@ void Get( core::crypto::hash HashCommit, std::string Path = {} )
 static void Adapter( std::vector<ArgumentValue> Args )
 {
   auto HashCommit = std::get<core::crypto::hash>(Args[0]);
-  auto Path = std::get<std::string>(Args[1]);
+  std::string Path;
+  if (Args.size() == 2)
+    Path = std::get<std::string>(Args[1]);
 
   Get(HashCommit, Path);
 } /* End of 'Adapter' function */

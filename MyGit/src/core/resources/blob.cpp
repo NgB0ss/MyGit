@@ -1,6 +1,6 @@
 /* FILE:        blob.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 18.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Resources - blob executor file
  */
@@ -49,5 +49,15 @@ std::vector<uint8_t> core::resources::blob::ToData( void ) const
 {
   return Bytes;
 } /* End of 'core::resources::blob::ToData' function */
+
+/* Funtion to ge hash from blob
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (core::crypto::hash) Hash of blob.
+ */
+core::crypto::hash core::resources::blob::GetHash( void ) const
+{
+  return crypto::hash(Bytes);
+} /* End of 'core::resources::blob::GetHash' function */
 
 /* END OF 'blob.cpp' FILE */

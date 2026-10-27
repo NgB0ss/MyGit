@@ -1,6 +1,6 @@
 /* FILE:        blob.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 18.10.2026
+ * LAST UPDATE: 26.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - blob.
  */
@@ -51,6 +51,13 @@ namespace core
        *   (std::vector<unit8_t>) Data that was blob.
        */
       std::vector<uint8_t> ToData( void ) const;
+
+      /* Funtion to ge hash from blob
+       * ARGUMENTS: None.
+       * RETURNS:
+       *   (core::crypto::hash) Hash of blob.
+       */
+      crypto::hash GetHash( void ) const;
     }; /* End of 'blob' class */
   } /* end of 'resources' namespace */
 } /* end of 'core' namespace */

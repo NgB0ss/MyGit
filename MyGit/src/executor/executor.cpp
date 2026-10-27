@@ -27,7 +27,7 @@ void executor_core::ChooseFunc( core::ParsedCommand Cmd )
   std::vector<ArgumentValue> Args;                            // Get value of arguments
 
   // Parsing string arguments to correct-type arguments
-  for (int i = 0; i < Command.Arguments.size(); i++)
+  for (int i = 0; i < Cmd.Arguments.size(); i++)
   {
     std::string CurrArgStr = Cmd.Arguments[i];
     argument CurrArg = Command.Arguments[i];

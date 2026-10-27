@@ -124,7 +124,7 @@ core::crypto::hash core::resources::branch::GetLastCmmtHash( void )
  * RETURNS:
  *   (std::string) Name of branch.
  */
-std::string core::resources::branch::GetName( void )
+std::string core::resources::branch::GetName( void ) const
 {
   return NameBranch;
 } /* End of 'core::resources::branch::GetName' function */
@@ -166,7 +166,7 @@ void core::resources::branch::SwapCurrentBranch( const branch &NewCurrBr )
  * RETURNS: 
  *   (std::vector<uint8_t>) Data in bytes.
  */
-std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
+std::vector<uint8_t> core::resources::branch::ToData( void ) const
 {
   /* How branch wiil be saved in bytes?:
    *   - In default sequence field:
@@ -187,15 +187,15 @@ std::vector<uint8_t> core::resources::branch::FromBranchToData( void )
   Data.push_back(' ');
   Data.insert(Data.end(), HashStr.begin(), HashStr.end());
   return Data;
-} /* End of 'core::resources::branch::FromBranchToData' fucntion */
+} /* End of 'core::resources::branch::ToData' fucntion */
 
 /* Function to save branch in filesystem
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-void core::resources::branch::SaveBranch( void )
+void core::resources::branch::SaveBranch( void ) const
 {
-  std::vector<uint8_t> BytesBrnch = FromBranchToData();
+  std::vector<uint8_t> BytesBrnch = ToData();
 
   if (IsQueueInit)
   {
@@ -208,6 +208,7 @@ void core::resources::branch::SaveBranch( void )
   if (!filesystem::WriteBranch(NameBranch, BytesBrnch))
     throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm\n"));
 } /* End of 'core::resources::branch::SaveBranch' function */
+
 
 
 /* END OF 'branch.cpp' FILE */

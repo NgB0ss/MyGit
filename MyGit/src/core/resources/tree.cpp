@@ -1,6 +1,6 @@
 /* FILE:        tree.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 27.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Resources - tree executor file
  */
@@ -73,6 +73,12 @@ void core::resources::tree::ApplyVersion( std::string Path )
   // Is apply tree or make by tree in other path
   if (Path.size() == 0)
     IsApp = true;
+  // If that tree must be applied to this dirrectory-> that mean thet we need to delete all file
+  // Before we applied filesystem
+  if (IsApp) 
+  {
+    filesystem::ClearFilesystem(std::filesystem::current_path().string());
+  }
 
   // Write tree to filesystem state variable
   for (const auto &[defPath, hash]: FileSystemState)
@@ -86,7 +92,7 @@ void core::resources::tree::ApplyVersion( std::string Path )
     // Aproximate realtive path
     Relative = std::filesystem::relative(Def, CurrentPath);
     if (IsApp)
-      FSStt.FSState.insert({defPath, {0, hash}});
+      FSStt.FSState.insert({Def.string(), {0, hash}});
     else
       FSStt.FSState.insert({Path + "\\" + Relative.string(), {0, hash}});
   }

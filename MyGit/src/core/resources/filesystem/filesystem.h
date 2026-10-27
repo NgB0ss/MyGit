@@ -1,6 +1,6 @@
 /* FILE:        filesystem.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 13.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Filesystem main file - physic save resources
  */
@@ -46,6 +46,15 @@ namespace core
      * RETURNS: None.
      */
     void MakeFileSystem( const FileSystemState &FSStt );
+
+    /* Function to celar current filesystem 
+     * ARGUMENTS:
+     *   - Path to clear filesystem:
+     *       std::string Path;
+     * RETURNS: 
+     *   (bool) IsOkOrNo.
+     */
+    bool ClearFilesystem( std::string Path );
 
     /* Function to read filesystem state
      * ARGUMENTS: None.

@@ -34,7 +34,11 @@ void Commit( std::string ArgCommit, std::string Message )
       core::resources::commit(CurrBranch.GetLastCmmtHash(),
                               HashTree,
                               "Author", Message);
-    core::filesystem::WriteCommit(CurrBranch.GetName(), CurrCommit.DataFromCommit());
+    if (!CurrCommit.Save(CurrBranch.GetName()))
+      throw std::runtime_error("Commit cant be saved -> check rights of mygit\n");
+    core::resources::tree EmptyQueue;
+
+    CurrBranch.ApplyTree(EmptyQueue);
   }
   else
     std::cout << "Not correct operator to commit -> see help" << std::endl;

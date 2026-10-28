@@ -22,7 +22,7 @@ core::resources::tree::tree( TreeCtor Type )
       FileSystemState[path] = FStt.Hash;
     // Create blobs by tree that not created
     for (const auto &[path, hash]: FileSystemState)
-      if (!filesystem::WriteBlob(hash, blob(path).ToData()))
+      if (!blob(path).Save())
         std::cout << "Blob cant be writed " << hash.string() << std::endl;
   }
   else  // Ctor default
@@ -106,7 +106,7 @@ void core::resources::tree::ApplyVersion( std::string Path )
  * RETURNS: 
  *   (std::vector<uint8_t>)  Data that build from tree.
  */
-std::vector<uint8_t> core::resources::tree::DataFromTree( void ) const
+std::vector<uint8_t> core::resources::tree::ToData( void ) const
 {
   /* HOW WRITE:
    *   - PATH TO FILE, HASH OF BLOB FILE, \n
@@ -132,7 +132,20 @@ std::vector<uint8_t> core::resources::tree::DataFromTree( void ) const
   Data.erase(it, Data.end());
   Data.shrink_to_fit();
   return Data;
-} /* End of 'core::resources::tree::DataFromTree' function */
+} /* End of 'core::resources::tree::ToData' function */
+
+/* Function to save tree
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (bool) Is save succes or not.
+ */
+bool core::resources::tree::Save( void ) const
+{
+  std::vector<uint8_t> BytesToSave;
+  
+  BytesToSave = ToData();
+  return filesystem::WriteTree(GetHash(BytesToSave), BytesToSave);
+} /* End of 'core::resources::Save' function */
 
 /* Function to get hash by tree class
  * ARGUMENTS: 
@@ -151,7 +164,7 @@ core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &D
   bool IsDataGet = true;
 
   if (Data.size() == 0)
-    DataToSort = DataFromTree();
+    DataToSort = ToData();
   else
     DataToSort = Data;
 
@@ -217,5 +230,15 @@ core::crypto::hash core::resources::tree::GetHash( const std::vector<uint8_t> &D
 
   return crypto::hash(SortedData);
 } /* End of 'core::resources::tree::GetHash' function */
+
+/* Function to check is tree empty or no
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (bool) Is Empty or not.
+ */
+bool core::resources::tree::IsEmpty( void ) const
+{
+  return !FileSystemState.size();
+} /* End of 'core::respurces::tree::IsEmpty' function */
 
 /* END OF 'tree.cpp' FILE */

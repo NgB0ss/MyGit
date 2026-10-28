@@ -1,6 +1,6 @@
 /* FILE:        tree.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 21.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - tree.
  */
@@ -25,12 +25,19 @@ namespace core
     class tree
     {
     private:
-      std::map<std::string, crypto::hash> FileSystemState; // Map of filesyste, state
+      std::map<std::string, crypto::hash> FileSystemState {}; // Map of filesyste, state
       /* IN DEFAULT GIT:
        *   - Dirrectories in def git also have hashes, to optimiztion time, for commited big projects e.t.c
        *     But I have so many time and do it like def map, 
        *     maybe I change it after end core and write first executor functions
        */
+      
+      /* Function to bild data from tree class 
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (std::vector<uint8_t>)  Data that build from tree.
+       */
+      std::vector<uint8_t> ToData( void ) const;
     public:
       /* Default ctro of tree */
       tree( void ) = default;
@@ -57,12 +64,12 @@ namespace core
        */
       void ApplyVersion( std::string Path = {} );
 
-      /* Function to bild data from tree class 
+      /* Function to save tree
        * ARGUMENTS: None.
        * RETURNS: 
-       *   (std::vector<uint8_t>)  Data that build from tree.
+       *   (bool) Is save success or not.
        */
-      std::vector<uint8_t> DataFromTree( void ) const;
+      bool Save( void ) const;
 
       /* Function to get hash by tree class
        * ARGUMENTS: 
@@ -71,6 +78,13 @@ namespace core
        *   (core::crypto::hash) Hash of tree.
        */
       crypto::hash GetHash( const std::vector<uint8_t> &Data = {} ) const;
+
+      /* Function to check is tree empty or no
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (bool) Is Empty or not.
+       */
+      bool IsEmpty( void ) const;
     }; /* End of 'tree' class */
   }  /* end of 'resources' namespace */
 } /* end of 'core' namespace */

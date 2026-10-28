@@ -1,6 +1,6 @@
 /* FILE:        mygit_add.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project
  *              Mygit add functions 
  */
@@ -23,10 +23,14 @@ void Add( std::string ArgAdd )
     core::resources::branch CurrBranch = core::resources::branch::GetCurrentBranch();
     
     CurrBranch.ApplyTree(CurrTree);
-    CurrBranch.SaveBranch();
+    CurrBranch.Save();
+  }
+  else if (ArgAdd.size() != 0)
+  {
+    std::cout << "Add by path of file is not ready, use add ." << std::endl;
   }
   else
-    std::cout << "Not correct chooise operator of add -> see help" << std::endl;
+    std::cout << "Choose operator to add -> see help" << std::endl;
 } /* End of 'Add' function */
 
 /*** ADAPTER TO FUNCTION ***/

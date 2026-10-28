@@ -50,6 +50,16 @@ std::vector<uint8_t> core::resources::blob::ToData( void ) const
   return Bytes;
 } /* End of 'core::resources::blob::ToData' function */
 
+/* Function to save blob 
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (bool) Is save success or not.
+ */
+bool core::resources::blob::Save( void ) const
+{
+  return filesystem::WriteBlob(crypto::hash(Bytes), Bytes);
+} /* End of 'core::resources::blob::Save' function */
+
 /* Funtion to ge hash from blob
  * ARGUMENTS: None.
  * RETURNS:

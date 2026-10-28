@@ -1,6 +1,6 @@
 /* FILE:        branch.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 24.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Resources - branch executor file
  */
@@ -41,7 +41,7 @@ core::resources::branch::branch( const std::string &Branch )
   CurrentCommitHash = crypto::hash(std::vector<uint8_t> ()); // ZERO_BYTES_BRNCH
   
   // Write new branch if ctor not delegated
-  try { SaveBranch(); }
+  try { Save(); }
   catch ( std::runtime_error Err ) { throw Err; }
 } /* End of 'core::resources::branch::branch' fucntion */
 
@@ -94,7 +94,10 @@ void core::resources::branch::ApplyTree( const core::resources::tree &NewTree )
 {
   // Init queue
   QueueAdd = NewTree;
-  IsQueueInit = true;
+  if (NewTree.IsEmpty())
+    IsQueueInit = false;
+  else
+    IsQueueInit = true;
 } /* End of 'core::resources::branch::ApplyTree' function */
 
 /* Function to get tree from branch
@@ -191,23 +194,18 @@ std::vector<uint8_t> core::resources::branch::ToData( void ) const
 
 /* Function to save branch in filesystem
  * ARGUMENTS: None.
- * RETURNS: None.
+ * RETURNS: 
+ *   (bool) Is save success or not.
  */
-void core::resources::branch::SaveBranch( void ) const
+bool core::resources::branch::Save( void ) const
 {
   std::vector<uint8_t> BytesBrnch = ToData();
 
   if (IsQueueInit)
-  {
-    std::vector<uint8_t> QueueData = QueueAdd.DataFromTree();
+    QueueAdd.Save();
 
-    if (!filesystem::WriteTree(QueueAdd.GetHash(QueueData), QueueData))
-      throw(std::runtime_error("Tree cant be written -> Make mygit init or check rights of mygit\n"));
-  }
-
-  if (!filesystem::WriteBranch(NameBranch, BytesBrnch))
-    throw(std::runtime_error("Branch cant be written -> Make mygit init or check rights of programm\n"));
-} /* End of 'core::resources::branch::SaveBranch' function */
+  return filesystem::WriteBranch(NameBranch, BytesBrnch);
+} /* End of 'core::resources::branch::Save' function */
 
 
 

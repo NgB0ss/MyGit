@@ -1,6 +1,6 @@
 /* FILE:        branch.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 27.10.2026
+ * LAST UPDATE: 28.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - branch
  */
@@ -86,9 +86,10 @@ namespace core
 
       /* Function to save branch in filesystem
        * ARGUMENTS: None.
-       * RETURNS: None.
+       * RETURNS: 
+       *   (bool) Is save succes or not.
        */
-      void SaveBranch( void ) const;
+      bool Save( void ) const;
 
       /* Function to get current branch 
        * ARGUMENTS: None.

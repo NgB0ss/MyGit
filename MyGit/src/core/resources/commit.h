@@ -28,6 +28,12 @@ namespace core
       std::string Author{}, Message{};                                            // Author of commit message
       std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> Time{};       // Time that commit was created
 
+      /* Function to get data from commit 
+       * ARGUMENTS: None.
+       * RETURNS:
+       *   (std::vector<uint8_t>) Data of commit in bytes.
+       */
+      std::vector<uint8_t> DataFromCommit( void ) const;
     public:
       /* Default commit ctor
        * ARGUMENTS: None.
@@ -74,12 +80,14 @@ namespace core
       */
       void MakeVersionByCommit( std::string Path );
 
-      /* Function to get data from commit 
-       * ARGUMENTS: None.
-       * RETURNS:
-       *   (std::vector<uint8_t>) Data of commit in bytes.
+      /* Function to save commit
+       * ARGUMENTS: 
+       *   - Branch name to save commit:
+       *       std::string BranchName;
+       * RETURNS: 
+       *   (bool) Is save success or not.
        */
-      std::vector<uint8_t> DataFromCommit( void );
+      bool Save( std::string BranchName ) const;
     }; /* End of 'commit' class */
   }  /* end of 'resources' namespace */
 } /* end of 'core' namespace */

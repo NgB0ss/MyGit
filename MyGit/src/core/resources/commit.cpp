@@ -135,7 +135,7 @@ void core::resources::commit::MakeVersionByCommit( std::string Path )
  * RETURNS:
  *   (std::vector<uint8_t>) Data of commit in bytes.
  */
-std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
+std::vector<uint8_t> core::resources::commit::DataFromCommit( void ) const
 {
   /* How commit saved in branch?
    *   - First:  Commit hash
@@ -180,5 +180,19 @@ std::vector<uint8_t> core::resources::commit::DataFromCommit( void )
   Data.insert(Data.begin() + BYTES_HASH + 1, HashArr.begin(), HashArr.end());  
   return Data;
 } /* End of 'core::resources::commit::DataFromCommit' function */
+
+/* Function to save commit
+ * ARGUMENTS: 
+ *   - Name where commit need be saved:
+ *       std::string BranchName;
+ * RETURNS: 
+ *   (bool) Is save success or not.
+ */
+bool core::resources::commit::Save( std::string BranchName ) const
+{
+  std::vector<uint8_t> Bytes = DataFromCommit();
+
+  return filesystem::WriteCommit(BranchName, Bytes);
+} /* End of 'core::resources::branch::Save' function */
 
 /* END OF 'commit.cpp' FILE */

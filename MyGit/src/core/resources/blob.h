@@ -20,7 +20,14 @@ namespace core
     class blob
     {
     private:
-      std::vector<uint8_t> Bytes;   // File data in bytes
+      std::vector<uint8_t> Bytes{};   // File data in bytes
+
+      /* Function that convert blob to data
+       * ARGUMENTS: None.
+       * RETURNS:
+       *   (std::vector<unit8_t>) Data that was blob.
+       */
+      std::vector<uint8_t> ToData( void ) const;
     public:
 
       /* Ctor blob by file path 
@@ -45,12 +52,12 @@ namespace core
        */
       void MakeFileByBlob( const std::string &Path ) const;
 
-      /* Function that convert blob to data
+      /* Function to save blob 
        * ARGUMENTS: None.
-       * RETURNS:
-       *   (std::vector<unit8_t>) Data that was blob.
+       * RETURNS: 
+       *   (bool) Is save success or not.
        */
-      std::vector<uint8_t> ToData( void ) const;
+      bool Save( void ) const;
 
       /* Funtion to ge hash from blob
        * ARGUMENTS: None.

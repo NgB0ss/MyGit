@@ -1,6 +1,3 @@
 # Student project of ngbs :: started at 03.09.2026
-#                         :: ended   at --.--.----
-## Tasks of project
-- All systems of core need check
-- Trees and branches need optimization
-- All subsystems need code refactoring
+#                         :: ended   at 30.10.2026
+MyGit - small version of git that i make to learn c++ and some architecture reception

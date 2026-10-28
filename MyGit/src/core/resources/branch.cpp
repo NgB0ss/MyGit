@@ -90,7 +90,7 @@ core::resources::branch::branch( const std::vector<uint8_t> &Data )
  *       const tree &NewTree;
  * RETURNS: None.
  */
-void core::resources::branch::ApplyTree( const core::resources::tree &NewTree )
+void core::resources::branch::SetTree( const core::resources::tree &NewTree )
 {
   // Init queue
   QueueAdd = NewTree;
@@ -98,7 +98,18 @@ void core::resources::branch::ApplyTree( const core::resources::tree &NewTree )
     IsQueueInit = false;
   else
     IsQueueInit = true;
-} /* End of 'core::resources::branch::ApplyTree' function */
+} /* End of 'core::resources::branch::SetTree' function */
+
+/* Function to set last commit hash 
+ * ARGUMENTS: 
+ *   - Commit to set hash:
+ *       commit NewLastCommit;
+ * RETURNS: None.
+ */
+void core::resources::branch::SetHashCurrCommit( const commit &NewLastCommit )
+{
+  CurrentCommitHash = crypto::hash(NewLastCommit.GetHash());
+} /* End of 'core::resources::branch::SetHashCurrCommit' function */
 
 /* Function to get tree from branch
  * ARGUMENTS: None

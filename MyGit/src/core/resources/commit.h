@@ -80,6 +80,12 @@ namespace core
       */
       void MakeVersionByCommit( std::string Path );
 
+      /* Get commit hash function 
+       * ARGUMENTS: None.
+       * RETURNS: None.
+       */
+      crypto::hash GetHash( void ) const;
+
       /* Function to save commit
        * ARGUMENTS: 
        *   - Branch name to save commit:

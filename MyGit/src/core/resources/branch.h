@@ -61,7 +61,15 @@ namespace core
        *       const tree &NewTree;
        * RETURNS: None.
        */
-      void ApplyTree( const tree &NewTRee );
+      void SetTree( const tree &NewTRee );
+
+      /* Function to set last commit hash 
+       * ARGUMENTS: 
+       *   - Commit to set hash:
+       *       commit NewLastCommit;
+       * RETURNS: None.
+       */
+      void SetHashCurrCommit( const commit &NewLastCommit );
 
       /* Function to get tree from branch
        * ARGUMENTS: None

@@ -195,4 +195,13 @@ bool core::resources::commit::Save( std::string BranchName ) const
   return filesystem::WriteCommit(BranchName, Bytes);
 } /* End of 'core::resources::branch::Save' function */
 
+/* Get commit hash function 
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+core::crypto::hash core::resources::commit::GetHash( void ) const
+{
+  return crypto::hash(DataFromCommit());
+} /* End of 'core::resources::commit::GetHash' function */
+
 /* END OF 'commit.cpp' FILE */

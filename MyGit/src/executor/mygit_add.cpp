@@ -22,7 +22,7 @@ void Add( std::string ArgAdd )
     core::resources::tree CurrTree(core::resources::TreeCtor::BySystem);
     core::resources::branch CurrBranch = core::resources::branch::GetCurrentBranch();
     
-    CurrBranch.ApplyTree(CurrTree);
+    CurrBranch.SetTree(CurrTree);
     CurrBranch.Save();
   }
   else if (ArgAdd.size() != 0)

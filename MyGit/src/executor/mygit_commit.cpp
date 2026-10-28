@@ -38,7 +38,9 @@ void Commit( std::string ArgCommit, std::string Message )
       throw std::runtime_error("Commit cant be saved -> check rights of mygit\n");
     core::resources::tree EmptyQueue;
 
-    CurrBranch.ApplyTree(EmptyQueue);
+    CurrBranch.SetTree(EmptyQueue);
+    CurrBranch.SetHashCurrCommit(CurrCommit);
+    CurrBranch.Save();
   }
   else
     std::cout << "Not correct operator to commit -> see help" << std::endl;

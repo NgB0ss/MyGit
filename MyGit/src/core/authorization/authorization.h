@@ -28,9 +28,10 @@ namespace core
      * ARGUMENTS: 
      *   - Command that parser return:
      *       ParseredCommand Cmd;
-     * RETURNS: None.
+     * RETURNS: 
+     *   (bool) Is login Ok or not.
      */
-    void Login( ParsedCommand Cmd );
+    bool Login( ParsedCommand Cmd );
 
     /* Function to logout from this session 
      * ARGUMENTS: None.
@@ -38,6 +39,13 @@ namespace core
      */
     void Logout( void );
 
+    /* Function to create new user on this PC
+     * ARGUMENTS:
+     *   - Command that parser return:
+     *       ParsedCommand Cmd;
+     * RETURNS: None.
+     */
+    void CreateUser( ParsedCommand Cmd );
   } /* End of 'resources' namespace */
 } /* End of 'core' namespace */
 

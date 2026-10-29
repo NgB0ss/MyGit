@@ -159,6 +159,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\authorization\authorization.cpp" />
+    <ClCompile Include="src\core\authorization\user.cpp" />
     <ClCompile Include="src\core\mygit.cpp" />
     <ClCompile Include="src\core\resources\blob.cpp" />
     <ClCompile Include="src\core\resources\branch.cpp" />
@@ -190,6 +192,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\authorization\authorization.h" />
+    <ClInclude Include="src\core\authorization\user.h" />
     <ClInclude Include="src\core\mygit.h" />
     <ClInclude Include="src\core\parser\parser.h" />
     <ClInclude Include="src\core\parser\parser_def.h" />

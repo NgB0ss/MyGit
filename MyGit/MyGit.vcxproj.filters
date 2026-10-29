@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Executor\Registrator">
       <UniqueIdentifier>{58f1f92b-b79e-498b-8d1f-a97738dd9ee7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Authorization">
+      <UniqueIdentifier>{422c0afe-87d5-422a-91fb-05c09ad8fafa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\mygit.cpp">
@@ -117,6 +120,12 @@
     <ClCompile Include="src\executor\mygit_commit_log.cpp">
       <Filter>Source Files\Executor</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\authorization\authorization.cpp">
+      <Filter>Source Files\Core\Authorization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\authorization\user.cpp">
+      <Filter>Source Files\Core\Authorization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\mygit.h">
@@ -166,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="src\utils\utils.h">
       <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\authorization\authorization.h">
+      <Filter>Source Files\Core\Authorization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\authorization\user.h">
+      <Filter>Source Files\Core\Authorization</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

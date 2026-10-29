@@ -14,6 +14,7 @@
  */
 bool core::authorization::IsLogined( void )
 {
+  return true;
 } /* End of 'core::authorization::IsLogined' function */
     
 /* Function to login already exist user 
@@ -25,6 +26,7 @@ bool core::authorization::IsLogined( void )
  */
 bool core::authorization::Login( ParsedCommand Cmd )
 {
+  return true;
 } /* End of 'core::authorization::Login' function */
 
 /* Function to logout from this session 

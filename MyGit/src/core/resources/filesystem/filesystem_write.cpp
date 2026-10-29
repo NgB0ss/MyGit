@@ -1,6 +1,6 @@
 /* FILE:        filesystem_write.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Filesystem write function module.
  */
@@ -276,5 +276,23 @@ bool core::filesystem::ClearFilesystem( std::string Path )
     fs::remove(entry);
   return true;
 } /* End of 'core::filesystem::ClearFilesystem' function */
+
+/*******************************************
+*
+** DATABASE AND AUTHORIZATION FUNCTIONS **
+*
+*******************************************/
+    
+/* Function to write user to database
+ * ARGUMENTS:
+ *   - Bytes to write:
+ *       std::vector<uint8_t> Bytes;
+ * RETURNS:
+ *   (bool) Is saved ok or not.
+ */
+bool core::filesystem::WriteUser( const std::vector<uint8_t> &Bytes )
+{
+  return true;
+} /* End of 'core::filesystem::WriteUser' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

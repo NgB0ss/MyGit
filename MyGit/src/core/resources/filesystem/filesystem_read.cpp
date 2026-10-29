@@ -1,6 +1,6 @@
 /* FILE:        filesystem_read.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Filesystem read function module.
  */
@@ -279,5 +279,21 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
 
   return FSStt;
 } /* End of 'core::filesystem::ReadFileSystem' function */
+
+/*******************************************
+*
+** DATABASE AND AUTHORIZATION FUNCTIONS **
+*
+*******************************************/
+
+/* Function to read nickname of user
+ * ARGUMENTS:
+ *   - Nickname of user that need be read:
+ *       const std::string &Nickname;
+ * RETURNS: None.
+ */
+void core::filesystem::ReadUser( const std::string &Nickname )
+{
+} /* End of 'core::filesystem::ReadUser' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

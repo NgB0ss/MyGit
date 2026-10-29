@@ -1,6 +1,6 @@
 /* FILE:        filesystem.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 28.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Filesystem main file - physic save resources
  */
@@ -203,6 +203,30 @@ namespace core
      *   (bool) Is saved before or no.
      */
     bool IsBranchSavedBf( std::string NameBranch );
+
+    /*******************************************
+     *
+     ** DATABASE AND AUTHORIZATION FUNCTIONS **
+     *
+     *******************************************/
+
+    
+    /* Function to write user to database
+     * ARGUMENTS:
+     *   - Bytes to write:
+     *       std::vector<uint8_t> Bytes;
+     * RETURNS:
+     *   (bool) Is saved ok or not.
+     */
+    bool WriteUser( const std::vector<uint8_t> &Bytes );
+
+    /* Function to read nickname of user
+     * ARGUMENTS:
+     *   - Nickname of user that need be read:
+     *       const std::string &Nickname;
+     * RETURNS: None.
+     */
+    void ReadUser( const std::string &Nickname );
   }  /* end of 'filesystem' namespace */
 } /* end of 'core' namespace */
 

@@ -1,6 +1,6 @@
 /* FILE:        def.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.10.2026
+ * LAST UPDATE: 29.10.2026
  * PURPOSE:     Git project
  *              Default header file
  */
@@ -27,6 +27,15 @@
 #include <stdexcept>
 #include <cstdint>
 #include <limits>
+
+// To enable or disable ECHO input 
+// Linux / Windows 
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#else 
+#include <termios.h>
+#include <unistd.h>
+#endif 
 
 // My def header file
 #include "utils/utils.h"

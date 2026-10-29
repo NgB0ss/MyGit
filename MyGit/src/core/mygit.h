@@ -10,6 +10,7 @@
 #define __mygit_h_
 
 #include "executor/executor.h"
+#include "authorization/authorization.h"
 #include "parser/parser.h"
 
 namespace core

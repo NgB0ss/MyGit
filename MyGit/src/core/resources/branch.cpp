@@ -108,7 +108,7 @@ void core::resources::branch::SetTree( const core::resources::tree &NewTree )
  */
 void core::resources::branch::SetHashCurrCommit( const commit &NewLastCommit )
 {
-  CurrentCommitHash = crypto::hash(NewLastCommit.GetHash());
+  CurrentCommitHash = NewLastCommit.GetHash();
 } /* End of 'core::resources::branch::SetHashCurrCommit' function */
 
 /* Function to get tree from branch

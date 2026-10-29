@@ -201,7 +201,35 @@ bool core::resources::commit::Save( std::string BranchName ) const
  */
 core::crypto::hash core::resources::commit::GetHash( void ) const
 {
-  return crypto::hash(DataFromCommit());
+  std::vector<uint8_t> Data;
+  std::array<uint8_t, BYTES_HASH> CurrHash;
+  int CurrPos = 0;
+  
+  CurrHash = Parent.bytes();
+  // Write hash 
+  Data.resize(BYTES_HASH * 2 + Author.size() + Message.size() + TIME_SYMBOLS + 7); // 5 symblos for spaces and 2 to ""
+  Data.insert(Data.begin(), CurrHash.begin(), CurrHash.end());
+  CurrPos += BYTES_HASH;
+  Data[CurrPos++] = ' ';
+  Data[CurrPos++] = ' ';
+  // Write time
+  std::string TimeStr = std::format("{:%Y-%m-%d %H:%M}", Time);
+
+  Data.insert(Data.begin() + CurrPos, TimeStr.begin(), TimeStr.end());
+  CurrPos += (int)TimeStr.size();
+  Data[CurrPos++] = ' ';
+  Data.insert(Data.begin() + CurrPos, Author.begin(), Author.end());
+  CurrPos += (int)Author.size();
+  Data[CurrPos++] = ' ';
+  Data[CurrPos++] = '"';
+  Data.insert(Data.begin() + CurrPos, Message.begin(), Message.end());
+  CurrPos += (int)Message.size();
+  Data[CurrPos++] = '"';
+  Data[CurrPos++] = ' ';
+  CurrHash = Tree.bytes();
+  Data.insert(Data.begin() + CurrPos, CurrHash.begin(), CurrHash.end());
+
+  return crypto::hash(Data);
 } /* End of 'core::resources::commit::GetHash' function */
 
 /* END OF 'commit.cpp' FILE */

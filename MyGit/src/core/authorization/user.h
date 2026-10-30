@@ -1,6 +1,6 @@
 /* FILE:        user.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 29.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Resources header file - user.
  */

@@ -321,6 +321,16 @@ std::vector<uint8_t> core::filesystem::ReadUser( const std::string &Nickname )
  */
 std::string core::filesystem::ReadCurrUserSession( void )
 {
+  std::ifstream File(LOCAL_SESSION_PATH, std::ios::binary);
+
+  if (!File.is_open())
+    throw std::runtime_error("File of session cant be opened -> check rights of MyGit");
+  std::string Name;
+
+  std::getline(File, Name);
+  if (File.fail())
+    throw std::runtime_error("Line cant be readed");
+  return Name;
 } /* End of 'core::filesystem::ReadCurrUserSession' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

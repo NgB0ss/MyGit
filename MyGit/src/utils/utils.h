@@ -49,6 +49,18 @@ namespace utils
    *   (std::filesystem::path) Path to folder that u need.
    */
   std::filesystem::path GetWindowPath( REFKNOWNFOLDERID rfolderid );
+
+  /* Function to swap console mode to not echo
+   * ARGUMENTS: None.
+   * RETURNS: None.
+   */
+  void DisableEchoInput( void );
+
+  /* Function to swap console mode to echo
+   * ARGUMENTS: None.
+   * RETURNS: None.
+   */
+  void EnableEchoInput( void );
 } /* end of 'utils' namespace */
 
 #endif /* __utils_h_ */

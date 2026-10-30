@@ -317,7 +317,14 @@ bool core::filesystem::WriteUser( const std::vector<uint8_t> &Bytes )
 bool core::filesystem::WriteCurrUserSession( const std::string CurrUserNickname )
 {
   // Check that user not forget make MyGit logout!
+  std::ofstream File(LOCAL_SESSION_PATH, std::ios::binary);
 
+  if (!File.is_open())
+    return false;
+  File << CurrUserNickname;
+  if (File.fail())
+    return false;
+  return true;
 } /* End of 'core::filesystem::WriteCurrUserSession' function */
 
 /* END OF 'filesystem_write.cpp' FILE */

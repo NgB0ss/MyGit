@@ -36,14 +36,14 @@ namespace core
 
     struct FileState
     {
-      uintmax_t Size;         // Size of file
-      crypto::hash Hash;      // Hash of file with flag i there binary (like blob hash)
+      uintmax_t Size {};         // Size of file
+      crypto::hash Hash {};      // Hash of file with flag i there binary (like blob hash)
     }; /* End of 'FileState' struct */
 
     // File system state struct 
     struct FileSystemState
     {
-      std::map<std::string, FileState> FSState;  // Filesystem state map
+      std::map<std::string, FileState> FSState {};  // Filesystem state map
     }; /* End of 'FileSystemState' struct */
 
     /******** FILESYSTEM ********/

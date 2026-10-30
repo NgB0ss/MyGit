@@ -1,6 +1,6 @@
 /* FILE:        mygit.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 10.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Coordinator module executor.
  */
@@ -25,10 +25,19 @@ core::mygit::mygit( int argc, char* argv[] ) : parser(argc, argv, std::filesyste
  */
 void core::mygit::RunSession( void )
 {
-  // Parser arguments and choose executor function
+  // Parser arguments and choose executor function, before it -> login
   try
   {
-    executor_core::ChooseFunc(ParseLex());
+    ParsedCommand Cmd = ParseLex();
+    
+    if (!authorization::IsLogined())
+    {
+      if (!authorization::Login(Cmd))
+        if (!authorization::CreateUser(Cmd))
+          throw std::runtime_error("Not logined session");
+    }
+    else
+      executor_core::ChooseFunc(Cmd);
   }
   catch ( std::runtime_error Err )
   {

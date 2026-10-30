@@ -14,6 +14,12 @@
  */
 bool core::authorization::IsLogined( void )
 {
+  std::string CurrUserNickname;
+  
+  // Throw -> Run session catch
+  CurrUserNickname = filesystem::ReadCurrUserSession();
+  if (CurrUserNickname.size() == 0)
+    return false;
   return true;
 } /* End of 'core::authorization::IsLogined' function */
     
@@ -32,7 +38,7 @@ bool core::authorization::Login( ParsedCommand Cmd )
     return false;
 
   // Try login
-  std::string Nickname, Gmail, Password;
+  std::string Nickname, Password;
 
   std::cout << "Nickname:" << std::endl;
   std::cin >> Nickname;
@@ -50,7 +56,7 @@ bool core::authorization::Login( ParsedCommand Cmd )
   user User(filesystem::ReadUser(Nickname));
 
   if (User.HashPassword() != CurrentPassword)
-    throw std::runtime_error("Not correct password");
+    return false;
 
   filesystem::WriteCurrUserSession(Nickname);
   return true;
@@ -71,10 +77,35 @@ void core::authorization::Logout( void )
  * ARGUMENTS:
  *   - Command that parser return:
  *       ParsedCommand Cmd;
- * RETURNS: None.
+ * RETURNS: 
+ *   (bool) Create OK or not.
  */
-void core::authorization::CreateUser( ParsedCommand Cmd )
+bool core::authorization::CreateUser( ParsedCommand Cmd )
 {
+  if (Cmd.FuncName != "create_user")
+    return false;
+
+  // Try login
+  std::string Nickname, Gmail, Password;
+
+  std::cout << "Nickname:" << std::endl;
+  std::cin >> Nickname;
+  if (Nickname.size() > MAX_AUTH)
+    return false;
+  std::cout << "Gmail" << std::endl;
+  std::cin >> Gmail;
+  std::cout << "Password:" << std::endl;
+  utils::DisableEchoInput();
+  std::cin >> Password;
+  utils::EnableEchoInput();
+
+  std::vector<uint8_t> BytesPswrd;
+
+  BytesPswrd.insert(BytesPswrd.begin(), Password.begin(), Password.end());
+  crypto::hash CurrentPassword(BytesPswrd);
+  user User(Nickname, Gmail, CurrentPassword);
+
+  return User.Save();
 } /* End of 'core::authorization::CreateUser' function */
 
 /* END OF 'authorization.cpp' FILE */

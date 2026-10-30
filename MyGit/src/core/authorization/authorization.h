@@ -1,6 +1,6 @@
 /* FILE:        authorization.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 29.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Authorization subsystem - main header file.
  */
@@ -43,9 +43,10 @@ namespace core
      * ARGUMENTS:
      *   - Command that parser return:
      *       ParsedCommand Cmd;
-     * RETURNS: None.
+     * RETURNS: 
+     *   (bool) Create OK or not.
      */
-    void CreateUser( ParsedCommand Cmd );
+    bool CreateUser( ParsedCommand Cmd );
   } /* End of 'resources' namespace */
 } /* End of 'core' namespace */
 

@@ -1,6 +1,6 @@
 /* FILE:        user.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 29.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Resources executor file - user.
  */
@@ -13,12 +13,12 @@
  *       const std::string &Nickname;
  *   - Gmail of user:
  *       const std::string &Mail;
- *   - Password of user:
+ *   - Hash password of user:
  *       const std::string &Pswrd;
  */
 core::authorization::user::user( const std::string &Nick,
-      const std::string &Mail, 
-      const std::string &Pswrd )
+                                 const std::string &Mail, 
+                                 const crypto::hash &Pswrd )
 {
   Nickname = Nick;
   Gmail = Mail;
@@ -33,6 +33,22 @@ core::authorization::user::user( const std::string &Nick,
 core::authorization::user::user( const std::vector<uint8_t> &Bytes )
 {
   // Decoder of bytes
+  int cnt = 1;
+
+  for (int i = 0; i < 3; i++)
+  {
+    std::string CurrStr;
+
+    cnt = 1;
+    while (Bytes[cnt] != '|')
+      CurrStr.push_back(Bytes[cnt++]);
+    if (i == 0)
+      Nickname = CurrStr;
+    else if (i == 1)
+      Gmail = CurrStr;
+    else 
+      Password = crypto::hash::FromStrToHash(CurrStr);
+  }
 } /* End of 'core::authorization::user::user' function */
 
 /* Function to get data from user to save 
@@ -40,19 +56,24 @@ core::authorization::user::user( const std::vector<uint8_t> &Bytes )
  * RETURNS:
  *   (std::vector<uint8_t>) Bytes.
  */
-std::vector<uint8_t> core::authorization::user::ToData( void )
+std::vector<uint8_t> core::authorization::user::ToData( void ) const
 {
   /* User will be saved like:
-   *    Nickname|Gmail|Password 
+   *    Nickname|Gmail|PasswordHash 
    *    Only in programm, in database save -> check filesystem 
    */
   std::vector<uint8_t> Bytes;
 
-  Bytes.insert(Bytes.begin(), Nickname.begin(), Nickname.end());
+  Bytes.push_back('|');
+  Bytes.insert(Bytes.begin() + 1, Nickname.begin(), Nickname.end());
   Bytes.push_back('|');
   Bytes.insert(Bytes.end(), Gmail.begin(), Gmail.end());
   Bytes.push_back('|');
-  Bytes.insert(Bytes.end(), Password.begin(), Password.end());
+  // Insert password hash
+  std::array<uint8_t, BYTES_HASH> Hash = Password.bytes();
+
+  Bytes.insert(Bytes.end(), Hash.begin(), Hash.end());
+  Bytes.push_back('|');
   return Bytes;
 } /* End of 'core::authorization::user::ToData' function */
 
@@ -63,7 +84,7 @@ std::vector<uint8_t> core::authorization::user::ToData( void )
  */
 bool core::authorization::user::Save( void ) const
 {
-  return true;
+  return filesystem::WriteUser(ToData());
 } /* End of 'core::authorization::user::Save' function */
 
 /* Static function to check is user exist in database
@@ -75,6 +96,10 @@ bool core::authorization::user::Save( void ) const
  */
 bool core::authorization::user::IsExisted( const user &User )
 {
+  bool flag = true;
+  
+  try { filesystem::ReadUser(User.Nickname); }
+  catch ( const std::runtime_error &Err) { flag = false; }
   return true;
 } /* End of 'core::authorization::user::IsExisted' function */
 

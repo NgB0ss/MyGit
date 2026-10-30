@@ -20,16 +20,16 @@ namespace core
     class user
     {
     private:
-      std::string Nickname;  // User nickname
-      std::string Gmail;     // Gmail of user
-      std::string Password;  // Password of user
+      std::string Nickname {};  // User nickname
+      std::string Gmail {};     // Gmail of user
+      crypto::hash Password {};  // Password of user
 
       /* Function to get data from user to save 
        * ARGUMENTS: None.
        * RETURNS:
        *   (std::vector<uint8_t>) Bytes.
        */
-      std::vector<uint8_t> ToData( void );
+      std::vector<uint8_t> ToData( void ) const;
     public:
       /* Ctor of user class by all args
        * ARGUMENTS: 
@@ -37,12 +37,12 @@ namespace core
        *       const std::string &Nickname;
        *   - Gmail of user:
        *       const std::string &Mail;
-       *   - Password of user:
-       *       const std::string &Pswrd;
+       *   - Hash password of user:
+       *       const crypto::hash &Pswrd;
        */
       user( const std::string &Nick,
             const std::string &Mail, 
-            const std::string &Pswrd );
+            const crypto::hash &Pswrd );
 
       /* Ctor of user by bytes from database
        * ARGUMENTS:

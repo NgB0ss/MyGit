@@ -1,6 +1,6 @@
 /* FILE:        utils.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 04.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Utils executor file.
  */
@@ -61,6 +61,30 @@ std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> utils::
     throw(std::runtime_error("Error in parsed time of commit"));
   return TimePoint;
 } /* End of 'utils::TimeFromStr' function */
+
+
+/* Function to aproximate path ro localappdata/programmdata
+ * ARGUMENTS:
+ *   - Reference to folder ID in Windws:
+ *       REFKNOWFOLDERID: rfolderid;
+ * RETURNS:
+ *   (std::filesystem::path) Path to folder that u need.
+ */
+std::filesystem::path utils::GetWindowPath( REFKNOWNFOLDERID rfolderid )
+{
+  PWSTR pszPath = nullptr; // Wide string where will be saved path
+  // Function that malloc memory to var
+  // and return result of opersation,
+  // also, save path in var
+  HRESULT hr = SHGetKnownFolderPath(rfolderid, 0, nullptr, &pszPath); 
+  if (SUCCEEDED(hr)) 
+  {
+    std::filesystem::path result(pszPath);
+    CoTaskMemFree(pszPath); // Clean memory
+    return result;
+  }
+  return std::filesystem::path();
+} /* End of 'utils::GetWindowPath' function */
 
 
 /* END OF 'utils.cpp' FILE */

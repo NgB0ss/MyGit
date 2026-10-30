@@ -22,7 +22,7 @@ namespace core
     class hash
     {
     private:
-      std::array<uint8_t, BYTES_HASH> Bytes;   // Hash bytes
+      std::array<uint8_t, BYTES_HASH> Bytes {};   // Hash bytes
     public:
       
       /* Default class consructor

@@ -36,6 +36,7 @@
 #include <termios.h>
 #include <unistd.h>
 #endif 
+#include <shlobj.h>
 
 // My def header file
 #include "utils/utils.h"

@@ -1,6 +1,6 @@
 /* FILE:        utils.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 04.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Utilit consalidation header file.
  */
@@ -40,6 +40,15 @@ namespace utils
    *   (std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes>) Time point.
    */
   std::chrono::time_point<std::chrono::system_clock, std::chrono::minutes> TimeFromStr( const std::string &StrTime );
+
+  /* Function to aproximate path ro localappdata/programmdata
+   * ARGUMENTS:
+   *   - Reference to folder ID in Windws:
+   *       REFKNOWFOLDERID: rfolderid;
+   * RETURNS:
+   *   (std::filesystem::path) Path to folder that u need.
+   */
+  std::filesystem::path GetWindowPath( REFKNOWNFOLDERID rfolderid );
 } /* end of 'utils' namespace */
 
 #endif /* __utils_h_ */

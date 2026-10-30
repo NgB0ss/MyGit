@@ -292,6 +292,18 @@ bool core::filesystem::ClearFilesystem( std::string Path )
  */
 bool core::filesystem::WriteUser( const std::vector<uint8_t> &Bytes )
 {
+  std::ofstream File(DATABASE_PATH, std::ios::binary | std::ios::app);
+
+  if (!File.is_open())
+    return false;
+  File.write(reinterpret_cast<const char *>(Bytes.data()), Bytes.size());
+  File << "\n";
+  if (File.fail())
+  {
+    File.close();
+    return false;
+  }
+  File.close();
   return true;
 } /* End of 'core::filesystem::WriteUser' function */
 

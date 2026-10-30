@@ -32,7 +32,7 @@ namespace core
     // Path of local session of this user wndws
     inline const fs::path LOCAL_SESSION_PATH = utils::GetWindowPath(FOLDERID_LocalAppData) / "session.dat";
     // Path of user database on this PC
-    inline const fs::path DATA_BASE_PATH = utils::GetWindowPath(FOLDERID_ProgramData) / "users.db";
+    inline const fs::path DATABASE_PATH = utils::GetWindowPath(FOLDERID_ProgramData) / "users.db";
 
     struct FileState
     {
@@ -232,9 +232,10 @@ namespace core
      * ARGUMENTS:
      *   - Nickname of user that need be read:
      *       const std::string &Nickname;
-     * RETURNS: None.
+     * RETURNS: 
+     *   (std::vector<uint8_t>) Bytes of user.
      */
-    void ReadUser( const std::string &Nickname );
+    std::vector<uint8_t> ReadUser( const std::string &Nickname );
   }  /* end of 'filesystem' namespace */
 } /* end of 'core' namespace */
 

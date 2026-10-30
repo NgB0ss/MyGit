@@ -290,10 +290,28 @@ core::filesystem::FileSystemState core::filesystem::ReadFileSystem( void )
  * ARGUMENTS:
  *   - Nickname of user that need be read:
  *       const std::string &Nickname;
- * RETURNS: None.
+ * RETURNS: 
+ *   (std::vector<uint8_t>) Bytes of user.
  */
-void core::filesystem::ReadUser( const std::string &Nickname )
+std::vector<uint8_t> core::filesystem::ReadUser( const std::string &Nickname )
 {
+  std::ifstream File(DATABASE_PATH, std::ios::binary);
+
+  if (!File.is_open())
+    throw std::runtime_error("User cant be readed -> check right to read programm data " + Nickname);
+  std::vector<uint8_t> Bytes;
+  std::string curr;
+
+  // Find user by nickname
+  while (std::getline(File, curr))
+    if (curr.find(Nickname) == std::string::npos)
+      continue;
+    else
+      break;
+  if (curr.size() == 0)
+    throw std::runtime_error("User not find " + Nickname);
+  Bytes.insert(Bytes.begin(), curr.begin(), curr.end());
+  return Bytes;
 } /* End of 'core::filesystem::ReadUser' function */
 
 /* END OF 'filesystem_read.cpp' FILE */

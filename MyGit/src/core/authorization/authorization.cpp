@@ -24,19 +24,12 @@ bool core::authorization::IsLogined( void )
 } /* End of 'core::authorization::IsLogined' function */
     
 /* Function to login already exist user 
- * ARGUMENTS: 
- *   - Command that parser return:
- *       ParseredCommand Cmd;
+ * ARGUMENTS: None.
  * RETURNS: 
  *   (bool) Is login Ok or not.
  */
-bool core::authorization::Login( ParsedCommand Cmd )
+bool core::authorization::Login( void )
 {
-  // Command like MyGit login
-  // Check that parsed command that needed command
-  if (Cmd.FuncName != "login")
-    return false;
-
   // Try login
   std::string Nickname, Password;
 
@@ -58,33 +51,32 @@ bool core::authorization::Login( ParsedCommand Cmd )
   if (User.HashPassword() != CurrentPassword)
     return false;
 
-  filesystem::WriteCurrUserSession(Nickname);
-  return true;
+  return filesystem::WriteCurrUserSession(Nickname);
 } /* End of 'core::authorization::Login' function */
 
 /* Function to logout from this session 
- * ARGUMENTS: None.
- * RETURNS: None.
+ * ARGUMENTS: 
+ *   - Parsered command from parser:
+ *       const ParsedCommand &Cmd;
+ * RETURNS: 
+ *   (bool) Ok logout or not.
  */
-void core::authorization::Logout( void )
+bool core::authorization::Logout( const ParsedCommand &Cmd )
 {
   // Command like MyGit logout
   //   - Clean current session -> write empty user nickname
-  filesystem::WriteCurrUserSession(std::string());
+  if (Cmd.FuncName == "logout")
+    return filesystem::WriteCurrUserSession(std::string());
+  return false;
 } /* End of 'core::authorization::Logout' function */
 
 /* Function to create new user on this PC
- * ARGUMENTS:
- *   - Command that parser return:
- *       ParsedCommand Cmd;
+ * ARGUMENTS: None.
  * RETURNS: 
  *   (bool) Create OK or not.
  */
-bool core::authorization::CreateUser( ParsedCommand Cmd )
+bool core::authorization::CreateUser( void )
 {
-  if (Cmd.FuncName != "create_user")
-    return false;
-
   // Try login
   std::string Nickname, Gmail, Password;
 
@@ -107,5 +99,25 @@ bool core::authorization::CreateUser( ParsedCommand Cmd )
 
   return User.Save();
 } /* End of 'core::authorization::CreateUser' function */
+
+
+/* Function to authorization in mygit
+ * ARGUMENTS:
+ *   - Parsed command from parser:
+ *       const ParsedCommand &Cmd;
+ * RETURNS:
+ *   (StateAuthorizationFunc) Authorization state correct.
+ */
+core::authorization::StateAuthorizationFunc core::authorization::Authorization( const ParsedCommand &Cmd )
+{
+  // Check command to authorization command
+  // If not logout -> logined or not and login or create if not and true if logined
+  if (Cmd.FuncName == "login")
+    return Login() ? StateAuthorizationFunc::FuncCorrect : StateAuthorizationFunc::FuncError;
+  else if (Cmd.FuncName == "create_user")
+    return CreateUser() ? StateAuthorizationFunc::FuncCorrect : StateAuthorizationFunc::FuncError;
+  else 
+    return StateAuthorizationFunc::FuncIsNotAuthorization;
+} /* End of 'core::authorization::Authorization' functoin */
 
 /* END OF 'authorization.cpp' FILE */

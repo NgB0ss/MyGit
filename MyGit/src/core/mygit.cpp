@@ -30,14 +30,26 @@ void core::mygit::RunSession( void )
   {
     ParsedCommand Cmd = ParseLex();
     
-    if (!authorization::IsLogined())
+    // Try logout
+    if (authorization::Logout(Cmd))
+      return;
+
+    // Try authorization
+    authorization::StateAuthorizationFunc State = authorization::Authorization(Cmd);
+    
+    // Parsed state of authorization
+    if (State == authorization::StateAuthorizationFunc::FuncCorrect)
+      return;
+    if (State == authorization::StateAuthorizationFunc::FuncError)
+      throw std::runtime_error("Not correct password/nickname, or rights of MyGit-> see help");
+    // If not authorization try choose func
+    if (authorization::IsLogined())
     {
-      if (!authorization::Login(Cmd))
-        if (!authorization::CreateUser(Cmd))
-          throw std::runtime_error("Not logined session");
+      if (State == authorization::StateAuthorizationFunc::FuncIsNotAuthorization)
+        executor_core::ChooseFunc(Cmd);
     }
     else
-      executor_core::ChooseFunc(Cmd);
+      throw std::runtime_error("Not logined session");
   }
   catch ( std::runtime_error Err )
   {

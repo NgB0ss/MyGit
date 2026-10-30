@@ -327,9 +327,8 @@ std::string core::filesystem::ReadCurrUserSession( void )
     throw std::runtime_error("File of session cant be opened -> check rights of MyGit");
   std::string Name;
 
+  // Line cant be 0, that mean we dont need check File.fail()
   std::getline(File, Name);
-  if (File.fail())
-    throw std::runtime_error("Line cant be readed");
   return Name;
 } /* End of 'core::filesystem::ReadCurrUserSession' function */
 

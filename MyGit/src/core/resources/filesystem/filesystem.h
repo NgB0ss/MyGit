@@ -30,9 +30,9 @@ namespace core
     // Path of trees object dirrectory in current .mygit
     inline const fs::path TREES_OBJ_PATH = fs::current_path() / ".mygit" / "objects" / "trees";
     // Path of local session of this user wndws
-    inline const fs::path LOCAL_SESSION_PATH = utils::GetWindowPath(FOLDERID_LocalAppData) / "session.dat";
+    inline const fs::path LOCAL_SESSION_PATH = utils::GetWindowPath(FOLDERID_LocalAppData) / "MyGit" / "session.dat";
     // Path of user database on this PC
-    inline const fs::path DATABASE_PATH = utils::GetWindowPath(FOLDERID_ProgramData) / "users.db";
+    inline const fs::path DATABASE_PATH = utils::GetWindowPath(FOLDERID_ProgramData) / "MyGit" / "users.db";
 
     struct FileState
     {

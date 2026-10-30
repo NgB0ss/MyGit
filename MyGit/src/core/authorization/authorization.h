@@ -17,6 +17,13 @@ namespace core
   // Authorization subsystem namespace
   namespace authorization
   {
+    // Enum class to check state corre of authorization
+    enum class StateAuthorizationFunc
+    {
+      FuncCorrect,            // Authorization is correct
+      FuncError,              // Authorization error
+      FuncIsNotAuthorization  // Parsed function is not authorization 
+    }; /* End of 'StateAuthorizationFunc' enum class */
     /* Function to check is user logined before in this session or no
      * ARGUMENTS: None.
      * RETURNS:
@@ -25,28 +32,36 @@ namespace core
     bool IsLogined( void );
     
     /* Function to login already exist user 
-     * ARGUMENTS: 
-     *   - Command that parser return:
-     *       ParseredCommand Cmd;
+     * ARGUMENTS: None.
      * RETURNS: 
      *   (bool) Is login Ok or not.
      */
-    bool Login( ParsedCommand Cmd );
+    bool Login( void );
 
     /* Function to logout from this session 
-     * ARGUMENTS: None.
-     * RETURNS: None.
+     * ARGUMENTS: 
+     *   - Parsered command from parser:
+     *       const ParsedCommand &Cmd;
+     * RETURNS: 
+     *   (bool) Ok logout or not.
      */
-    void Logout( void );
+    bool Logout( const ParsedCommand &Cmd );
 
     /* Function to create new user on this PC
-     * ARGUMENTS:
-     *   - Command that parser return:
-     *       ParsedCommand Cmd;
+     * ARGUMENTS: None.
      * RETURNS: 
      *   (bool) Create OK or not.
      */
-    bool CreateUser( ParsedCommand Cmd );
+    bool CreateUser( void );
+
+    /* Function to authorization in mygit
+     * ARGUMENTS:
+     *   - Parsed command from parser:
+     *       const ParsedCommand &Cmd;
+     * RETURNS:
+     *   (StateAuthorizationFunc) Is authorization success or not.
+     */
+    StateAuthorizationFunc Authorization( const ParsedCommand &Cmd );
   } /* End of 'resources' namespace */
 } /* End of 'core' namespace */
 

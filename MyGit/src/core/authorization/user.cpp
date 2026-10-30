@@ -39,9 +39,9 @@ core::authorization::user::user( const std::vector<uint8_t> &Bytes )
   {
     std::string CurrStr;
 
-    cnt = 1;
     while (Bytes[cnt] != '|')
       CurrStr.push_back(Bytes[cnt++]);
+    cnt++;
     if (i == 0)
       Nickname = CurrStr;
     else if (i == 1)

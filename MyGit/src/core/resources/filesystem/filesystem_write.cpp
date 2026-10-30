@@ -307,4 +307,17 @@ bool core::filesystem::WriteUser( const std::vector<uint8_t> &Bytes )
   return true;
 } /* End of 'core::filesystem::WriteUser' function */
 
+/* Function to write current user to session on this wndws acc
+ * ARGUMENTS: 
+ *   - New curr user nickname:
+ *       const std::string &CurrUserNickname;
+ * RETURNS:
+ *   (bool) Ok or not.
+ */
+bool core::filesystem::WriteCurrUserSession( const std::string CurrUserNickname )
+{
+  // Check that user not forget make MyGit logout!
+
+} /* End of 'core::filesystem::WriteCurrUserSession' function */
+
 /* END OF 'filesystem_write.cpp' FILE */

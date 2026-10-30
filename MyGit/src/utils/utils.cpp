@@ -86,5 +86,33 @@ std::filesystem::path utils::GetWindowPath( REFKNOWNFOLDERID rfolderid )
   return std::filesystem::path();
 } /* End of 'utils::GetWindowPath' function */
 
+/* Function to swap console mode to not echo
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+void utils::DisableEchoInput( void )
+{
+  HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+  DWORD mode = 0;
+
+  // Get current mode
+  GetConsoleMode(hStdin, &mode);
+  // Disable echo
+  SetConsoleMode(hStdin, mode & (~ENABLE_ECHO_INPUT));
+} /* End of 'utils::DisableEchoInput' function */
+
+/* Function to swap console mode to echo
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+void utils::EnableEchoInput( void )
+{
+  HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+  DWORD mode = 0;
+
+  GetConsoleMode(hStdin, &mode);
+  SetConsoleMode(hStdin, mode | ENABLE_ECHO_INPUT);
+} /* End of 'utils::EnableEchoInput' function */
+
 
 /* END OF 'utils.cpp' FILE */

@@ -51,6 +51,16 @@ core::authorization::user::user( const std::vector<uint8_t> &Bytes )
   }
 } /* End of 'core::authorization::user::user' function */
 
+/* Function to get password from user
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (crypto::hash) PasswordHash
+ */
+core::crypto::hash core::authorization::user::HashPassword( void )
+{
+  return Password;
+} /* End of 'core::authorization::user::HashPassword' function */
+
 /* Function to get data from user to save 
  * ARGUMENTS: None.
  * RETURNS:

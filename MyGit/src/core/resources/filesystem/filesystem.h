@@ -236,6 +236,23 @@ namespace core
      *   (std::vector<uint8_t>) Bytes of user.
      */
     std::vector<uint8_t> ReadUser( const std::string &Nickname );
+
+    /*** CURRENT USER -> WRITE/READ ***/
+    /* Function to write current user to session on this wndws acc
+     * ARGUMENTS: 
+     *   - New curr user nickname:
+     *       const std::string &CurrUserNickname;
+     * RETURNS:
+     *   (bool) Ok or not.
+     */
+    bool WriteCurrUserSession( const std::string CurrUserNickname );
+
+    /* Function to read current user 
+     * ARGUMENTS: None.
+     * RETURNS:
+     *   (std::string) Current user nickname
+     */
+    std::string ReadCurrUserSession( void );
   }  /* end of 'filesystem' namespace */
 } /* end of 'core' namespace */
 

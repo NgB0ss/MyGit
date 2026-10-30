@@ -314,4 +314,13 @@ std::vector<uint8_t> core::filesystem::ReadUser( const std::string &Nickname )
   return Bytes;
 } /* End of 'core::filesystem::ReadUser' function */
 
+/* Function to read current user 
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (std::string) Current user nickname
+ */
+std::string core::filesystem::ReadCurrUserSession( void )
+{
+} /* End of 'core::filesystem::ReadCurrUserSession' function */
+
 /* END OF 'filesystem_read.cpp' FILE */

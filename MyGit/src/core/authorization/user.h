@@ -51,6 +51,13 @@ namespace core
        */
       user( const std::vector<uint8_t> &Bytes );
 
+      /* Function to get password from user
+       * ARGUMENTS: None.
+       * RETURNS: 
+       *   (crypto::hash) PasswordHash
+       */
+      crypto::hash HashPassword( void );
+
       /* Function save user to database
        * ARGUMENTS: None.
        * RETURNS: 

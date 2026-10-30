@@ -1,6 +1,6 @@
 /* FILE:        hash.cpp
  * AUTHOR:      Ngbs
- * LAST UPDATE: 26.09.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Cryptography - hash system.
  */
@@ -45,6 +45,18 @@ core::crypto::hash::hash( const std::vector<uint8_t> &BytesData )
     Bytes[i * 2 + 1] = hex_digits[byte & 0x0F];
    }
 } /* End of 'core::crypto::hash::hash' function */
+
+/* Operator == of hash
+ * ARGUMENTS:
+ *   - Hash to check:
+ *       const hash &Hash;
+ * RETURNS:
+ *   (bool) True or false.
+ */
+bool core::crypto::hash::operator==( const hash &Hash ) const
+{
+return Hash.bytes() == Bytes;
+} /* End of 'core::crypto::hash' function */
 
 /* Function to make from string - hash
  * ARGUMENTS:

@@ -8,6 +8,10 @@
 #ifndef __def_h_
 #define __def_h_
 
+#define MAX_MSG 150  // Max symbols in 1 message to commit 
+#define MAX_AUTH 150 // Max author info
+#define TIME_SYMBOLS 16 // Time in commit symbols in string
+
 /* Includes lib */
 #include <map>
 #include <tuple>

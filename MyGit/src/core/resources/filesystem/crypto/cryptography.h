@@ -1,6 +1,6 @@
 /* FILE:        cryptography.h
  * AUTHOR:      Ngbs
- * LAST UPDATE: 25.10.2026
+ * LAST UPDATE: 30.10.2026
  * PURPOSE:     Git project.
  *              Cryptography consalidator module.
  */
@@ -37,6 +37,15 @@ namespace core
        *       const std::vector<uint8_t> &BytesData;
        */
       hash( const std::vector<uint8_t> &BytesData );
+
+      /* Operator == of hash
+       * ARGUMENTS:
+       *   - Hash to check:
+       *       const hash &Hash;
+       * RETURNS:
+       *   (bool) True or false.
+       */
+      bool operator==( const hash &Hash ) const;
 
       /* Function to make from string - hash
        * ARGUMENTS:
